@@ -1,0 +1,12 @@
+flowchart TB
+  A[Python 脚本\n可重复运行] --> B[REST API\n接口契约]
+  B --> C[LLM API\n模型调用边界]
+  C --> D[Structured Output\n可验证数据]
+  D --> E[Tool Calling\n受控操作]
+  E --> F[PostgreSQL\n状态与审计]
+  F --> G[RAG\n证据与引用]
+  G --> H[Agent Workflow\n状态与分支]
+  H --> I[Human-in-the-loop\n人工批准]
+  I --> J[Evaluation and Security\n质量与风险]
+  J --> K[Web Product\n真实用户流程]
+  K --> L[Production Deployment\n可观测交付]

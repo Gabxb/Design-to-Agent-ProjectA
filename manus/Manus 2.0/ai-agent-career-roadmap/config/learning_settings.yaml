@@ -1,0 +1,24 @@
+schedule:
+  default_weekly_hours: 15
+  target_weekly_hours_min: 15
+  target_weekly_hours_max: 20
+  daily_rhythm:
+    day_1: concept_and_minimum_example
+    day_2: coding_exercise
+    day_3: feature_development
+    day_4: engineering_hardening
+    day_5: project_development
+    day_6: independent_challenge_and_fixes
+    day_7: review_and_buffer
+engineering:
+  python_version: "3.12"
+  api_framework: FastAPI
+  database: PostgreSQL
+  frontend: React_or_Next.js
+  version_control: Git
+  container: Docker
+content_policy:
+  preserve_user_notes: true
+  create_backup_before_update: true
+  source_of_truth: Markdown
+  pdf_generated_from_markdown: true

@@ -1,0 +1,15 @@
+{
+  "task_kind": "markdown-to-pdf",
+  "output": "pdf",
+  "signals": [],
+  "hard_constraints": [
+    "Chinese CJK text",
+    "table of contents",
+    "page numbers"
+  ],
+  "content_features": {
+    "code_blocks": 12,
+    "defined_terms": 12,
+    "portrait_images": 0
+  }
+}

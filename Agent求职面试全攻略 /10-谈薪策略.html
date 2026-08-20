@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>10 · 谈薪策略</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/theme/white.min.css" id="theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #1e293b;
+            --accent-color: #2563eb;
+            --accent-2: #7c3aed;
+            --accent-3: #059669;
+            --border-color: #e2e8f0;
+            --card-bg: rgba(241, 245, 249, 0.7);
+        }
+        body { background: radial-gradient(circle at 30% 20%, #ffffff 0%, #f8fafc 60%, #f1f5f9 100%); }
+        .reveal { font-family: 'Noto Sans SC', sans-serif; color: var(--text-color); }
+
+        /* Typography */
+        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+            font-family: 'Noto Sans SC', sans-serif;
+            text-transform: none; letter-spacing: normal; word-break: break-word;
+        }
+        .reveal h1.main-title { font-weight: 900; color: #0f172a; font-size: 2.8em; text-shadow: 0 4px 24px rgba(37,99,235,0.18); margin-bottom: 0.3em; }
+        .reveal .main-subtitle { font-weight: 300; color: #64748b; font-size: 1.1em; line-height: 1.6; max-width: 800px; margin: 0 auto; }
+
+        .reveal h2.section-h2 {
+            color: transparent; background: linear-gradient(90deg, var(--accent-color), var(--accent-2));
+            -webkit-background-clip: text; background-clip: text;
+            font-weight: 800; font-size: 2.2em; border-bottom: 2px solid var(--border-color); padding-bottom: 0.3em; display: inline-block;
+        }
+        .reveal h3.section-h3 { color: #0f172a; font-weight: 700; font-size: 1.5em; text-align: left; border-left: 4px solid var(--accent-color); padding-left: 0.6em; margin-bottom: 1em; }
+
+        .reveal p, .reveal li { font-size: 0.95em; line-height: 1.7; text-align: left; margin-bottom: 0.8em; word-break: break-word; }
+        .reveal strong { color: #1d4ed8; font-weight: 700; }
+        .reveal em { color: #475569; }
+
+        /* Layouts */
+        .title-slide { height: 100%; display: flex !important; flex-direction: column; justify-content: center; align-items: center; }
+        .content-slide { height: 100%; display: flex !important; flex-direction: column; justify-content: center; align-items: flex-start; padding: 2% 5% !important; }
+        .slide-content-wrapper { width: 100%; max-height: 86vh; overflow-y: auto; padding-right: 15px; }
+        .content-slide.present .slide-content-wrapper > * { animation: fadeUp 0.5s ease both; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(14px);} to { opacity: 1; transform: none;} }
+
+        /* Scrollbar */
+        .slide-content-wrapper::-webkit-scrollbar { width: 6px; }
+        .slide-content-wrapper::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+
+        /* Badges & Hints */
+        .label-badge, .chapter-badge {
+            background: rgba(37,99,235,0.08); border: 1px solid rgba(37,99,235,0.25); color: var(--accent-color);
+            padding: 6px 16px; border-radius: 20px; font-size: 0.6em; font-weight: 700; margin-bottom: 2em; letter-spacing: 2px;
+        }
+        .scroll-hint { margin-top: 4em; font-size: 0.6em; color: #94a3b8; opacity: 0.9; }
+
+        /* Blockquotes */
+        .reveal blockquote {
+            width: 100%; text-align: left; margin: 1em 0; padding: 1em 1.5em;
+            background: var(--card-bg); border-left: 4px solid var(--accent-color);
+            border-radius: 0 8px 8px 0; font-style: normal; font-size: 0.9em; box-shadow: none;
+        }
+
+        /* Inline Code */
+        .reveal code { font-family: 'Fira Code', monospace; background: #f1f5f9; color: #db2777; padding: 0.1em 0.3em; border-radius: 4px; font-size: 0.85em; }
+
+        /* Mac Window Code Blocks */
+        .mac-window {
+            background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;
+            margin: 1em 0; width: 100%; box-shadow: 0 8px 24px rgba(15,23,42,0.10); overflow: hidden; text-align: left;
+        }
+        .mac-header { background: #eef2f7; padding: 8px 12px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid #e2e8f0; }
+        .mac-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+        .mac-lang { margin-left: auto; color: #94a3b8; font-size: 0.6em; font-family: 'Fira Code', monospace; text-transform: uppercase; }
+        .reveal pre { margin: 0; width: 100%; box-shadow: none; display: block; }
+        .reveal pre code {
+            padding: 1.2em; font-size: 0.75em; line-height: 1.5; font-family: 'Fira Code', monospace;
+            background: transparent; color: inherit; max-height: 55vh; overflow-y: auto; white-space: pre-wrap; word-break: break-all;
+        }
+
+        /* Tables + Bars */
+        .table-wrapper { width: 100%; overflow-x: auto; margin: 1em 0; }
+        .reveal table.data-table { width: 100%; margin: 0; font-size: 0.8em; border-collapse: collapse; }
+        .reveal table.data-table th { background: rgba(37,99,235,0.08); color: #1e293b; font-weight: 700; padding: 10px 14px; border-bottom: 2px solid var(--accent-color); text-align: left; }
+        .reveal table.data-table td { padding: 9px 14px; border-bottom: 1px solid var(--border-color); vertical-align: middle; }
+        .reveal table.data-table tr:nth-child(even) { background: rgba(15,23,42,0.02); }
+        .reveal table.data-table tr:hover { background: rgba(37,99,235,0.06); }
+        .bar-cell { min-width: 160px; }
+        .bar-val { font-weight: 600; color: #1d4ed8; margin-bottom: 4px; }
+        .bar-track { height: 7px; background: rgba(15,23,42,0.08); border-radius: 4px; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent-color), var(--accent-2)); box-shadow: 0 0 6px rgba(37,99,235,0.35); }
+
+        /* KPI Cards */
+        .kpi-grid { display: flex; flex-wrap: wrap; gap: 16px; width: 100%; margin: 0.8em 0; }
+        .kpi-card {
+            flex: 1 1 160px; min-width: 150px; padding: 18px 20px; border-radius: 14px;
+            background: linear-gradient(145deg, rgba(37,99,235,0.07), rgba(124,58,237,0.05));
+            border: 1px solid rgba(37,99,235,0.18); box-shadow: 0 8px 24px rgba(15,23,42,0.08);
+        }
+        .kpi-value { font-size: 2.1em; font-weight: 900; line-height: 1; color: #0f172a; background: linear-gradient(90deg,#2563eb,#7c3aed); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .kpi-unit { font-size: 0.45em; font-weight: 700; margin-left: 4px; -webkit-text-fill-color: #64748b; }
+        .kpi-label { margin-top: 8px; font-size: 0.8em; font-weight: 700; color: #1e293b; }
+        .kpi-desc { margin-top: 4px; font-size: 0.7em; color: #64748b; line-height: 1.4; }
+
+        /* Callouts */
+        .callout { display: flex; gap: 14px; width: 100%; margin: 1em 0; padding: 14px 18px; border-radius: 12px; text-align: left; background: var(--card-bg); border: 1px solid var(--border-color); }
+        .callout-icon { font-size: 1.4em; line-height: 1.4; }
+        .callout-body { flex: 1; font-size: 0.85em; }
+        .callout-body :first-child { margin-top: 0; } .callout-body :last-child { margin-bottom: 0; }
+        .callout-tip { border-left: 4px solid #34d399; background: rgba(52,211,153,0.08); }
+        .callout-note { border-left: 4px solid #38bdf8; background: rgba(56,189,248,0.08); }
+        .callout-info { border-left: 4px solid #38bdf8; background: rgba(56,189,248,0.08); }
+        .callout-warning { border-left: 4px solid #fbbf24; background: rgba(251,191,36,0.08); }
+        .callout-danger { border-left: 4px solid #f87171; background: rgba(248,113,113,0.08); }
+        .callout-success { border-left: 4px solid #34d399; background: rgba(52,211,153,0.08); }
+
+        /* Mermaid */
+        .mermaid-wrap { width: 100%; display: flex; justify-content: center; margin: 0.5em 0; }
+        .reveal .mermaid { background: transparent; font-size: 0.9em; max-height: 70vh; }
+        .reveal .mermaid svg { max-width: 100%; height: auto; }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            
+        <section class="title-slide">
+            <div class="label-badge">求职与面试 · 章节 10</div>
+            <h1 class="main-title">10 · 谈薪策略</h1>
+            <div class="main-subtitle">谈薪不是祈求施舍，而是一场基于信息差和博弈论的商务对决。在 AI Agent 这个存在极大供需错配的风口赛道，了解底牌，你能多谈出至少 20% 的溢价。</div>
+            <div class="scroll-hint">
+                <p>按 <strong>Space</strong> 键查看全景鸟瞰视图</p>
+                <p>按 <strong>↓</strong> 或 <strong>→</strong> 键开始阅读</p>
+            </div>
+        </section>
+    <section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+
+<div class="kpi-grid"><div class="kpi-card">
+                <div class="kpi-value">20+<span class="kpi-unit">%</span></div>
+                <div class="kpi-label">谈薪溢价</div>
+                <div class="kpi-desc">掌握信息差与博弈技巧可多谈出的溢价幅度</div>
+            </div><div class="kpi-card">
+                <div class="kpi-value">71<span class="kpi-unit">%</span></div>
+                <div class="kpi-label">[!KPI] 薪资溢价</div>
+                <div class="kpi-desc">AI Agent 岗相对同级岗位的整体薪资溢价</div>
+            </div><div class="kpi-card">
+                <div class="kpi-value">4<span class="kpi-unit">项</span></div>
+                <div class="kpi-label">[!KPI] 总包构成</div>
+                <div class="kpi-desc">Base + Bonus + Equity + Sign-on 四部分</div>
+            </div><div class="kpi-card">
+                <div class="kpi-value">150<span class="kpi-unit">万/年</span></div>
+                <div class="kpi-label">[!KPI] 架构师天花板</div>
+                <div class="kpi-desc">AI 解决方案架构师最高年薪参考</div>
+            </div></div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">彻底拆解薪资构成</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>在谈判桌上，不要只盯着那个最大的数字看。了解内部结构，你才能知道哪些地方好撬动，哪些地方是死规定。</p>
+
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">code</span>
+                </div>
+                <pre><code class="language-plaintext">你的总包 (Package) = 基础月薪 (Base) + 绩效奖金/年终奖 (Bonus) + 股票/期权 (Equity) + 各种名目的补贴/签字费 (Sign-on)</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">1. 基础工资（Base Pay）</h3>
+<ul>
+<li><strong>核心定位</strong>：这是你每天睁开眼就能赚到的真金白银，是你下一份工作跳槽时的<strong>计算基数</strong>，是绝对的重中之重。</li>
+<li><strong>发放逻辑</strong>：一般是按月发放。大厂通常标配 12 个月（年底额外发年终），部分创业公司为了让总包看起来大，会玩文字游戏拆成 13 或 14 个月（但这 1-2 个月不写进合同死板里）。</li>
+<li><strong>博弈难度</strong>：最难谈。因为这受限于公司严格的职级薪酬体系（Band）。HR 手里的 base 权限极小。</li>
+</ul>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">2. 绩效/年终奖（Bonus）</h3>
+<ul>
+<li><strong>大厂生态</strong>：通常会写在 Offer 上（比如 &quot;目标年终 3 个月&quot;），但通常会加一句&quot;根据公司业绩和个人绩效浮动&quot;。目前大环境一般稳拿 2 个月，拼一点拿 3-4 个月。</li>
+<li><strong>创业公司生态</strong>：极大概率是没有固定年终奖的，或者年底发个大红包意思一下。千万不要把这部分作为创业公司 offer 的核心考量。</li>
+<li><strong>博弈难度</strong>：中等。可以谈&quot;保证最低绩效&quot;（很难），或者要求以保底目标写入合同。</li>
+</ul>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">3. 股票 / 期权（Equity）</h3>
+<ul>
+<li><strong>大厂 (如字节/腾讯)</strong>：发的是 <strong>RSU（限制性股票单位）</strong>。这是几乎等同于现金的硬通货。通常分 4 年归属（Vesting），每年拿 25%。注意汇率波动和股价波动。</li>
+<li><strong>创业公司</strong>：发的是 <strong>期权（Options）</strong>。在公司上市（IPO）或被收购之前，这是一张<strong>废纸</strong>。同样分 4 年归属，且通常带有一个 <strong>1 年的 Cliff（悬崖期）</strong>——干不满一年离职，期权直接清零。</li>
+<li><strong>估值陷阱</strong>：HR 在发期权时，通常会按照&quot;我们下轮融资估算&quot;或者一个极度乐观的价格给你画饼。你要清醒地意识到要打 5 折甚至 1 折计算。</li>
+</ul>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">4. 特殊补贴与签字费（Sign-on Bonus）</h3>
+<ul>
+<li><strong>签字费</strong>：这是为了弥补你放弃现有公司的期权/年终奖，或者作为吸引你快速入职的&quot;定金&quot;。通常是一次性在入职首月发放（但如果有竞业协议，半年内离职可能要退还）。</li>
+<li><strong>博弈难度</strong>：<strong>极容易谈</strong>。当 HR 告诉你 Base 工资被职级卡死的时候，立刻转头要签字费作为总包补偿，这是最常见的破局手段。</li>
+</ul>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">Agent 岗真实薪资参考（2026年 · 独家披露）</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<blockquote>
+<p>⚠️ 注意：薪资极大程度受候选人背景、所在城市及当年行情波动影响。以下数据为一线城市（北上广深）的中位数参考区间。</p>
+</blockquote>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">按照经验职级划分</h3>
+
+<div class="table-wrapper"><table class="data-table"><thead><tr><th>级别</th><th>真实工作年限</th><th>核心画像</th><th>Agent 大厂总包 (万)</th><th>Agent 中小厂总包 (万)</th></tr></thead><tbody><tr><td><strong>初级</strong></td><td class="bar-cell">
+                    <div class="bar-val">1-3 年</div>
+                    <div class="bar-track"><div class="bar-fill" style="width:13%"></div></div>
+                </td><td>熟悉 LangChain，能独立完成单个链路模块（如 RAG 检索）</td><td><strong>40 - 60</strong></td><td>30 - 45</td></tr><tr><td><strong>中级</strong></td><td class="bar-cell">
+                    <div class="bar-val">3-5 年</div>
+                    <div class="bar-track"><div class="bar-fill" style="width:38%"></div></div>
+                </td><td>能独立架构复杂 Agent 项目，深刻理解大模型评测与微调边界</td><td><strong>60 - 90</strong></td><td>45 - 65</td></tr><tr><td><strong>高级</strong></td><td class="bar-cell">
+                    <div class="bar-val">5-8 年</div>
+                    <div class="bar-track"><div class="bar-fill" style="width:63%"></div></div>
+                </td><td>主导千万级日活的 AI 系统，解决极端长文本或分布式系统挑战</td><td><strong>90 - 130</strong></td><td>65 - 90</td></tr><tr><td><strong>专家级</strong></td><td class="bar-cell">
+                    <div class="bar-val">8 年以上</div>
+                    <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+                </td><td>定义公司级别 AI 战略底座，带团队，业内有开源贡献或顶会论文</td><td><strong>140 - 250+</strong></td><td>90 - 150+</td></tr></tbody></table></div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">按照公司生态划分</h3>
+
+<div class="table-wrapper"><table class="data-table"><thead><tr><th>公司类型代表</th><th>核心特点与薪酬偏好</th><th>谈判策略重头戏</th></tr></thead><tbody><tr><td><strong>字节跳动</strong></td><td>极度慷慨但职级压得狠，年包大头在期权和超额年终。</td><td>别过度纠结职级名称（字节扁平化），重点拉满 Base 和签字费。</td></tr><tr><td><strong>腾讯 / 阿里</strong></td><td>稳扎稳打，职级体系森严。房补、餐补等福利极好。</td><td>P 级（或 T 级）定生死。如果卡在晋升边缘线，宁愿降一点 Base 也要争取高一级的 Title。</td></tr><tr><td><strong>DeepSeek 等明星大模型厂</strong></td><td>给钱非常爽快，技术氛围浓厚。但面试地狱难度。</td><td>他们不缺钱，但缺最顶尖的人。展示你的不可替代性，直接给出一个强势的期望区间。</td></tr><tr><td><strong>A/B 轮 AI 创业公司</strong></td><td>现金紧张，大肆派发期权画饼。</td><td>必须争取高于市场平均水平的 Base 来对冲期权的巨大死亡风险。</td></tr></tbody></table></div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">高能谈判场景实景推演</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<blockquote>
+<p>核心谈判心法：谁先亮出确切的数字底牌，谁就输了气场。</p>
+</blockquote>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">场景一：HR 夺命连环问&quot;你现在的薪资是多少，期望是多少？&quot;</h3>
+
+<p><strong>❌ 错误回答（自爆底牌）</strong>：
+&quot;我现在的 Base 是 25K，我期望能拿到 35K 左右，毕竟现在跳槽一般涨 30% 嘛。&quot;（你已经把天花板死死锁在了 35K）。</p>
+
+
+<p><strong>✅ 高手应对（模糊处理 + 转移焦点）</strong>：</p>
+
+<blockquote>
+<p>&quot;我目前的薪酬体系比较复杂，包含了未归属的期权和一些特殊的项目奖金，简单折算成月薪并不准确。对于期望薪资，我对贵公司的 Agent 核心业务和团队技术氛围非常认可，这是我跳槽的首要驱动力。我相信贵公司有一套成熟且具备市场竞争力的薪酬评估体系，<strong>方便透露一下贵司针对这个高级 Agent 开发岗位设定的总包预算范围大概在哪个区间吗？</strong>&quot;</p>
+</blockquote>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">场景二：HR 试图极限压价</h3>
+
+<p><strong>HR</strong>：&quot;您的技术面反馈很好，但由于您之前主要做的是传统 Java 后端，Agent 相关的项目只有半年经验，按照我们这边的定级只能给您评到中级，月薪 32K，这可能达不到您的预期。&quot;</p>
+
+
+<p><strong>✅ 高手应对（利用稀缺性进行反压）</strong>：</p>
+
+<blockquote>
+<p>&quot;我非常理解公司的定级考量。但我认为，传统后端架构经验叠加 Agent 落地的实操能力，这正是目前市场上最稀缺的复合型人才组合。在二面时，面试官也极其认可我在高并发处理上对现有系统改造的巨大价值。我手头目前还有一个其他公司的 Offer 正在推进最终的 Package 审批（释放压力筹码），但我个人极度倾向加入贵团队。如果您能在 Base 上再上浮 10% 达到 35K 的话，我愿意立刻停止其他流程，本周内签署 Offer。&quot;</p>
+</blockquote>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">场景三：僵局破冰——用签字费曲线救国</h3>
+
+<p><strong>HR</strong>：&quot;实在抱歉，35K 已经是我们这个职级的绝对上限了，总监特批也只能批到这，真的无法再提高了。&quot;</p>
+
+
+<p><strong>✅ 高手应对（见好就收，切换赛道）</strong>：</p>
+
+<blockquote>
+<p>&quot;好的，我明白您的难处了，也非常感谢您帮我向总监争取。既然 Base 受限于硬性制度无法突破，那我也愿意展示我的诚意。如果公司能在入职时提供相当于 2 个月月薪（或具体数字，如 6 万）的签字费（Sign-on Bonus），作为对我年底跳槽损失的年终奖补偿，我完全可以接受这个 Base 方案。&quot;</p>
+</blockquote>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">创业公司&quot;期权大坑&quot;防雷指南</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>当你拿到一份来自一家 AI 创业公司的 Offer 时，HR 会用极其亢奋的语气告诉你：&quot;虽然我们月薪只有 25K，但我们给了你 5 万股期权！你知道上周我们刚刚融了 2 亿美金吗？等我们两年后 IPO，你这笔期权起码价值几百万！&quot;</p>
+
+
+<p>深呼吸，保持冷酷，按以下流程拆解这块大饼：</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">核心连问 4 步法（在签署 Offer 前必须问清楚）</h3>
+
+<ol>
+<li><strong>&quot;请问这 5 万股期权，占目前公司总股本的百分之多少？&quot;</strong><ul>
+<li>股数没有任何意义。如果总股本有 100 亿股，你这 5 万股连沧海一粟都不算。重点是要确切的百分比（如 0.05%）。</li>
+</ul>
+</li>
+<li><strong>&quot;目前的行权价（Strike Price）是多少？&quot;</strong><ul>
+<li>也就是你需要花多少钱去买这只股票。如果行权价过高，这期权就是废纸。</li>
+</ul>
+</li>
+<li><strong>&quot;请问公司最近一轮（或者你们内部测算的）公允市场价值（FMV）是多少？&quot;</strong><ul>
+<li><strong>纸面价值 = (FMV - 行权价) × 你的期权股数</strong>。算出这个数字，然后立刻在心里打个 2 折，这才是你能预期的最高收益。</li>
+</ul>
+</li>
+<li><strong>&quot;归属期（Vesting Schedule）和悬崖期（Cliff）是怎么规定的？如果我在期权未全部归属前被优化或者主动离职，未行权的部分如何处理？&quot;</strong><ul>
+<li>绝大多数是 4 年归属，满 1 年（Cliff）才能拿 25%，之后按月发放。如果公司在 1 年内把你裁了，你毛都拿不到。</li>
+</ul>
+</li>
+</ol>
+
+
+<p><strong>谈判应对策略</strong>：
+如果你对这家创业公司未来的上市前景持严重怀疑态度，或者你需要每个月交房贷，直接对 HR 摊牌：</p>
+
+<blockquote>
+<p>&quot;我非常看好公司的未来，我也愿意接受一部分期权来绑定长期利益。但我目前的现金流压力较大，<strong>请问是否有一个选项方案：我愿意放弃 30% 的期权份额，来换取每个月 Base 工资增加 5000 元？</strong>&quot;</p>
+</blockquote>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">谈判背后的博弈论：你必须懂的 4 个底层模型</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>谈薪的本质是一场<strong>信息不对称下的非零和博弈</strong>。理解下面几个经济学/博弈论概念，能让你从&quot;凭感觉砍价&quot;升级为&quot;按模型决策&quot;。</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">模型一：锚定效应（Anchoring Effect）</h3>
+
+<p>人类大脑对第一个出现的数字有非理性的依赖。谈判桌上<strong>第一个被抛出的具体数字会成为整场谈判的引力中心</strong>。</p>
+
+
+<ul>
+<li>如果 HR 先报 30K，那么后续无论你怎么谈，结果大概率落在 30-35K 区间；</li>
+<li>如果你能让对方先开口，或者由你抛出一个<strong>略高于心理预期但有依据</strong>的锚（如 40K），最终成交价会显著上移。</li>
+</ul>
+
+
+<div class="callout callout-tip">
+            <div class="callout-icon">💡</div>
+            <div class="callout-body"><p>当你不得不先开价时，开一个&quot;高而有理&quot;的数字，并立刻补上支撑理由（市场行情/竞品 offer/稀缺技能），让锚有重量、扎得稳。</p>
+</div>
+        </div>
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">模型二：BATNA（最佳替代方案）</h3>
+
+<p>BATNA = Best Alternative To a Negotiated Agreement，即&quot;谈崩了你还有什么退路&quot;。</p>
+
+
+<p><strong>你的谈判力 = 你的 BATNA 强度。</strong> 手里有一个 50 万的竞品 offer，就是你最硬的 BATNA。没有 BATNA 的谈判，本质是乞讨。</p>
+
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">code</span>
+                </div>
+                <pre><code class="language-plaintext">谈判力强度 ∝ (BATNA 价值) × (对方对你的需求度) / (你对这份 offer 的依赖度)</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">模型三：ZOPA（协议可能区间）</h3>
+
+<p>ZOPA = Zone Of Possible Agreement，即你的底线和对方上限之间的重叠区。</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="mermaid-wrap"><pre class="mermaid">graph LR
+    A[&quot;你的底线&lt;br/&gt;(Reservation Price)&lt;br/&gt;35K&quot;] --- B[&quot;ZOPA&lt;br/&gt;重叠成交区&lt;br/&gt;35K~42K&quot;]
+    B --- C[&quot;对方预算上限&lt;br/&gt;(Walk-away Point)&lt;br/&gt;42K&quot;]
+    style B fill:#dcfce7,stroke:#16a34a</pre></div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>谈判技巧的核心，就是<strong>用信息战把成交点尽量推向 ZOPA 的对方一侧（即 42K），而不是你那一侧（35K）</strong>。</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">模型四：信息差套利</h3>
+
+<div class="table-wrapper"><table class="data-table"><thead><tr><th>信息维度</th><th>HR 通常掌握</th><th>候选人通常缺失</th><th>如何补齐信息差</th></tr></thead><tbody><tr><td>该岗位真实预算带</td><td>✅ 精确</td><td>❌ 全靠猜</td><td>脉脉/同行打听、猎头透底、面试中侧面试探</td></tr><tr><td>公司急招程度</td><td>✅ 知道</td><td>❌ 不知道</td><td>看招聘时长、面试节奏、是否催签</td></tr><tr><td>你的市场稀缺度</td><td>⚠️ 模糊</td><td>✅ 应自己评估</td><td>拿到几个 offer 即可校准自身定价</td></tr><tr><td>团队人员流失情况</td><td>✅ 知道</td><td>❌ 不知道</td><td>面试时问&quot;这个岗位是新增还是补缺&quot;</td></tr></tbody></table></div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">Offer 横向决策：别只看总包数字</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>当你手握 2-3 个 offer 时，<strong>用现金折现思维做量化对比</strong>，而不是看哪个总包数字大就选哪个。下面是一个可直接运行的 offer 对比脚本。</p>
+
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">python</span>
+                </div>
+                <pre><code class="language-python">&quot;&quot;&quot;
+offer_compare.py —— 多 Offer 量化对比工具
+把期权按&quot;风险折扣&quot;折算成现金期望值，再算 4 年总现金流现值。
+&quot;&quot;&quot;
+from dataclasses import dataclass
+
+@dataclass
+class Offer:
+    name: str
+    base_monthly: float      # 月薪 (元)
+    months_per_year: float   # 几薪 (大厂常 12+目标年终)
+    bonus_months: float      # 目标年终月数
+    equity_total: float      # 4年期权/RSU 面值总额 (元)
+    equity_risk: float       # 期权兑现概率折扣 0~1 (大厂RSU~0.85, 早期创业~0.1)
+    signon: float            # 一次性签字费 (元)
+    commute_cost_year: float # 通勤/搬家等隐性年成本 (元)
+
+def annual_cash_value(o: Offer, years: int = 4) -&gt; float:
+    base_year = o.base_monthly * o.months_per_year
+    bonus_year = o.base_monthly * o.bonus_months
+    equity_year = (o.equity_total * o.equity_risk) / 4  # 4年线性归属
+    cash_per_year = base_year + bonus_year + equity_year - o.commute_cost_year
+    total = cash_per_year * years + o.signon
+    return total
+
+def compare(offers: list[Offer]):
+    ranked = sorted(offers, key=lambda o: annual_cash_value(o), reverse=True)
+    print(f&quot;{&#039;Offer&#039;:&lt;14}{&#039;4年风险调整后总现金 (万)&#039;:&lt;22}{&#039;年均(万)&#039;}&quot;)
+    for o in ranked:
+        total = annual_cash_value(o)
+        print(f&quot;{o.name:&lt;14}{total/1e4:&lt;22.1f}{total/4/1e4:.1f}&quot;)
+    return ranked
+
+if __name__ == &quot;__main__&quot;:
+    bigtech = Offer(&quot;大厂A&quot;, 35000, 12, 3, equity_total=800000,
+                    equity_risk=0.85, signon=60000, commute_cost_year=10000)
+    startup = Offer(&quot;创业B&quot;, 28000, 13, 1, equity_total=2000000,
+                    equity_risk=0.10, signon=0, commute_cost_year=5000)
+    compare([bigtech, startup])
+    # 输出会揭示：创业B看似&quot;总包大&quot;,但期权按10%折扣后,实际现金流远不如大厂A</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p><strong>关键洞察</strong>：创业公司报的&quot;总包 200 万&quot;如果按 10% 兑现概率折算，期望值只剩 20 万。这个脚本能帮你在情绪化的画饼前保持清醒。</p>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">Competing Offer 实战话术与邮件模板</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>当你有多个 offer 时，让它们<strong>互相竞价</strong>是合法且高效的。但措辞要专业，避免显得&quot;唯利是图&quot;。</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">邮件模板：向心仪公司释放竞争压力</h3>
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">text</span>
+                </div>
+                <pre><code class="language-text">主题：关于 [岗位名称] Offer 的最终沟通
+
+尊敬的 [HR姓名]：
+
+非常感谢贵团队的认可，[公司名] 是我本轮求职中最心仪的选择，
+团队的技术氛围和 Agent 业务方向都极具吸引力。
+
+坦诚相告：我目前手上还有另一家公司的 offer，总包约为 [具体数字]。
+我个人更倾向加入贵团队，但希望在薪酬上能够 match 到一个我无需纠结的水平。
+
+如果 base 能够调整到 [目标数字]，或在签字费上做一定补偿，
+我可以在 [本周内] 确认接受并停止其他所有流程。
+
+期待您的回复，也理解公司有自己的薪酬体系，无论结果如何都非常感谢。
+
+此致
+[你的名字]</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<div class="callout callout-danger">
+            <div class="callout-icon">🔥</div>
+            <div class="callout-body"><p>红线：<strong>绝不可虚构 offer</strong>。HR 圈子很小，且部分公司会要求出示 offer letter 验证。一旦被发现造假，offer 会被立即撤回，并可能进入行业黑名单。</p>
+</div>
+        </div>
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">谈判全流程决策图</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="mermaid-wrap"><pre class="mermaid">flowchart TD
+    Start[收到口头 Offer] --&gt; Eval{薪资是否达预期?}
+    Eval --&gt;|达到/超出| Lock[索要书面 Offer&lt;br/&gt;核对所有条款]
+    Eval --&gt;|低于预期| Has{是否有竞品 Offer?}
+
+    Has --&gt;|有| Compete[亮出 BATNA&lt;br/&gt;请求 match 竞品]
+    Has --&gt;|无| Value[用稀缺性/价值锚定&lt;br/&gt;请求上浮 10-15%]
+
+    Compete --&gt; Resp{对方回应?}
+    Value --&gt; Resp
+
+    Resp --&gt;|同意加 Base| Lock
+    Resp --&gt;|Base 卡死| Signon[转攻签字费/&lt;br/&gt;提前调薪/职级]
+    Resp --&gt;|完全拒绝| Walk{是否触及你的底线?}
+
+    Signon --&gt; Lock
+    Walk --&gt;|是, 低于底线| Decline[礼貌拒绝&lt;br/&gt;保持关系]
+    Walk --&gt;|否, 可接受| Lock
+
+    Lock --&gt; Sign[确认签署]
+    style Lock fill:#dcfce7,stroke:#16a34a
+    style Decline fill:#fee2e2,stroke:#dc2626</pre></div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">真实案例复盘：一次从 32K 谈到 41K 的全过程</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<blockquote>
+<p>背景：候选人 W，传统 Java 后端 4 年 + 自学 Agent 半年，手握一个中厂 35K 的保底 offer。目标公司是某 AI 创业独角兽。</p>
+</blockquote>
+
+
+<div class="table-wrapper"><table class="data-table"><thead><tr><th>回合</th><th>对方动作</th><th>W 的应对</th><th>结果</th></tr></thead><tbody><tr><td>1. 摸底</td><td>HR 问&quot;期望多少&quot;</td><td>&quot;我相信贵司有成熟体系，方便先透露预算带吗？&quot;</td><td>HR 报出 30-38K</td></tr><tr><td>2. 锚定</td><td>—</td><td>W 抛锚：&quot;结合我手上 35K 的 offer 和后端+Agent 的复合背景，我的预期在 42K&quot;</td><td>锚定在 42K</td></tr><tr><td>3. 压价</td><td class="bar-cell">
+                    <div class="bar-val">&quot;你 Agent 经验只有半年，只能给 36K&quot;</div>
+                    <div class="bar-track"><div class="bar-fill" style="width:90%"></div></div>
+                </td><td>W 反压：&quot;正是后端架构经验让我能把 Agent 跑稳，这是团队当前最缺的&quot;</td><td>松动到 38K</td></tr><tr><td>4. BATNA</td><td class="bar-cell">
+                    <div class="bar-val">&quot;38K 是上限了&quot;</div>
+                    <div class="bar-track"><div class="bar-fill" style="width:95%"></div></div>
+                </td><td>W 出牌：&quot;我更想来贵司，但需要 match 到至少不低于现 offer 的实际水平，41K 我立刻签&quot;</td><td>总监特批 40K</td></tr><tr><td>5. 破局</td><td class="bar-cell">
+                    <div class="bar-val">&quot;40K 真的到顶了&quot;</div>
+                    <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+                </td><td>W 切赛道：&quot;那能否补 2 个月签字费？&quot;</td><td>40K base + 6 万签字费成交</td></tr></tbody></table></div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p><strong>复盘要点</strong>：W 全程没有一次先报具体数字（让 HR 先开口）、用 BATNA 顶住压价、Base 卡死后立刻切换到签字费赛道。最终从初始报价 32K（按职级）谈到 40K base + 签字费，<strong>实际涨幅约 25%</strong>。</p>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">黄金谈薪 5 大铁律</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<ol>
+<li><strong>手里的 Offer 就是唯一的枪</strong>：不要在拿到实质性 Offer 前去虚张声势。拿到一个哪怕是小公司的保底 Offer，你在面大厂谈判时底气都会截然不同。手里有多个 Offer 时，让它们相互竞价（&quot;A 厂给了 50 万，但我更喜欢你们 B 厂的氛围，只要能 match 到 52 万我就签&quot;）。</li>
+<li><strong>警惕沉没成本控制</strong>：千万不要因为面试了 5 轮，熬了半个月，最后 HR 给出一个极低的侮辱性价格时，想着&quot;算了吧懒得再找了&quot;就委屈签下。这种委屈感会在你入职第一个月加班时爆炸。敢于掀桌子的人，往往能得到最好的报价。</li>
+<li><strong>保持礼貌与极度的专业性</strong>：谈薪不是吵架。态度要极其诚恳谦逊（&quot;我非常渴望加入&quot;），但坚持的底线要如钢铁般坚硬（&quot;但是我的价值在市场上明确位于这个区间&quot;）。外圆内方。</li>
+<li><strong>一切以书面协议为准</strong>：HR 口头答应的&quot;入职半年后表现好可以调薪&quot;、&quot;年终肯定不少于三个月&quot;——全部当做空气。必须让对方白纸黑字写进正式邮件或劳动合同的附件里，否则绝不松口。</li>
+<li><strong>在气场上藐视他们</strong>：你正在应聘的是 2026 年最具红利的 AI Agent 工程师岗位。很多公司的 HR 甚至都不懂什么是 Agent。<strong>是市场极其匮乏你这种懂得将大模型落地工程化的人才，而不是你在哀求一份工作。</strong> 带着这份傲骨去谈判。</li>
+</ol>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">2025-2026 最新进展</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>在 AI Agent 这个供需严重错配的赛道，2026 年的谈薪窗口异常友好：人才紧缺 455%、跳槽涨幅普遍 20-50%、岗位整体薪资溢价约 71%，这些都是谈判桌上的硬底牌。掌握总包结构（Base/Bonus/Equity/Sign-on）的撬动空间，配合多个 offer 形成竞争，候选人往往能在初始报价基础上再谈出 20% 以上的溢价。AI 解决方案架构师等顶尖岗位年薪可达 150 万元，头部人才议价能力极强。</p>
+
+
+<p>但风口之下也暗藏陷阱：创业公司的高 package 常以巨额期权撑起数字，而期权的真实价值高度依赖公司能否成功退出。</p>
+
+
+<div class="callout callout-tip">
+            <div class="callout-icon">💡</div>
+            <div class="callout-body"><p>谈薪前务必手握至少 2 个真实 offer 形成横向比价，并把对话焦点从&quot;你们能给多少&quot;转向&quot;基于我能交付的价值，市场价应该是多少&quot;，用数据和价值锚定而非情绪博弈。
+[!DANGER] 警惕&quot;期权画饼&quot;：把期权按面值计入总包是最大的认知陷阱。务必问清行权价、归属周期(Vesting)、回购条款与最近一轮估值，对未上市公司的期权大幅折价评估，别用纸面财富替代到手现金。</p>
+</div>
+        </div>
+                </div>
+            </section>
+</section>
+
+        <section class="title-slide">
+            <h1 class="main-title" style="color: #2563eb">THANKS</h1>
+            <div class="main-subtitle">10 · 谈薪策略 · 完</div>
+        </section>
+    
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/highlight/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/zoom/zoom.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.1/mermaid.min.js"></script>
+    <script>
+        if (window.mermaid) {
+            mermaid.initialize({
+                startOnLoad: false,
+                theme: 'default',
+                themeVariables: {
+                    primaryColor: '#eff6ff',
+                    primaryTextColor: '#1e293b',
+                    primaryBorderColor: '#2563eb',
+                    lineColor: '#94a3b8',
+                    secondaryColor: '#f1f5f9',
+                    tertiaryColor: '#ffffff',
+                    fontFamily: 'Noto Sans SC, sans-serif'
+                }
+            });
+            // reveal 切片后再渲染当前可见的 mermaid，避免隐藏时尺寸为 0
+            const renderMermaid = () => { try { mermaid.run({ querySelector: '.present .mermaid:not([data-processed])' }); } catch(e){} };
+            window.addEventListener('load', () => { setTimeout(renderMermaid, 300); });
+        }
+    
+        Reveal.initialize({
+            hash: true, center: false, controls: true, progress: true,
+            transition: 'slide', backgroundTransition: 'fade', slideNumber: 'c/t',
+            width: 1280, height: 720, margin: 0.08,
+            plugins: [ RevealHighlight, RevealZoom ]
+        });
+        Reveal.on('slidechanged', () => { try { mermaid.run({ querySelector: '.present .mermaid:not([data-processed])' }); } catch(e){} });
+    </script>
+
+<!-- 水印 -->
+<div id="_wm" style="pointer-events:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99999;overflow:hidden;opacity:0.06;">
+<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+<defs><pattern id="wmp" x="0" y="0" width="240" height="160" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
+<text x="10" y="80" font-size="16" fill="#333" font-family="sans-serif">算法研习手记</text>
+</pattern></defs>
+<rect width="100%" height="100%" fill="url(#wmp)"/>
+</svg></div>
+</body>
+</html>

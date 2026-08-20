@@ -1,0 +1,2 @@
+VERIFY PASS pass=6 warn=0 fail=0 unknown=0 report=/home/ubuntu/ai-agent-career-roadmap/BOOK.verify.json
+Built and verified BOOK.pdf from the offline HTML edition.

@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>03 · 简历写作：Agent 项目的 3D 表达法</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/theme/white.min.css" id="theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #1e293b;
+            --accent-color: #2563eb;
+            --accent-2: #7c3aed;
+            --accent-3: #059669;
+            --border-color: #e2e8f0;
+            --card-bg: rgba(241, 245, 249, 0.7);
+        }
+        body { background: radial-gradient(circle at 30% 20%, #ffffff 0%, #f8fafc 60%, #f1f5f9 100%); }
+        .reveal { font-family: 'Noto Sans SC', sans-serif; color: var(--text-color); }
+
+        /* Typography */
+        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+            font-family: 'Noto Sans SC', sans-serif;
+            text-transform: none; letter-spacing: normal; word-break: break-word;
+        }
+        .reveal h1.main-title { font-weight: 900; color: #0f172a; font-size: 2.8em; text-shadow: 0 4px 24px rgba(37,99,235,0.18); margin-bottom: 0.3em; }
+        .reveal .main-subtitle { font-weight: 300; color: #64748b; font-size: 1.1em; line-height: 1.6; max-width: 800px; margin: 0 auto; }
+
+        .reveal h2.section-h2 {
+            color: transparent; background: linear-gradient(90deg, var(--accent-color), var(--accent-2));
+            -webkit-background-clip: text; background-clip: text;
+            font-weight: 800; font-size: 2.2em; border-bottom: 2px solid var(--border-color); padding-bottom: 0.3em; display: inline-block;
+        }
+        .reveal h3.section-h3 { color: #0f172a; font-weight: 700; font-size: 1.5em; text-align: left; border-left: 4px solid var(--accent-color); padding-left: 0.6em; margin-bottom: 1em; }
+
+        .reveal p, .reveal li { font-size: 0.95em; line-height: 1.7; text-align: left; margin-bottom: 0.8em; word-break: break-word; }
+        .reveal strong { color: #1d4ed8; font-weight: 700; }
+        .reveal em { color: #475569; }
+
+        /* Layouts */
+        .title-slide { height: 100%; display: flex !important; flex-direction: column; justify-content: center; align-items: center; }
+        .content-slide { height: 100%; display: flex !important; flex-direction: column; justify-content: center; align-items: flex-start; padding: 2% 5% !important; }
+        .slide-content-wrapper { width: 100%; max-height: 86vh; overflow-y: auto; padding-right: 15px; }
+        .content-slide.present .slide-content-wrapper > * { animation: fadeUp 0.5s ease both; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(14px);} to { opacity: 1; transform: none;} }
+
+        /* Scrollbar */
+        .slide-content-wrapper::-webkit-scrollbar { width: 6px; }
+        .slide-content-wrapper::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+
+        /* Badges & Hints */
+        .label-badge, .chapter-badge {
+            background: rgba(37,99,235,0.08); border: 1px solid rgba(37,99,235,0.25); color: var(--accent-color);
+            padding: 6px 16px; border-radius: 20px; font-size: 0.6em; font-weight: 700; margin-bottom: 2em; letter-spacing: 2px;
+        }
+        .scroll-hint { margin-top: 4em; font-size: 0.6em; color: #94a3b8; opacity: 0.9; }
+
+        /* Blockquotes */
+        .reveal blockquote {
+            width: 100%; text-align: left; margin: 1em 0; padding: 1em 1.5em;
+            background: var(--card-bg); border-left: 4px solid var(--accent-color);
+            border-radius: 0 8px 8px 0; font-style: normal; font-size: 0.9em; box-shadow: none;
+        }
+
+        /* Inline Code */
+        .reveal code { font-family: 'Fira Code', monospace; background: #f1f5f9; color: #db2777; padding: 0.1em 0.3em; border-radius: 4px; font-size: 0.85em; }
+
+        /* Mac Window Code Blocks */
+        .mac-window {
+            background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;
+            margin: 1em 0; width: 100%; box-shadow: 0 8px 24px rgba(15,23,42,0.10); overflow: hidden; text-align: left;
+        }
+        .mac-header { background: #eef2f7; padding: 8px 12px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid #e2e8f0; }
+        .mac-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+        .mac-lang { margin-left: auto; color: #94a3b8; font-size: 0.6em; font-family: 'Fira Code', monospace; text-transform: uppercase; }
+        .reveal pre { margin: 0; width: 100%; box-shadow: none; display: block; }
+        .reveal pre code {
+            padding: 1.2em; font-size: 0.75em; line-height: 1.5; font-family: 'Fira Code', monospace;
+            background: transparent; color: inherit; max-height: 55vh; overflow-y: auto; white-space: pre-wrap; word-break: break-all;
+        }
+
+        /* Tables + Bars */
+        .table-wrapper { width: 100%; overflow-x: auto; margin: 1em 0; }
+        .reveal table.data-table { width: 100%; margin: 0; font-size: 0.8em; border-collapse: collapse; }
+        .reveal table.data-table th { background: rgba(37,99,235,0.08); color: #1e293b; font-weight: 700; padding: 10px 14px; border-bottom: 2px solid var(--accent-color); text-align: left; }
+        .reveal table.data-table td { padding: 9px 14px; border-bottom: 1px solid var(--border-color); vertical-align: middle; }
+        .reveal table.data-table tr:nth-child(even) { background: rgba(15,23,42,0.02); }
+        .reveal table.data-table tr:hover { background: rgba(37,99,235,0.06); }
+        .bar-cell { min-width: 160px; }
+        .bar-val { font-weight: 600; color: #1d4ed8; margin-bottom: 4px; }
+        .bar-track { height: 7px; background: rgba(15,23,42,0.08); border-radius: 4px; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent-color), var(--accent-2)); box-shadow: 0 0 6px rgba(37,99,235,0.35); }
+
+        /* KPI Cards */
+        .kpi-grid { display: flex; flex-wrap: wrap; gap: 16px; width: 100%; margin: 0.8em 0; }
+        .kpi-card {
+            flex: 1 1 160px; min-width: 150px; padding: 18px 20px; border-radius: 14px;
+            background: linear-gradient(145deg, rgba(37,99,235,0.07), rgba(124,58,237,0.05));
+            border: 1px solid rgba(37,99,235,0.18); box-shadow: 0 8px 24px rgba(15,23,42,0.08);
+        }
+        .kpi-value { font-size: 2.1em; font-weight: 900; line-height: 1; color: #0f172a; background: linear-gradient(90deg,#2563eb,#7c3aed); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .kpi-unit { font-size: 0.45em; font-weight: 700; margin-left: 4px; -webkit-text-fill-color: #64748b; }
+        .kpi-label { margin-top: 8px; font-size: 0.8em; font-weight: 700; color: #1e293b; }
+        .kpi-desc { margin-top: 4px; font-size: 0.7em; color: #64748b; line-height: 1.4; }
+
+        /* Callouts */
+        .callout { display: flex; gap: 14px; width: 100%; margin: 1em 0; padding: 14px 18px; border-radius: 12px; text-align: left; background: var(--card-bg); border: 1px solid var(--border-color); }
+        .callout-icon { font-size: 1.4em; line-height: 1.4; }
+        .callout-body { flex: 1; font-size: 0.85em; }
+        .callout-body :first-child { margin-top: 0; } .callout-body :last-child { margin-bottom: 0; }
+        .callout-tip { border-left: 4px solid #34d399; background: rgba(52,211,153,0.08); }
+        .callout-note { border-left: 4px solid #38bdf8; background: rgba(56,189,248,0.08); }
+        .callout-info { border-left: 4px solid #38bdf8; background: rgba(56,189,248,0.08); }
+        .callout-warning { border-left: 4px solid #fbbf24; background: rgba(251,191,36,0.08); }
+        .callout-danger { border-left: 4px solid #f87171; background: rgba(248,113,113,0.08); }
+        .callout-success { border-left: 4px solid #34d399; background: rgba(52,211,153,0.08); }
+
+        /* Mermaid */
+        .mermaid-wrap { width: 100%; display: flex; justify-content: center; margin: 0.5em 0; }
+        .reveal .mermaid { background: transparent; font-size: 0.9em; max-height: 70vh; }
+        .reveal .mermaid svg { max-width: 100%; height: auto; }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            
+        <section class="title-slide">
+            <div class="label-badge">求职与面试 · 章节 03</div>
+            <h1 class="main-title">03 · 简历写作：Agent 项目的 3D 表达法</h1>
+            
+            <div class="scroll-hint">
+                <p>按 <strong>Space</strong> 键查看全景鸟瞰视图</p>
+                <p>按 <strong>↓</strong> 或 <strong>→</strong> 键开始阅读</p>
+            </div>
+        </section>
+    <section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">什么是 3D 表达法？</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>Agent 项目不能只写成&quot;我做了个 XXX&quot;，面试官看不出你的贡献量级。用三个维度描述每个项目：</p>
+
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">code</span>
+                </div>
+                <pre><code class="language-plaintext">架构表达（做了什么） → 业务表达（解决了什么问题） → 结果表达（带来了什么价值）</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<div class="kpi-grid"><div class="kpi-card">
+                <div class="kpi-value">3<span class="kpi-unit">D</span></div>
+                <div class="kpi-label">表达维度</div>
+                <div class="kpi-desc">架构/业务/结果三维度立体呈现项目贡献</div>
+            </div><div class="kpi-card">
+                <div class="kpi-value">数字<span class="kpi-unit">必备</span></div>
+                <div class="kpi-label">[!KPI] 量化要素</div>
+                <div class="kpi-desc">用 QPS、延迟、成本下降等数字体现贡献量级</div>
+            </div><div class="kpi-card">
+                <div class="kpi-value">6-10<span class="kpi-unit">秒</span></div>
+                <div class="kpi-label">[!KPI] HR 初筛</div>
+                <div class="kpi-desc">简历首屏停留时间极短，重点必须前置</div>
+            </div><div class="kpi-card">
+                <div class="kpi-value">1<span class="kpi-unit">页</span></div>
+                <div class="kpi-label">[!KPI] 一份简历</div>
+                <div class="kpi-desc">校招/社招建议控制在 1 页，突出核心项目</div>
+            </div></div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">错误示范</h3>
+
+<blockquote>
+<p>使用 LangChain 搭建了一个智能客服 Agent，支持多轮对话和知识库检索。</p>
+</blockquote>
+
+
+<p><strong>问题</strong>：没有架构、没有业务场景、没有量化结果。</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">正确示范</h3>
+
+<blockquote>
+<p>基于 LangGraph + FAISS 搭建智能客服系统，支持 5 类意图识别和向量知识库检索。线上处理日均 3000+ 用户咨询，意图识别准确率 92%，回答满意度 85%，减少人工客服工作量约 60%。</p>
+</blockquote>
+
+
+<p><strong>亮点</strong>：</p>
+
+<ul>
+<li>架构：LangGraph + FAISS ✅</li>
+<li>业务：日均 3000 咨询 ✅</li>
+<li>结果：准确率 92%，减负 60% ✅</li>
+</ul>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">同一项目，两种写法</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">客服 Agent — 算法岗版本</h3>
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">markdown</span>
+                </div>
+                <pre><code class="language-markdown">## 智能客服 Agent 系统
+2025.12 - 2026.03
+
+- 设计混合检索策略：BM25 + BGE 向量检索 + BGE-Reranker 重排序，
+  在 5000 条客服对话数据集上召回率 94%，MRR 提升 12%
+- 引入 HyDE 查询扩展，对短查询场景准确率提升 8%
+- 对比实验：选择了 ReAct 而非 Plan-Execute，
+  在客服场景下决策步数减少 30%，用户等待时间缩短 40%
+- 用 RAGAS 做自动化评估，建立了 8 个维度的评估体系</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p><strong>侧重</strong>：策略选择、对比实验、指标提升</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">客服 Agent — 开发岗版本</h3>
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">markdown</span>
+                </div>
+                <pre><code class="language-markdown">## 智能客服 Agent 系统
+2025.12 - 2026.03
+
+- 基于 LangGraph 搭建图式工作流，支持意图分类 → 知识检索 → 回答生成 → 转人工
+  四节点自动流转
+- FAISS 向量库 + SQLite 持久化记忆，支持多轮对话上下文管理
+- FastAPI + SSE 流式输出，P99 延迟 &lt; 2s，单机 QPS 200+
+- Docker Compose 一键部署，包括 Nginx 负载均衡 + Redis 缓存 +
+  Prometheus 监控</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p><strong>侧重</strong>：技术栈、性能指标、运维方案</p>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">常见简历错误</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<div class="table-wrapper"><table class="data-table"><thead><tr><th>错误</th><th>问题</th><th>修正</th></tr></thead><tbody><tr><td>&quot;熟悉 LangChain&quot;</td><td>太泛，看不出深度</td><td>&quot;用 LangChain Memory 实现多轮对话历史管理&quot;</td></tr><tr><td>&quot;了解 Transformer&quot;</td><td>2019 年人人都会写</td><td>&quot;深入理解 Attention 机制，实现过简化版 Transformer&quot;</td></tr><tr><td>&quot;参与 XX 项目&quot;</td><td>&quot;参与&quot;是最虚的词</td><td>&quot;独立负责 XX 项目的检索模块，将召回率从 70% 提升到 94%&quot;</td></tr><tr><td>没有数字</td><td>面试官无法判断你的贡献</td><td>每个要点至少带一个数字</td></tr><tr><td>罗列技术栈</td><td>像采购清单，没有场景</td><td>每个技术配一个解决了什么问题的说明</td></tr></tbody></table></div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">STAR 法则用在 Agent 项目</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<div class="table-wrapper"><table class="data-table"><thead><tr><th>STAR</th><th>怎么写</th></tr></thead><tbody><tr><td><strong>S</strong>ituation</td><td>项目背景：为什么需要这个 Agent？（如&quot;客服人力不足&quot;）</td></tr><tr><td><strong>T</strong>ask</td><td>你的职责：你负责什么模块？（如&quot;负责检索系统&quot;）</td></tr><tr><td><strong>A</strong>ction</td><td>你怎么做的：技术方案是什么？（如&quot;BM25 + 向量 + Reranker&quot;）</td></tr><tr><td><strong>R</strong>esult</td><td>结果如何：量化效果？（如&quot;召回率 94%，提升 12%&quot;）</td></tr></tbody></table></div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">STAR 示例</h3>
+
+<blockquote>
+<p><strong>S</strong>: 电商平台客服团队通过人工处理，日均 3000 通咨询中 70% 是重复问题。
+<strong>T</strong>: 我负责搭建智能客服 Agent，自动处理常见问题。
+<strong>A</strong>: 使用 LangGraph 搭建图式工作流，实现意图识别 + 知识库检索 + 自动回复 + 转人工。
+<strong>R</strong>: 系统上线后自动处理了 60% 的咨询量，将平均响应时间从 5 分钟降到 5 秒，客服团队人力需求缩减 40%。</p>
+</blockquote>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">简历结构模板</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">markdown</span>
+                </div>
+                <pre><code class="language-markdown">## 个人信息
+姓名 | 电话 | 邮箱 | GitHub/Blog
+
+## 技术栈
+Python, LangChain, LangGraph, FAISS, FastAPI, Docker, Redis, MySQL
+
+## 项目经验
+
+### 项目名称 1（核心 Agent 项目 — 详细写）
+- 一句话概述
+- 3-4 个量化要点（用 3D 表达法）
+
+### 项目名称 2（辅助项目 — 简写）
+- 1-2 个要点
+
+### 项目名称 3（如果有的话）
+
+## 工作经历
+- 公司 · 职位 · 时间
+- 2-3 个成就点
+
+## 教育背景
+- 学校 · 专业 · 时间
+
+## 其他（可选）
+- 开源贡献 / 技术博客 / 竞赛成绩</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">更多简历示例</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">AI 筛选简历怎么过（ATS/LLM 篇）</h3>
+
+<p>2026年越来越多公司用 LLM 做简历初筛。你的简历必须同时让<strong>人</strong>和<strong>AI</strong>都满意。</p>
+
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">code</span>
+                </div>
+                <pre><code class="language-plaintext">AI 筛简历的逻辑：
+1. 关键词提取：扫描你的简历，找匹配 JD 的技能词
+2. 经验量化：看有没有数字（提升了X%、降低了Y%）
+3. 项目相关性：你做的项目和这个岗位有关吗
+4. 结构清晰度：格式是否友好（PDF &gt; Word &gt; 图片）
+
+优化策略：</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p><strong>针对 AI 筛的优化</strong>：</p>
+
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">markdown</span>
+                </div>
+                <pre><code class="language-markdown">【优化前 — AI 可能漏掉你】
+负责公司 AI 相关项目的开发和维护，使用了多种框架和工具。
+
+【优化后 — AI 能准确提取关键词】
+主导公司智能客服 Agent 系统开发（Python + LangGraph + FAISS），
+实现日处理 2000+ 咨询量，自动解决率从 45% 提升至 78%，
+P99 延迟降低 60%（从 3.2s 到 1.2s），单次调用成本 $0.003。</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p><strong>AI 筛必须注意</strong>：</p>
+
+<ol>
+<li>关键技能词要精确出现在简历里（别缩写也别花哨描述）</li>
+<li>至少每个项目有 1 个量化数字</li>
+<li>用 PDF 格式（Word 格式可能乱码）</li>
+<li>避免两栏布局（AI 解析容易乱）</li>
+</ol>
+
+
+<hr>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">简历检查清单</h3>
+
+<p>投递前过一遍：</p>
+
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">code</span>
+                </div>
+                <pre><code class="language-plaintext">□ 每个项目都有 3D：架构 + 业务 + 结果
+□ 每个项目至少有 1 个量化数字
+□ 技术栈精确（&quot;LangGraph&quot; 不是 &quot;langraph&quot;）
+□ 没有&quot;负责&quot;&quot;参与&quot;这种虚词
+□ 没有堆砌与 Agent 无关的技术
+□ 针对每个投递的岗位微调了简历（至少改了项目重点）
+□ PDF 格式
+□ 一页（3-5年经验）、两页（5年+）
+□ 文件名：姓名-岗位-简历.pdf（不是&quot;简历.pdf&quot;）
+□ 检查过 AI 解析：把 PDF 贴到文本编辑器看是不是能读出来</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">示例 2：数据分析师 → Agent 开发工程师</h3>
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">markdown</span>
+                </div>
+                <pre><code class="language-markdown">## 张三 · AI Agent 开发工程师 · 4 年经验
+
+**技术栈**：Python, LangChain, LangGraph, FAISS, FastAPI, Docker,
+SQL, Pandas, Redis
+
+**项目经验**：
+
+### 自然语言问数 Agent（核心项目）
+2025.11 - 2026.03
+
+- 设计意图识别→元数据检索→SQL 生成→安全校验→执行的 5 节点
+  LangGraph 工作流，SQL 生成正确率 87%
+- 搭建元数据知识库（表结构+字段说明+示例 SQL），通过 RAG 注入
+  Prompt，字段匹配错误率降低 40%
+- 实现 SQL 沙箱校验层（禁止 DROP/DELETE，自动 LIMIT+超时），
+  上线 5 个月零安全事故
+- 技术栈：LangGraph + MySQL + Qdrant + FastAPI + React + ECharts
+
+### 客户行为分析 Agent
+2025.06 - 2025.10
+
+- 基于历史数据分析经验，设计自动异常检测 Agent，
+  通过 LLM 理解业务语义自动生成分析维度
+- 将分析流程从手工 SQL（30min）缩短到自然语言提问（10s）
+- 业务团队使用后，数据分析效率提升 5 倍
+
+**工作经历**：
+- XX 电商 · 数据分析师 · 2023.03 - 2025.10
+  · 负责用户增长分析，使用 SQL/Python 搭建数据看板
+  · 推动部门 AI 化转型，主导了从手工分析到 Agent 分析的升级</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p><strong>亮点</strong>：把数据分析经验转化为 Agent 项目优势，强调&quot;效率提升&quot;这个量化结果。</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">示例 3：应届生 → Agent 初级开发工程师</h3>
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">markdown</span>
+                </div>
+                <pre><code class="language-markdown">## 李四 · AI Agent 开发工程师 · 应届
+
+**技术栈**：Python, LangChain, LangGraph, FAISS, FastAPI, Docker, Git
+
+**项目经验**：
+
+### 科研论文助手 Agent（毕业设计）
+2025.09 - 2026.05
+
+- 基于 LangGraph 搭建论文搜索+摘要+翻译的 Agent 系统，
+  4 节点工作流：关键词扩展→学术搜索→摘要生成→中文翻译
+- 实现 FAISS 向量记忆，用户偏好随对话逐步优化，
+  推荐论文的相关度评分从平均 3.2 提升到 4.1（满分 5）
+- FastAPI + SSE 流式输出，前端 Vue3 实时展示搜索过程
+- 毕业设计获评&quot;优秀&quot;，导师评为&quot;有工程落地价值&quot;
+
+### 智能客服 Agent（开源项目）
+2025.06 - 2025.09
+
+- 参与 GitHub 开源项目，贡献 RAG 检索模块
+- 独立实现 BM25 + FAISS 双路召回的混合检索策略，
+  PR 被合并并获得 50+ Stars
+- 撰写技术文档，帮助 3 位新人快速上手
+
+**教育背景**：
+- XX 大学 · 计算机科学 · 本科 · 2022.09 - 2026.06
+- GPA 3.7/4.0 · 校级奖学金
+
+**其他**：
+- GitHub：github.com/lisi（50+ contributions）
+- 技术博客：写了 12 篇 Agent 相关的技术文章</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p><strong>亮点</strong>：毕业设计包装成完整项目 + 开源贡献证明动手能力 + 技术博客证明持续学习。</p>
+
+
+<hr>
+
+
+<blockquote>
+<p><strong>一句话</strong>：简历是面试的&quot;引线&quot;，不是你的完整履历。每个项目留一些&quot;什么时候可以说&quot;的悬念，面试官才会追问。</p>
+</blockquote>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">深度实战：高级别的 STAR 话术与简历魔改案例</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>在简历通过了 AI 筛选进入技术面试官手中后，你的 STAR 描述就是面试官提问的&quot;剧本&quot;。简历里写的每一句话，都必须预埋好&quot;钩子&quot;（Hooks），引导面试官问你最擅长的问题。</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">预埋钩子的 STAR 写法技巧</h3>
+
+<p><strong>平庸的写法（没有任何钩子）：</strong></p>
+
+<blockquote>
+<p>&quot;实现了一个 RAG 知识库问答系统，使用了 LangChain 和 FAISS，提高了检索准确率。&quot;
+<em>(面试官看了毫无波澜，可能会随便问：&quot;你觉得 LangChain 怎么样？&quot;，这是你无法掌控的开放问题)</em></p>
+</blockquote>
+
+
+<p><strong>带钩子的顶级写法（设置陷阱让面试官跳）：</strong></p>
+
+<blockquote>
+<p>&quot;设计并落地企业级 RAG 问答中台。针对<strong>长尾业务文档召回率低</strong>的痛点，引入了 <strong>Parent-Child Document 块分割</strong> 和 <strong>BGE-Rerank 重排</strong>策略。在构建评测集使用 RAGAS 评估后，将 MRR@5 核心指标提升了 22%，系统支持日均千万级 Token 吞吐。&quot;</p>
+</blockquote>
+
+
+<p><strong>面试官大概率会踩中你设下的钩子：</strong></p>
+
+<ol>
+<li>&quot;你提到的 Parent-Child 块分割具体是怎么做的？解决了什么问题？&quot;（<strong>钩子 1</strong>）</li>
+<li>&quot;BGE-Rerank 引入后延迟增加了多少？你是怎么平衡准确率和耗时的？&quot;（<strong>钩子 2</strong>）</li>
+<li>&quot;你们是怎么用 RAGAS 搭建自动评估流水线的？&quot;（<strong>钩子 3</strong>）
+<em>(这就变成了你的主场，你可以拿出早就准备好的完美回答大杀四方)</em></li>
+</ol>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">真实简历魔改案例（Before vs After）</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>以下是我们在 2026 年春招辅导中，三个极具代表性的简历修改真实案例。仔细体会从&quot;流水账&quot;到&quot;工程级商业表达&quot;的巨大跨越。</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">案例 1：缺乏深度的&quot;调包侠&quot;转型</h3>
+
+<p><strong>候选人画像</strong>：3年后端开发，跟风学了几个月 Agent，做了一个会议纪要总结助手。</p>
+
+
+<p><strong>🔴 修改前 (Before)</strong></p>
+
+<blockquote>
+<p><strong>项目：智能会议助手</strong></p>
+<ul>
+<li>使用 Python 语言开发了一个会议助手应用。</li>
+<li>接入了 OpenAI API，对会议语音转写的文字进行总结。</li>
+<li>使用 Prompt 让大模型提取出待办事项（To-Do List）。</li>
+<li>前端使用了 Vue 搭建界面，与后端通过 HTTP 接口交互。</li>
+</ul>
+</blockquote>
+
+
+<p><strong>诊断</strong>：全是无意义的废话，含金量极低。任何一个应届生看两天教程都能写出一样的话。</p>
+
+
+<p><strong>🟢 修改后 (After)</strong></p>
+
+<blockquote>
+<p><strong>项目：企业级会议纪要智能解析 Agent</strong></p>
+<ul>
+<li><strong>架构设计</strong>：主导设计异步多环节大模型工作流（预处理 -&gt; 实体提取 -&gt; 动作分析 -&gt; 格式化输出），将原本需要人工 30 分钟整理的会议纪要缩短至自动化 1 分钟生成。</li>
+<li><strong>长文本挑战攻克</strong>：针对 2 小时会议长达 4 万字的长文本溢出问题，设计了<strong>分段 Map-Reduce 递归摘要算法</strong>，有效缓解了模型遗忘问题，关键结论召回率达 95%。</li>
+<li><strong>容错与重试机制</strong>：针对大模型 API 偶发超时及 JSON 解析失败问题，在工程层引入了基于 Pydantic 的 Schema 校验与带退避策略的 Retry 机制，API 调用成功率提升至 99.9%。</li>
+<li><strong>性能优化</strong>：将同步的 HTTP 接口重构为基于 Server-Sent Events (SSE) 的流式响应，首字返回时间 (TTFT) 控制在 1.5s 以内，大幅提升用户体验。</li>
+</ul>
+</blockquote>
+
+
+<p><strong>解析</strong>：技术还是那些技术，但加入了&quot;分段算法&quot;、&quot;容错机制&quot;、&quot;流式优化&quot;，直接把层级拉到了资深后端工程架构的高度。</p>
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">案例 2：偏重算法但缺乏工程落地的应届生</h3>
+
+<p><strong>候选人画像</strong>：硕士应届，发过一篇 NLP 论文，懂模型微调，但没有真正的企业级系统经验，只会写 Jupyter Notebook。</p>
+
+
+<p><strong>🔴 修改前 (Before)</strong></p>
+
+<blockquote>
+<p><strong>项目：基于大语言模型的客服问答研究</strong></p>
+<ul>
+<li>在 Llama-3-8B 模型上使用 LoRA 进行了微调。</li>
+<li>收集了 1 万条客服问答数据集清洗并用于训练。</li>
+<li>训练后的模型在 BLEU 分数上提升了 4 个点。</li>
+<li>对比了不同学习率和 batch_size 对收敛速度的影响。</li>
+</ul>
+</blockquote>
+
+
+<p><strong>诊断</strong>：标准的实验室写法。企业不关心 BLEU 分数，企业关心 QPS、显存占用和业务转化。</p>
+
+
+<p><strong>🟢 修改后 (After)</strong></p>
+
+<blockquote>
+<p><strong>项目：垂直领域智能客服大模型本地化私有部署</strong></p>
+<ul>
+<li><strong>模型微调与对齐</strong>：为解决开源模型在特定业务下&quot;幻觉&quot;严重的问题，基于 Llama-3 提取 1 万条高质量业务问答对进行 LoRA 微调，使专业术语准确率从 72% 跃升至 94%。</li>
+<li><strong>推理加速落地</strong>：为了在企业受限算力（单张 T4）下跑起模型，引入 <strong>vLLM 框架联合 PagedAttention 显存优化</strong>，并进行 INT8 量化，将推理 QPS 从原生 HuggingFace 的 2 提升至 15，满足了线上并发需求。</li>
+<li><strong>RAG 与模型融合</strong>：不仅仅依赖微调权重，而是构建了 微调模型 + 向量检索 的混合系统。利用模型判别用户意图，精准路由至向量库查询，解决了模型长尾知识更新滞后的问题。</li>
+</ul>
+</blockquote>
+
+
+<p><strong>解析</strong>：把实验室参数调优，转化为了企业迫切需要的&quot;私有化部署&quot;、&quot;推理加速（vLLM）&quot;和&quot;降低硬件成本&quot;。</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">案例 3：试图堆砌 buzzwords（流行词）的求职者</h3>
+
+<p><strong>候选人画像</strong>：看了一堆公众号文章，把所有流行词都塞进简历，但逻辑混乱。</p>
+
+
+<p><strong>🔴 修改前 (Before)</strong></p>
+
+<blockquote>
+<p><strong>项目：多智能体复杂推理平台</strong></p>
+<ul>
+<li>使用了 Multi-Agent 架构，包括 LangGraph, AutoGen, MetaGPT 等多种框架。</li>
+<li>集成了 RAG, GraphRAG, 混合检索, Rerank 等所有最新检索技术。</li>
+<li>实现了 CoT, ToT, GoT 树搜索算法来提高推理能力。</li>
+<li>部署在 K8s 上，使用 Docker，能扛住高并发。</li>
+</ul>
+</blockquote>
+
+
+<p><strong>诊断</strong>：典型的一眼假。一个项目不可能既用 LangGraph 又用 AutoGen，算法大杂烩说明候选人根本没有深刻理解，只是在凑字数。</p>
+
+
+<p><strong>🟢 修改后 (After)</strong></p>
+
+<blockquote>
+<p><strong>项目：基于复杂推流的多智能体决策系统</strong></p>
+<ul>
+<li><strong>技术选型与收敛</strong>：在调研 AutoGen 与 LangGraph 后，基于<strong>状态图可控性强</strong>的业务诉求，最终选用 LangGraph 实现了包含 Planner、Researcher、Executor 的三节点协同网络，系统架构清晰度大幅提升。</li>
+<li><strong>深度检索优化</strong>：针对知识库信噪比高的问题，摒弃盲目堆砌技术，精准落地了 <strong>&quot;混合检索（BM25 + 向量）+ 轻量级 BGE-Reranker&quot;</strong> 流水线，以增加 300ms 延迟的代价，换取了 Top-3 命中率 25% 的相对提升。</li>
+<li><strong>可控推理实践</strong>：在 Executor 节点，为了防止模型发散，定制了具有领域约束的 CoT（思维链）Prompt 模版，强制模型输出思考路径并由规则引擎进行后置校验（Guardrails），彻底杜绝了危险的工具调用。</li>
+</ul>
+</blockquote>
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p><strong>解析</strong>：化繁为简。主动说明&quot;为什么不选那些华丽的技术&quot;，展示了 Senior 工程师的克制与取舍。</p>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">避坑指南：写简历时绝对不能出现的 5 句话</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>面试官每天看上百份简历，一旦看到以下话术，通常直接打上&quot;外行&quot;或者&quot;包装过度&quot;的标签：</p>
+
+
+<ol>
+<li>❌ <strong>&quot;利用 Prompt Engineering 让模型变得非常聪明。&quot;</strong><ul>
+<li>改进：Prompt 是一门玄学，工程上讲究&quot;Prompt 自动化生成&quot;、&quot;System Prompt 版本控制&quot;或&quot;Few-shot 样本库动态检索&quot;。</li>
+</ul>
+</li>
+<li>❌ <strong>&quot;实现了媲美 GPT-4 的性能。&quot;</strong><ul>
+<li>改进：夸大其词。应该写&quot;在特定业务（如 SQL 生成）的测试集上，准确率达到 88%，接近 GPT-4 的 90%，但推理成本降低了 95%&quot;。</li>
+</ul>
+</li>
+<li>❌ <strong>&quot;通过不断和模型对话，优化了输出结果。&quot;</strong><ul>
+<li>改进：这是普通用户的行为。工程师应该写&quot;通过构建包含 500 个样本的 Ground Truth 数据集，自动化评估迭代，量化提升了系统表现。&quot;</li>
+</ul>
+</li>
+<li>❌ <strong>&quot;熟悉 AI、大模型、人工智能等技术。&quot;</strong><ul>
+<li>改进：空洞无物。精确到具体技术点：&quot;熟练掌握 Transformer 架构、Rerank 排序算法及 MCP 工具调用协议。&quot;</li>
+</ul>
+</li>
+<li>❌ <strong>&quot;独立完成了涵盖前后端及 AI 模型的庞大系统。&quot;</strong><ul>
+<li>改进：不符合常理。应明确边界：&quot;负责核心 Agent 编排层及 RAG 链路搭建，并与前端团队协作定义了基于流式传输的 API 契约。&quot;</li>
+</ul>
+</li>
+</ol>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">终极检查表格 (The Final Polish)</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>在投递 PDF 之前，用这个商业级标准的表格对你的简历做最后一次审查。如果你能对每一项打勾，你获得面试的几率将提升 80%：</p>
+
+
+<div class="table-wrapper"><table class="data-table"><thead><tr><th>审查维度</th><th>核心标准</th><th>是/否</th></tr></thead><tbody><tr><td><strong>视觉与排版</strong></td><td>全文无任何拼写错误（注意大小写规范：是 LangChain 不是 langchain，是 GitHub 不是 Github）。</td><td>[ ]</td></tr><tr><td><strong>首屏冲击力</strong></td><td>前三分之一版面展示了最具技术深度的 Agent 项目，而不是长篇大论的自我评价。</td><td>[ ]</td></tr><tr><td><strong>量化文化</strong></td><td>每一个主要成就点（Bullet point）是否都包含了数字（时间、百分比、吞吐量、成本节省）？</td><td>[ ]</td></tr><tr><td><strong>技术语境</strong></td><td>是否清晰交代了底层的存储（如 PostgreSQL, Redis）、检索引擎（如 Milvus, ES）和部署形态（如 Docker, FastAPI）？</td><td>[ ]</td></tr><tr><td><strong>痛点驱动</strong></td><td>项目描述是否回答了&quot;你在解决什么棘手问题&quot;，而不是单纯的&quot;你用了什么框架&quot;？</td><td>[ ]</td></tr><tr><td><strong>可验证性</strong></td><td>如果提供了 GitHub 链接，点进去是否有清晰的 README 和至少能够支撑简历描述的提交记录？</td><td>[ ]</td></tr></tbody></table></div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<blockquote>
+<p><strong>最后的心法</strong>：简历的核心是构建<strong>信任</strong>和<strong>预期</strong>。一份优秀的 Agent 工程师简历，展现的不仅是你紧跟前沿框架的热情，更是你拥有将狂野的 AI 能力关进工程牢笼，使其稳定输出商业价值的顶级手腕。</p>
+</blockquote>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">顶级工具包：10 个直接可抄的简历 Bullet Points（高光话术）</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>为了节省大家思考用词的时间，我们针对 Agent 项目中最常见的技术场景，提炼了 10 条经过百场面试验证的&quot;满分描述&quot;。你可以根据自己的实际项目稍作修改，直接粘贴到简历中。</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">场景一：多智能体协作 (Multi-Agent) 与编排</h3>
+
+<ol>
+<li><p><strong>基于图结构的编排</strong></p>
+<blockquote>
+<p>&quot;基于 LangGraph 设计并落地了四节点的非线性状态机工作流（StateGraph），实现了从意图路由、数据检索、交叉验证到生成输出的全自动流转，将复杂多步任务的完成率从线性链（Chain）的 64% 提升至 89%。&quot;</p>
+</blockquote>
+</li>
+<li><p><strong>角色分工与通信</strong></p>
+<blockquote>
+<p>&quot;重构原有单体大模型架构，设计了基于 Supervisor-Worker 模式的层级多智能体系统。解耦了数据采集与文本生成的职责，通过并行调用 Worker Agent，使系统的平均处理延迟下降 45%，并降低了模型上下文干扰导致的幻觉率。&quot;</p>
+</blockquote>
+</li>
+</ol>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">场景二：检索增强生成 (RAG) 的深度优化</h3>
+
+<ol start="3">
+<li><p><strong>混合检索与重排</strong></p>
+<blockquote>
+<p>&quot;主导知识库核心检索模块的调优。摒弃单一向量召回，引入了 <strong>BM25 词频匹配 + 稠密向量相似度</strong> 的双路召回策略，并利用 BGE-Reranker 对 Top-50 结果进行语义重排。在自建的 1000 题测评集上，命中率 (Hit Rate@5) 跃升 26%。&quot;</p>
+</blockquote>
+</li>
+<li><p><strong>长文本切分策略</strong></p>
+<blockquote>
+<p>&quot;解决冗长财报切分导致语义断裂的痛点，落地了 Parent-Child 文档块结构（小块用于向量检索，大块用于上下文拼接）。结合大模型提取摘要作为 Metadata 辅助过滤，大幅提升了对复杂长尾问题的问答准确性。&quot;</p>
+</blockquote>
+</li>
+</ol>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">场景三：工具调用 (Tool Calling) 与系统集成</h3>
+
+<ol start="5">
+<li><p><strong>工具稳定性保障</strong></p>
+<blockquote>
+<p>&quot;开发并注册了超 20 个企业级 API 作为 Agent 可用工具。在工程层实现统一的 Pydantic 参数校验器，捕获大模型生成的错误参数并构造提示信息反馈给大模型进行重试，将工具调用的最终成功率稳定在 99% 以上。&quot;</p>
+</blockquote>
+</li>
+<li><p><strong>MCP (模型上下文协议) 落地</strong></p>
+<blockquote>
+<p>&quot;主导团队基础设施的解耦，将内部 GitLab 统计和 Jira 缺陷库抽象为标准化的 MCP Server。使得跨系统的所有 Agent 和 IDE（如 Cursor）均可免开发直接调用，极大提升了研发效能平台的扩展性。&quot;</p>
+</blockquote>
+</li>
+</ol>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">场景四：工程落地与性能优化</h3>
+
+<ol start="7">
+<li><p><strong>流式输出优化体验</strong></p>
+<blockquote>
+<p>&quot;优化后端服务响应机制，利用 FastAPI 构建基于 Server-Sent Events (SSE) 的全链路流式生成接口。在 Agent 思考与检索阶段，前端实时渲染 Thought 状态，将用户的感知首字节时间（TTFT）压降至 800ms 内。&quot;</p>
+</blockquote>
+</li>
+<li><p><strong>高并发与缓存防御</strong></p>
+<blockquote>
+<p>&quot;针对高频重复咨询场景，搭建了基于 Redis + 向量相似度（FAISS）的语义缓存中间件（Semantic Cache）。在请求打入大模型前成功拦截了 35% 的冗余流量，显著降低了系统的 API 调用成本，同时提升了峰值 QPS。&quot;</p>
+</blockquote>
+</li>
+</ol>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">场景五：自动化评估与持续集成</h3>
+
+<ol start="9">
+<li><p><strong>自动化评估流水线构建</strong></p>
+<blockquote>
+<p>&quot;推动构建数据驱动的优化文化。搭建基于 LLM-as-a-Judge 理念的自动化评测框架，设立了上下文精准度（Context Precision）和事实一致性（Faithfulness）双指标。将回归测试周期从人工的 2 天缩减为流水线自动执行的 15 分钟。&quot;</p>
+</blockquote>
+</li>
+<li><p><strong>私有化模型推理加速</strong></p>
+<blockquote>
+<p>&quot;负责 7B 级别垂直领域微调模型的私有化部署。引入 vLLM 推理框架并配置 PagedAttention 显存优化技术，在单机单卡（RTX 4090）环境下，吞吐量比原生 HuggingFace 提升了 4 倍，满足了线上实时的并发要求。&quot;</p>
+</blockquote>
+</li>
+</ol>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">终极对决：行为面试（Behavioral Interview）的通关策略</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>在拿下面试官的技术考察后，HR 轮或技术总监的最后一面往往会用行为面试来考察你的软实力。在 AI 工程领域，这主要考察你对技术的敬畏之心以及解决复杂未知问题的韧性。</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">必考题 1：&quot;请讲一次你和上级（或产品经理）在应用大模型时的分歧，你是如何解决的？&quot;</h3>
+
+<p><strong>考察点</strong>：你是否盲目迷信 AI？你是否具备落地工程的现实感？</p>
+
+
+<p><strong>✅ 顶级答法路线</strong>：
+<strong>情境（Situation）</strong>：&quot;在做智能客服重构时，产品经理提出，为了体验极客感，希望把原有的规则导航菜单全部取消，让所有的用户操作（查账单、退款）完全通过大模型意图识别来接管。&quot;
+<strong>冲突（Task/Conflict）</strong>：&quot;我认为虽然大模型的通用理解能力很强，但它在处理高频确定性任务时存在 2-3 秒的延迟，且有 1% 左右的不可控幻觉概率。退款这种核心流程的 1% 错误是业务无法承受的。&quot;
+<strong>行动（Action）</strong>：&quot;我没有直接拒绝，而是用一天时间做了一个 A/B 测试的 Demo 原型。A 版是全 AI 接管，B 版是&#39;高频意图走传统按钮规则，长尾长句求助走大模型 Agent&#39;的混合架构。我拉着产品经理一起测试了 50 个 case，并在后台对比了响应时间和错误率。&quot;
+<strong>结果（Result）</strong>：&quot;数据证明，混合架构（B版）不仅把平均响应时间降低了 60%，还在长尾问题上保留了 AI 的智能化优势。产品经理最终非常认可这个方案。这件事也让我更加确信，<strong>AI 只是系统的工具之一，不能为了用 AI 而牺牲业务的稳定性</strong>。&quot;</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">必考题 2：&quot;做这个 Agent 项目期间，你遇到过最难排查的技术 Bug 是什么？&quot;</h3>
+
+<p><strong>考察点</strong>：深入代码底层的 Debug 能力，以及应对黑盒（大模型）问题的系统论思维。</p>
+
+
+<p><strong>✅ 顶级答法路线</strong>：
+<strong>情境（Situation）</strong>：&quot;我们在做多智能体协作时，发现一个非常诡异的 Bug。Worker Agent 偶尔会陷入死循环，疯狂地反复调用同一个工具但参数完全一样，直到把 Token 耗尽系统报错。&quot;
+<strong>难点（Task）</strong>：&quot;因为大模型的输出是有随机性的（Temperature &gt; 0），这个 Bug 很难复现，大概 100 次才会出现 1-2 次，看代码逻辑完全找不出问题。&quot;
+<strong>行动（Action）</strong>：&quot;为了定位问题，我开发了一个轻量级的 Trace 工具，把发生 Bug 那一刻的完整上下文（Context）、工具报错信息（Stderr）和 LLM 输出存下来。通过比对 5 份崩溃日志，我发现根本原因不是大模型抽风，而是我们的工具在某种特殊边界条件下返回了空的 JSON 字符串 <code>{}</code>。大模型拿到这个 <code>{}</code> 后不知道怎么办，它以为自己没调好，于是原封不动地又调了一次。这就形成了一个闭环的死循环。&quot;
+<strong>结果（Result）</strong>：&quot;找到原因后，我修改了工具的异常处理。当工具遇到边界情况时，强制返回一段明确的自然语言解释，例如：&#39;工具执行成功但未找到数据，请尝试修改搜索关键词&#39;。加入这句明确的反馈后，大模型立刻就能理解并切换策略，死循环的 Bug 就此绝迹。这个经验让我学会了，<strong>在 Agent 工程中，任何工具的报错输出，其受众不是程序员，而是大模型，必须用大模型能听懂的自然语言来包裹错误信息</strong>。&quot;</p>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">建立个人影响力的最后一公里：&quot;项目展示矩阵&quot; (Portfolio)</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>现在简历过关了，面试也准备了，你还需要一个&quot;锚点&quot;来给面试官留下不可磨灭的印象。那就是你的附加展示材料。</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">1. GitHub 仓库的极致包装</h3>
+<p>不要把一个包含各种杂乱实验代码的仓库直接丢上去。</p>
+
+<ul>
+<li><strong>清理无用文件</strong>：删除测试一半的 Jupyter Notebook，清理所有的 <code>print(&quot;test&quot;)</code>。</li>
+<li><strong>加上清晰的架构图</strong>：使用 Excalidraw 或 Mermaid 绘制一张直观的流程图，放在 README 的最顶端。</li>
+<li><strong>提供示例输出</strong>：在 README 中放上一段 Agent 执行任务的完整对话日志（Markdown 格式），甚至是生成的图表截图。面试官没有时间跑你的代码，但他一定会看截图。</li>
+</ul>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">2. 录制一段 3 分钟的 Loom 演示视频</h3>
+<p>文字再好，不如活生生的 Demo。录制一段自己系统运行的屏幕操作视频：</p>
+
+<ul>
+<li><strong>第 1 分钟</strong>：简单说明解决什么痛点，输入一段复杂的指令。</li>
+<li><strong>第 2 分钟</strong>：打开后台终端或 LangSmith 界面，展示这几秒钟内 Agent 是怎么思考的、怎么调用工具的。</li>
+<li><strong>第 3 分钟</strong>：展示最终令人惊艳的结果。
+把这个视频链接（甚至可以做成一个 GIF）放在简历和 GitHub 中。这能让你的通过率呈指数级飙升。</li>
+</ul>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">3. 写一篇高质量的复盘博客</h3>
+<p>在掘金、知乎或 Medium 上发一篇文章。标题就叫：<em>《从零打造一个准确率 95% 的企业级财务 Agent：架构演进与踩坑实录》</em>。
+在博客里详细写出你在&quot;长文本切割&quot;、&quot;死循环处理&quot;上的经验。在简历最后附上博客链接。</p>
+
+<blockquote>
+<p>面试官极度偏爱有总结和分享习惯的工程师。这不仅代表你技术扎实，更代表你具备<strong>成为团队 Tech Lead 的潜力</strong>。</p>
+</blockquote>
+
+
+<p><strong>结束语</strong>：
+2026 年的 AI 招聘市场不再是 2023 年那个凭一个 &quot;ChatGLM 调包 Demo&quot; 就能拿到高薪的时代了。
+市场的狂热已经褪去，留下来的是对<strong>真正能产生商业落地价值的工程能力</strong>的渴求。
+用上述这套包含&quot;3D表达法、强量化指标、前沿架构图和深度复盘总结&quot;的组合拳去武装自己。你不再是一个焦虑的求职者，而是企业在 AI 时代破局迫切需要的利剑。
+祝大家 Offer 拿到手软！</p>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">附加战场：如何用 Cover Letter (求职信) 绝杀竞争对手</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>在 2026 年，AI 领域的职位竞争非常激烈。如果你的简历不够出彩，或者你是一个想转行的候选人，一封直击痛点的 Cover Letter 可以帮你绕过 HR，直接获得业务 Leader 或 CEO 的青睐。</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">为什么你需要 Cover Letter？</h3>
+<p>AI 初创公司的创始人通常会自己看简历。他们不在乎你是不是名校毕业，他们只在乎<strong>你是不是一个能直接上手干活的极客 (Geek)</strong>。一封干脆利落的求职信，比 10 页简历都有用。</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">AI 专属求职信公式</h3>
+
+<p><strong>第一段：一句话表明来意和你的硬核实力（Hook）</strong></p>
+
+<blockquote>
+<p>&quot;Hi [Hiring Manager 名字], 我关注到你们正在招募 Agent 工程师。过去 3 个月，我独立用 LangGraph 重构了公司的研报系统，把首字延迟优化到了 1.2 秒内，这是我的项目链接：[GitHub Link]。&quot;</p>
+</blockquote>
+
+
+<p><strong>第二段：指出他们的潜在痛点，并给出你的解法（Value Proposition）</strong></p>
+
+<blockquote>
+<p>&quot;我试用了贵公司的产品，发现目前的客服 Agent 在面对多次反问时容易丢失前置条件。我之前遇到过完全一样的问题，当时我是通过引入 <strong>Milvus 长短记忆分层</strong> 和 <strong>查询重写 (Query Rewriting)</strong> 来解决的，命中率提升了 30%。我觉得这个经验能直接用在你们的系统中。&quot;</p>
+</blockquote>
+
+
+<p><strong>第三段：行动呼吁（Call to Action）</strong></p>
+
+<blockquote>
+<p>&quot;希望能有机会聊聊我对这个问题的具体构想。下周二或周四我有时间，期待回复。&quot;</p>
+</blockquote>
+
+
+<p><strong>💡 核心要点</strong>：
+不要说&quot;我很热爱 AI&quot;，要说&quot;我发现了你们的痛点，我有代码能解决它&quot;。</p>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">薪资谈判 (Offer Negotiation) 策略</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>顺利通过所有面试后，谈薪（Negotiation）是最后也是最关键的一步。对于 Agent 岗，你可以这样提升你的议价能力。</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">谈判筹码 1：稀缺的落地经验</h3>
+<p>现在的市场上，懂理论的人多，真正踩过 Agent 落地坑的人极少。在谈薪时，反复强调你解决过的那些&quot;工程化痛点&quot;（如幻觉控制、RAG 缓存、并发降级），告诉 HR 这能帮公司省下几个月的试错成本。</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">谈判筹码 2：算力与架构洞察</h3>
+<p>表明你不仅会写代码，还能帮公司省钱。</p>
+
+<blockquote>
+<p>&quot;我在之前的项目中，通过引入本地轻量级模型进行意图路由，将对 GPT-4 的调用量减少了 70%，单月为公司节省了数万 API 费用。&quot;
+这表明你具备了 Tech Lead 级别的视野，可以要求直接对标高级工程师的薪资包。</p>
+</blockquote>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">谈判筹码 3：展示多领域的全栈能力</h3>
+<p>AI 工程师往往要接触前端流式渲染、后端并发控制、甚至向量数据库运维。强调你的&quot;全栈式 Agent 研发能力&quot;，不仅限于写 Python 脚本，这样可以争取到更宽泛的定级区间。</p>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">终极建议：在面试以外建立你的 AI 护城河</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>写简历只是&quot;卖自己&quot;的一步，在 2026 年，真正的 AI 工程师不应该只靠简历找工作。</p>
+
+
+<ol>
+<li><strong>混脸熟（Community Presence）</strong>：在 GitHub 上给热门的开源 Agent 框架（如 LangChain、LlamaIndex 或各种新出的国产框架）提 PR。哪怕是修复文档里的错别字，你的名字也会出现在贡献者名单里。很多公司喜欢直接去贡献者列表里挖人。</li>
+<li><strong>构建自己的技术 IP</strong>：维护一个技术博客或者在知乎/推特上记录你的折腾经历。写下你是怎么花了一整晚解决大模型 API 超时问题的。当你的文章被大量转发，HR 会主动来找你。</li>
+<li><strong>拥抱变化的心态</strong>：技术迭代太快了，今天的最佳实践可能明天就被新模型（比如具有原生 Agent 能力的强推流模型）取代。保持谦逊，持续学习，这是你能在这个赛道长期走下去的唯一护城河。</li>
+</ol>
+
+
+<blockquote>
+<p>&quot;在这个时代，最好的简历不是一纸文档，而是你在互联网上留下的代码、文章和可以运行的系统。去建造吧，让世界看到你的作品。&quot;</p>
+</blockquote>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">终极 Q&amp;A：简历与面试的百问百答精选</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>为了解答大家在投递简历过程中的常见疑惑，我们从辅导群中整理了以下最高频的问题，并给出最直接的答复。</p>
+
+
+<p><strong>Q1：我是传统 Java/Go 后端，没有真实上过线的 Agent 项目，能在简历里编一个吗？</strong>
+绝对不要编造！面试官稍微一深挖并发数据、日志排查、或是架构演进的过程，你就会露馅。正确做法是：自己动手基于公司的业务痛点做个内部工具（比如帮大家自动查服务器日志的 Agent），或者去打一些黑客马拉松（Hackathon），甚至是贡献开源项目。真实的踩坑经验才是最宝贵的。</p>
+
+
+<p><strong>Q2：我的简历是写两页还是缩减到一页？</strong>
+如果你是应届生或者工作经验不满 3 年，请务必压缩到一页，挑出最亮眼的 2 个 Agent 相关项目重点写透即可。如果你是 5 年以上资深工程师，可以写两页。千万不要为了凑字数去堆砌大学里那些没有商业价值的&quot;图书管理系统&quot;或者&quot;在线商城&quot;。</p>
+
+
+<p><strong>Q3：我需要把做项目遇到过的所有错误都写在简历上吗？</strong>
+简历不是记仇本，不需要罗列错误。但在你准备面试题的时候，每一个写在简历上的项目，都要准备一个&quot;我遇到了什么灾难级 Bug，最后是怎么用技术手段优雅解决的&quot;故事（STAR 法则中的 A 环节）。</p>
+
+
+<p><strong>Q4：现在大家都在卷 RAG，我觉得 RAG 太简单了，要不要写点别的？</strong>
+RAG &quot;写个 Demo&quot;非常简单，但&quot;做个高可用、高准确率的企业级系统&quot;难如登天。如果你能在简历里把 RAG 写出深度，比如写出你是怎么做混合召回（Hybrid Search）、怎么做 Rerank 的分数融合、怎么处理表格和图片的解析提取，这比你写一个不成熟的 Multi-Agent 更能打动面试官。</p>
+
+
+<p><strong>Q5：非科班出身，转行做 Agent 还有机会吗？</strong>
+机会很大！在 Agent 时代，<strong>Domain Knowledge（业务领域知识）</strong> 变得前所未有地重要。比如你是学财务的转行写代码，你去面金融公司的 Agent 岗，你对财报指标和业务逻辑的深刻理解，将成为你碾压纯计算机科班生的降维打击。在简历中不仅要写技术，更要大声说出你的业务洞察。</p>
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p><strong>Q6：投了十几份简历都没有回音，我该怎么办？</strong>
+先检查是不是踩了 ATS（AI 简历筛选）的坑：是否用了无法解析的图片格式？关键词是不是没有命中 JD？其次，现在内推的成功率远大于海投。利用领英（LinkedIn）、脉脉或者 GitHub 去找到发帖的 Tech Lead，通过我们前文提到的 Cover Letter 策略直接联系他们，转化率会高得多。</p>
+
+
+<p>希望这些回答能扫除你前进道路上的迷雾。行动起来，去打磨你的简历，去丰富你的项目。AI 的黄金时代才刚刚开始，你完全来得及！</p>
+
+
+<hr>
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">附录：好用但不为人知的排版小工具推荐</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>一份能直接被 HR 拿去给总监看的顶级简历，除了内容过硬，排版也要&quot;专业、克制&quot;。下面推荐几个可以让你省去大把时间的排版工具：</p>
+
+
+<ol>
+<li><strong>Typst</strong>: 如果你是 Markdown 极客，绝对不要错过 Typst。它可以像写代码一样写简历，而且编译成 PDF 的速度和排版精美度碾压 LaTeX。非常适合用来展现你的 Geek 精神。</li>
+<li><strong>JSON Resume</strong>: 一套基于 JSON 的简历开源标准。你只需要维护一个 JSON 文件，就可以随时导出数百种不同的主题风格。</li>
+<li><strong>Canva/Figma 的极简工程师模板</strong>: 虽然大家都不太喜欢过度设计的简历，但 Canva 里面一些&quot;单色调、网格对齐、高对比度&quot;的海外工程师专属模板，可以让你的履历在一堆黑白 Word 中瞬间脱颖而出。</li>
+</ol>
+
+
+<p>最后记住一点：<strong>千万千万不要用带有进度条的技能评分（比如：Python 进度条画个 80%，Java 画个 60%）</strong>。对于工程师而言，这种主观的图表除了暴露你缺乏严谨的数据支撑外，没有任何意义。能用数据和案例说话，绝不用图形去粉饰。祝大家都能用一份无可挑剔的简历，敲开理想公司的大门！</p>
+
+
+<hr>
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">特别提醒：开源经历与社区影响力的放大器</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>如果你有针对知名 Agent 框架（如 LangChain、AutoGPT、Camel、MetaGPT等）的贡献经历，务必将其放在项目经验之后、教育背景之前的&quot;黄金位置&quot;。</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">如何包装开源经历</h3>
+<p>不要只写&quot;给 LangChain 提交了 PR&quot;，要写出这个 PR 的工程价值：</p>
+
+<ul>
+<li><strong>正确示范 1</strong>：&quot;向官方仓库 LangGraph 提交了 3 个 PR，修复了在分布式状态机并行执行中 Checkpointer 锁死的问题，PR 被核心维护者合入，惠及全球超过 10,000 名框架使用者。&quot;</li>
+<li><strong>正确示范 2</strong>：&quot;主导翻译了 LlamaIndex 官方文档的 RAG 核心机制篇章，长达 2 万字，被官方列为核心中文维护者之一。&quot;</li>
+<li><strong>正确示范 3</strong>：&quot;针对国产大模型（如 Qwen, DeepSeek）的工具调用特性，为某开源 Multi-Agent 平台编写了适配层，解决了国产模型在函数调用时格式输出不稳定的痛点。&quot;</li>
+</ul>
+
+
+<p>拥有这种级别的开源贡献，往往能直接跳过简历初筛，甚至获得面试官主动在 GitHub 上私信你的机会。在这个&quot;源码面前，了无秘密&quot;的技术社区中，你提交的代码和文档，就是你最高级的通行证和简历。</p>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">2025-2026 最新进展</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>在岗位激增、投递量暴涨的 2026 年，简历的&quot;6 秒初筛&quot;竞争更加残酷。3D 表达法（架构/业务/结果）的核心是用数字把贡献量级显性化——&quot;将 Agent 平均响应延迟从 3.2s 降到 0.8s&quot;&quot;通过缓存与并发优化把单次任务成本降低 60%&quot;这类结果表达，远比&quot;负责 Agent 开发&quot;更有冲击力。</p>
+
+
+<p>针对算法岗与开发岗边界模糊的现状，越来越多候选人采用&quot;双版本简历&quot;：同一项目分别突出模型/评估侧与工程/架构侧，按目标岗位投递对应版本，显著提升命中率。</p>
+
+
+<div class="callout callout-tip">
+            <div class="callout-icon">💡</div>
+            <div class="callout-body"><p>每条项目经历至少塞进一个可量化指标。没有真实数据时，也要给出合理的相对量级（如&quot;吞吐提升约 3 倍&quot;），但切忌编造无法在面试中自圆其说的数字。
+[!WARNING] 简历造假在 Agent 岗的硬核追问下极易暴露——面试官会顺着你写的每个数字深挖实现细节。写不进项目就不要写，模糊夸大比留白更危险。</p>
+</div>
+        </div>
+                </div>
+            </section>
+</section>
+
+        <section class="title-slide">
+            <h1 class="main-title" style="color: #2563eb">THANKS</h1>
+            <div class="main-subtitle">03 · 简历写作：Agent 项目的 3D 表达法 · 完</div>
+        </section>
+    
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/highlight/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/zoom/zoom.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, center: false, controls: true, progress: true,
+            transition: 'slide', backgroundTransition: 'fade', slideNumber: 'c/t',
+            width: 1280, height: 720, margin: 0.08,
+            plugins: [ RevealHighlight, RevealZoom ]
+        });
+        
+    </script>
+
+<!-- 水印 -->
+<div id="_wm" style="pointer-events:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99999;overflow:hidden;opacity:0.06;">
+<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+<defs><pattern id="wmp" x="0" y="0" width="240" height="160" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
+<text x="10" y="80" font-size="16" fill="#333" font-family="sans-serif">算法研习手记</text>
+</pattern></defs>
+<rect width="100%" height="100%" fill="url(#wmp)"/>
+</svg></div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+flowchart TB
+  subgraph S1[阶段 1：软件工程基础 · Week 01–04]
+    direction LR
+    W01[W01 Python 环境] --> W02[W02 类型/测试] --> W03[W03 Git/API] --> W04[W04 SQL/Docker]
+  end
+  M1{基础项目验收}
+  subgraph S2[阶段 2：LLM 应用 · Week 05–08]
+    direction LR
+    W05[W05 LLM/Prompt] --> W06[W06 Structured Output] --> W07[W07 Tool Calling] --> W08[W08 Copilot 集成]
+  end
+  M2{LLM 项目 Demo}
+  subgraph S3[阶段 3：RAG · Week 09–12]
+    direction LR
+    W09[W09 解析/Chunking] --> W10[W10 Embedding] --> W11[W11 Hybrid/Rerank] --> W12[W12 RAG 评测]
+  end
+  M3{RAG 项目 Demo}
+  subgraph S4[阶段 4：Agent 工作流 · Week 13–16]
+    direction LR
+    W13[W13 边界选择] --> W14[W14 LangGraph 状态] --> W15[W15 HITL/MCP] --> W16[W16 评审 Agent]
+  end
+  M4{工作流项目 Demo}
+  subgraph S5[阶段 5：生产化 · Week 17–20]
+    direction LR
+    W17[W17 测试/评测] --> W18[W18 Tracing/成本] --> W19[W19 安全/部署] --> W20[W20 上线演练]
+  end
+  M5{部署候选版}
+  subgraph S6[阶段 6：求职冲刺 · Week 21–24]
+    direction LR
+    W21[W21 项目整理] --> W22[W22 简历/Demo] --> W23[W23 面试] --> W24[W24 投递/复盘]
+  end
+  M6{求职材料闭环}
+  S1 --> M1 --> S2 --> M2 --> S3 --> M3 --> S4 --> M4 --> S5 --> M5 --> S6 --> M6

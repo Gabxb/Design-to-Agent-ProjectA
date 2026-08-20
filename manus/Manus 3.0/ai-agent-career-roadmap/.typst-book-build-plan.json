@@ -1,0 +1,39 @@
+{
+  "base": {
+    "auto_apply": true,
+    "conflict_group": "document-base",
+    "id": "markdown-entry",
+    "kind": "asset",
+    "ownership": "global",
+    "path": "assets/markdown-entry.typ",
+    "reason": "Existing Markdown source.",
+    "status": "ready"
+  },
+  "catalog_version": "2026-07-17-affiliated-formats-v3",
+  "channel": "typst-pdf",
+  "confirmation_candidates": [],
+  "enhancements": [
+    {
+      "adoption": "A",
+      "auto_apply": true,
+      "conflict_group": null,
+      "id": "glossarium",
+      "kind": "universe-package",
+      "ownership": "semantic",
+      "reason": "Content evidence satisfies {\"defined_terms\": 5}",
+      "status": "ready",
+      "universe_ref": "@preview/glossarium:0.5.10",
+      "version": "0.5.10"
+    }
+  ],
+  "exclusions": [],
+  "fingerprint": "sha256:54054775fc12b89ef4a492df4eb4a2474eaecc0ef795b9be41a1d76b61cd8c30",
+  "next_action": "minimal-compile-preflight",
+  "optional_idea": null,
+  "question": null,
+  "reused": false,
+  "schema_version": 1,
+  "state": "ready",
+  "style_owner": "markdown-entry",
+  "typst_version": "typst 0.15.1 (9dfd3a08)"
+}

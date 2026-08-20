@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>07 · 双轨策略：算法岗 x 开发岗一起面</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/theme/white.min.css" id="theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #1e293b;
+            --accent-color: #2563eb;
+            --accent-2: #7c3aed;
+            --accent-3: #059669;
+            --border-color: #e2e8f0;
+            --card-bg: rgba(241, 245, 249, 0.7);
+        }
+        body { background: radial-gradient(circle at 30% 20%, #ffffff 0%, #f8fafc 60%, #f1f5f9 100%); }
+        .reveal { font-family: 'Noto Sans SC', sans-serif; color: var(--text-color); }
+
+        /* Typography */
+        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+            font-family: 'Noto Sans SC', sans-serif;
+            text-transform: none; letter-spacing: normal; word-break: break-word;
+        }
+        .reveal h1.main-title { font-weight: 900; color: #0f172a; font-size: 2.8em; text-shadow: 0 4px 24px rgba(37,99,235,0.18); margin-bottom: 0.3em; }
+        .reveal .main-subtitle { font-weight: 300; color: #64748b; font-size: 1.1em; line-height: 1.6; max-width: 800px; margin: 0 auto; }
+
+        .reveal h2.section-h2 {
+            color: transparent; background: linear-gradient(90deg, var(--accent-color), var(--accent-2));
+            -webkit-background-clip: text; background-clip: text;
+            font-weight: 800; font-size: 2.2em; border-bottom: 2px solid var(--border-color); padding-bottom: 0.3em; display: inline-block;
+        }
+        .reveal h3.section-h3 { color: #0f172a; font-weight: 700; font-size: 1.5em; text-align: left; border-left: 4px solid var(--accent-color); padding-left: 0.6em; margin-bottom: 1em; }
+
+        .reveal p, .reveal li { font-size: 0.95em; line-height: 1.7; text-align: left; margin-bottom: 0.8em; word-break: break-word; }
+        .reveal strong { color: #1d4ed8; font-weight: 700; }
+        .reveal em { color: #475569; }
+
+        /* Layouts */
+        .title-slide { height: 100%; display: flex !important; flex-direction: column; justify-content: center; align-items: center; }
+        .content-slide { height: 100%; display: flex !important; flex-direction: column; justify-content: center; align-items: flex-start; padding: 2% 5% !important; }
+        .slide-content-wrapper { width: 100%; max-height: 86vh; overflow-y: auto; padding-right: 15px; }
+        .content-slide.present .slide-content-wrapper > * { animation: fadeUp 0.5s ease both; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(14px);} to { opacity: 1; transform: none;} }
+
+        /* Scrollbar */
+        .slide-content-wrapper::-webkit-scrollbar { width: 6px; }
+        .slide-content-wrapper::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+
+        /* Badges & Hints */
+        .label-badge, .chapter-badge {
+            background: rgba(37,99,235,0.08); border: 1px solid rgba(37,99,235,0.25); color: var(--accent-color);
+            padding: 6px 16px; border-radius: 20px; font-size: 0.6em; font-weight: 700; margin-bottom: 2em; letter-spacing: 2px;
+        }
+        .scroll-hint { margin-top: 4em; font-size: 0.6em; color: #94a3b8; opacity: 0.9; }
+
+        /* Blockquotes */
+        .reveal blockquote {
+            width: 100%; text-align: left; margin: 1em 0; padding: 1em 1.5em;
+            background: var(--card-bg); border-left: 4px solid var(--accent-color);
+            border-radius: 0 8px 8px 0; font-style: normal; font-size: 0.9em; box-shadow: none;
+        }
+
+        /* Inline Code */
+        .reveal code { font-family: 'Fira Code', monospace; background: #f1f5f9; color: #db2777; padding: 0.1em 0.3em; border-radius: 4px; font-size: 0.85em; }
+
+        /* Mac Window Code Blocks */
+        .mac-window {
+            background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;
+            margin: 1em 0; width: 100%; box-shadow: 0 8px 24px rgba(15,23,42,0.10); overflow: hidden; text-align: left;
+        }
+        .mac-header { background: #eef2f7; padding: 8px 12px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid #e2e8f0; }
+        .mac-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+        .mac-lang { margin-left: auto; color: #94a3b8; font-size: 0.6em; font-family: 'Fira Code', monospace; text-transform: uppercase; }
+        .reveal pre { margin: 0; width: 100%; box-shadow: none; display: block; }
+        .reveal pre code {
+            padding: 1.2em; font-size: 0.75em; line-height: 1.5; font-family: 'Fira Code', monospace;
+            background: transparent; color: inherit; max-height: 55vh; overflow-y: auto; white-space: pre-wrap; word-break: break-all;
+        }
+
+        /* Tables + Bars */
+        .table-wrapper { width: 100%; overflow-x: auto; margin: 1em 0; }
+        .reveal table.data-table { width: 100%; margin: 0; font-size: 0.8em; border-collapse: collapse; }
+        .reveal table.data-table th { background: rgba(37,99,235,0.08); color: #1e293b; font-weight: 700; padding: 10px 14px; border-bottom: 2px solid var(--accent-color); text-align: left; }
+        .reveal table.data-table td { padding: 9px 14px; border-bottom: 1px solid var(--border-color); vertical-align: middle; }
+        .reveal table.data-table tr:nth-child(even) { background: rgba(15,23,42,0.02); }
+        .reveal table.data-table tr:hover { background: rgba(37,99,235,0.06); }
+        .bar-cell { min-width: 160px; }
+        .bar-val { font-weight: 600; color: #1d4ed8; margin-bottom: 4px; }
+        .bar-track { height: 7px; background: rgba(15,23,42,0.08); border-radius: 4px; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent-color), var(--accent-2)); box-shadow: 0 0 6px rgba(37,99,235,0.35); }
+
+        /* KPI Cards */
+        .kpi-grid { display: flex; flex-wrap: wrap; gap: 16px; width: 100%; margin: 0.8em 0; }
+        .kpi-card {
+            flex: 1 1 160px; min-width: 150px; padding: 18px 20px; border-radius: 14px;
+            background: linear-gradient(145deg, rgba(37,99,235,0.07), rgba(124,58,237,0.05));
+            border: 1px solid rgba(37,99,235,0.18); box-shadow: 0 8px 24px rgba(15,23,42,0.08);
+        }
+        .kpi-value { font-size: 2.1em; font-weight: 900; line-height: 1; color: #0f172a; background: linear-gradient(90deg,#2563eb,#7c3aed); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .kpi-unit { font-size: 0.45em; font-weight: 700; margin-left: 4px; -webkit-text-fill-color: #64748b; }
+        .kpi-label { margin-top: 8px; font-size: 0.8em; font-weight: 700; color: #1e293b; }
+        .kpi-desc { margin-top: 4px; font-size: 0.7em; color: #64748b; line-height: 1.4; }
+
+        /* Callouts */
+        .callout { display: flex; gap: 14px; width: 100%; margin: 1em 0; padding: 14px 18px; border-radius: 12px; text-align: left; background: var(--card-bg); border: 1px solid var(--border-color); }
+        .callout-icon { font-size: 1.4em; line-height: 1.4; }
+        .callout-body { flex: 1; font-size: 0.85em; }
+        .callout-body :first-child { margin-top: 0; } .callout-body :last-child { margin-bottom: 0; }
+        .callout-tip { border-left: 4px solid #34d399; background: rgba(52,211,153,0.08); }
+        .callout-note { border-left: 4px solid #38bdf8; background: rgba(56,189,248,0.08); }
+        .callout-info { border-left: 4px solid #38bdf8; background: rgba(56,189,248,0.08); }
+        .callout-warning { border-left: 4px solid #fbbf24; background: rgba(251,191,36,0.08); }
+        .callout-danger { border-left: 4px solid #f87171; background: rgba(248,113,113,0.08); }
+        .callout-success { border-left: 4px solid #34d399; background: rgba(52,211,153,0.08); }
+
+        /* Mermaid */
+        .mermaid-wrap { width: 100%; display: flex; justify-content: center; margin: 0.5em 0; }
+        .reveal .mermaid { background: transparent; font-size: 0.9em; max-height: 70vh; }
+        .reveal .mermaid svg { max-width: 100%; height: auto; }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            
+        <section class="title-slide">
+            <div class="label-badge">求职与面试 · 章节 07</div>
+            <h1 class="main-title">07 · 双轨策略：算法岗 x 开发岗一起面</h1>
+            
+            <div class="scroll-hint">
+                <p>按 <strong>Space</strong> 键查看全景鸟瞰视图</p>
+                <p>按 <strong>↓</strong> 或 <strong>→</strong> 键开始阅读</p>
+            </div>
+        </section>
+    <section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">为什么推荐双轨？</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>面试市场变化快，多一条赛道多一个机会。AI Agent 领域目前最大的特点是&quot;边界模糊&quot;，很多公司自己也分不清到底需要一个偏算法的人还是偏工程的人。这时候，如果你能同时呈现两种能力，命中率会大幅提升。</p>
+
+
+<div class="kpi-grid"><div class="kpi-card">
+                <div class="kpi-value">2<span class="kpi-unit">条</span></div>
+                <div class="kpi-label">投递赛道</div>
+                <div class="kpi-desc">算法岗 + 开发岗双线并行，命中率翻倍</div>
+            </div><div class="kpi-card">
+                <div class="kpi-value">2<span class="kpi-unit">份</span></div>
+                <div class="kpi-label">[!KPI] 简历版本</div>
+                <div class="kpi-desc">同一项目两侧重，分别突出算法与工程</div>
+            </div><div class="kpi-card">
+                <div class="kpi-value">模糊<span class="kpi-unit">机会</span></div>
+                <div class="kpi-label">[!KPI] 岗位边界</div>
+                <div class="kpi-desc">企业自身定位不清，双能力候选人更受青睐</div>
+            </div><div class="kpi-card">
+                <div class="kpi-value">为什么/怎么做<span class="kpi-unit">侧重</span></div>
+                <div class="kpi-label">[!KPI] 核心差异</div>
+                <div class="kpi-desc">算法岗考原理动机，开发岗考落地实现</div>
+            </div></div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">code</span>
+                </div>
+                <pre><code class="language-plaintext">你的背景
+├── 推荐投递：算法岗 + 开发岗（同时准备）
+├── 算法岗默认：需要较强的理论功底、评测能力、模型微调认知
+└── 开发岗默认：需要较强的工程能力、高并发处理、工程化部署经验
+
+你不知道面试官看重哪一项？两套都准备好。在面试的前 10 分钟通过对方的问题方向快速锁定&quot;频道&quot;。</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">同一项目的两侧重</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>以智能客服 Agent 为例，这是最常见但也最容易被问出深度的项目。</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">算法岗表述</h3>
+
+<p>面试官想听的是：<strong>你的策略选择思路、对比实验、Bad Case 分析以及为什么最终定下这个方案。</strong> 他们评估的是你的&quot;研究和优化能力&quot;。</p>
+
+
+<blockquote>
+<p>&quot;我对比了三种检索策略：纯向量检索召回率只有 68%，加上 BM25 稀疏检索提升到 74%，再加上 BGE-Reranker 重排序达到 89%。我选择这个方案是因为客服场景对精确关键词匹配要求高（比如用户说&#39;我要退货&#39;，BM25 能精确匹配&#39;退货流程&#39;），而纯语义检索会把&#39;退货&#39;和&#39;换货&#39;搞混。</p>
+<p>后来我们发现一个问题，用户有时候问得很简短，比如&#39;年假&#39;。为了解决这个短查询 query 的意图补全，我尝试引入 HyDE (Hypothetical Document Embeddings)。我用一个小模型先生成一段虚构的答案，再去检索。结果发现在某些专有名词上会幻觉，反而带偏检索。所以我最终改成了基于历史会话的 Query Rewrite 策略，用 LLM 结合前 3 轮对话重写当前问题，准确率提升了 12%。&quot;</p>
+</blockquote>
+
+
+<p><strong>关键要素</strong>：</p>
+
+<ul>
+<li>对比实验（A/B test 思路，不仅要有结果，还要有过程）</li>
+<li>策略选择理由（为什么选这个不选那个，甚至要说出踩过的坑）</li>
+<li>量化提升（核心指标：Recall, MRR, NDCG 等的变化）</li>
+<li>Bad Case 驱动优化（遇到什么问题，怎么分析，怎么解决）</li>
+</ul>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">开发岗表述</h3>
+
+<p>面试官想听的是：<strong>你的系统设计思路、性能指标、高可用保障以及复杂状态的管理。</strong> 他们评估的是你能不能把这套东西稳定、高效地跑到生产环境。</p>
+
+
+<blockquote>
+<p>&quot;我用 LangGraph 搭建了图式工作流，四个节点：意图分类 → 知识检索 → 回答生成 → 转人工判断。架构上，Agent 实例是无状态的，会话存在 Redis 里，向量库用 FAISS 本地部署。上线后单机 QPS 200+，P99 延迟 &lt; 2s。做了 Docker Compose 一键部署，Nginx 负载均衡 + 两个 Agent Worker + Redis + PostgreSQL。</p>
+<p>比较有挑战的是流式输出和工具调用的结合。当 LLM 决定调用外部 API（比如查订单）时，我们会暂停流式输出，给前端推一个特定的 status 事件，前端渲染加载动画。API 返回后，再恢复流式文本。为了防超时，所有外部工具调用都加了 3 秒的 timeout 和断路器机制。为了控制成本，我们对相似 Query 做了语义缓存，缓存在 Redis 里的命中率大概在 25% 左右，省了一大笔 token 费。&quot;</p>
+</blockquote>
+
+
+<p><strong>关键要素</strong>：</p>
+
+<ul>
+<li>系统架构图（能画出来，脑子里有清晰的分层）</li>
+<li>技术栈选择理由（为什么用 Redis 做会话存储，为什么用 FAISS 不用 Milvus）</li>
+<li>性能指标（QPS/延迟/可用性）</li>
+<li>生产环境挑战（超时、流式处理、降级机制、缓存策略）</li>
+</ul>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">简历准备两份</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>千万不要拿同一份简历去投两个截然不同的岗位，你需要准备两个版本。</p>
+
+
+<div class="table-wrapper"><table class="data-table"><thead><tr><th>维度</th><th>算法岗简历（AI 算法工程师/研究员）</th><th>开发岗简历（AI 应用工程师/全栈）</th></tr></thead><tbody><tr><td>个人总结</td><td>强调数据处理、模型评测、策略优化经验</td><td>强调工程交付、架构设计、全栈开发经验</td></tr><tr><td>项目标题</td><td>&quot;基于混合检索的智能客服系统&quot;</td><td>&quot;高并发智能客服 Agent 系统&quot;</td></tr><tr><td>主打技术</td><td>RAG 优化、检索策略、Reranker、Few-shot、评估指标</td><td>LangGraph、FastAPI、Docker、Redis、流式处理</td></tr><tr><td>结果指标</td><td>召回率 94%、MRR 提升 12%、幻觉率下降 30%</td><td>QPS 200+、P99 &lt; 2s、可用性 99.9%、Token 成本降低 40%</td></tr><tr><td>项目描述</td><td>强调策略实验、Bad Case 分析、为什么选择该算法方案</td><td>强调架构设计、高可用、并发处理、缓存与降级机制</td></tr><tr><td>技能清单</td><td>PyTorch, HuggingFace, RAGAS, 常用检索模型</td><td>Python, FastAPI, React/Vue, Docker, CI/CD</td></tr></tbody></table></div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">项目实战案例深度剖析：双版本表述</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">项目 2：RAG 企业文档问答系统</h3>
+
+<p>这个项目非常典型，很多公司的第一个 AI 落地应用就是它。</p>
+
+
+<h4>算法岗版本：策略深挖</h4>
+
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">markdown</span>
+                </div>
+                <pre><code class="language-markdown">## 企业文档智能问答系统
+2025.10 - 2026.02
+
+- **切分策略优化**：设计文档切分策略对比实验。对比了固定字符大小（500 token）、语义切分（按句号落段）和层级切分（按 Markdown 标题结构）。最终选择了层级切分+滑动窗口策略。在 5000 条企业规章制度文档的测试集上，chunk 的语义完整度提升了 23%，解决了答案被截断导致的幻觉问题。
+- **检索架构迭代**：实现 BM25 + FAISS 双路召回，并引入 BGE-Reranker-v2 进行三阶段检索。针对公司特定的缩写词（如&quot;OJT&quot;,&quot;OKR&quot;），通过构建同义词词典扩展 BM25 词袋。将最终答案的命中率从单路 FAISS 的 68% 提升到 91%，MRR 提升 18%。
+- **长下文难题**：针对跨文档的问题，引入多路召回后的合并去重策略。
+- **评估体系建设**：摒弃人工肉眼评估，使用 RAGAS 框架搭建了自动化的评估管线。重点监控 faithfulness（忠实度）和 answer_relevancy（相关性）。每两周进行一次 A/B 对比实验，形成了数据驱动的策略迭代闭环。</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p><strong>面试官可能的追问及应对（算法方向）</strong>：</p>
+
+<ul>
+<li><em>问：为什么不用多向量检索（Multi-Vector Retrieval）？</em><ul>
+<li>答：考虑过，但多向量检索对文档预处理要求太高，需要用 LLM 针对每个 chunk 生成摘要或假设性问题，这在我们的 10 万+ chunk 规模下成本过高（约 $500），且更新维护慢。我们折中选择了较小的 chunk size + 原文档引用的方式（Parent Document Retrieval）。</li>
+</ul>
+</li>
+<li><em>问：如何评价 BGE-Reranker 和 Cohere Rerank 的区别？</em><ul>
+<li>答：在中文场景下，BGE-M3 的多语言混合效果更好，且支持本地部署。Cohere 虽好但 API 延迟不稳定，且存在数据出境的合规风险。</li>
+</ul>
+</li>
+</ul>
+
+
+<h4>开发岗版本：架构与性能</h4>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">markdown</span>
+                </div>
+                <pre><code class="language-markdown">## 企业文档智能问答系统
+2025.10 - 2026.02
+
+- **全链路工作流**：基于 LangGraph 搭建完整的问答工作流，解耦了&quot;文档加载解析&quot;、&quot;向量化&quot;、&quot;检索&quot;和&quot;生成&quot;四个独立微服务。支持 500+ PDF/Word/Markdown 格式文档的并发实时处理，解析成功率 &gt;99%。
+- **多级缓存与性能优化**：设计并实现了多级缓存架构。L1 使用本地内存 LRU 缓存热点 Query 的 Embedding 结果；L2 使用 Redis 缓存完整问答对（基于相似度阈值匹配）。在不增加 LLM API 调用的情况下，将系统单机 QPS 从 50 提升到 180，P99 延迟从 3.2s 降至 1.1s。
+- **高并发与长连接**：后端使用 FastAPI，针对长文本生成场景实现了 SSE 流式分块输出，并结合 WebSocket 进行长连接会话状态管理，解决 HTTP 超时断开问题。单实例支持 1000+ 并发用户实时问答。
+- **工程化交付**：采用 Docker Compose 实现所有依赖（Redis, FAISS server, API）的一键自动化部署。接入 Prometheus 和 Grafana 进行全链路监控，包括大模型 API 的调用延迟、Token 消耗统计和失败率监控。运行 6 个月可用性达到 99.7%。</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p><strong>面试官可能的追问及应对（开发方向）</strong>：</p>
+
+<ul>
+<li><em>问：Redis 缓存相似问答，如果阈值设得太低导致错误回答怎么办？</em><ul>
+<li>答：我们加了双重保险。只有当用户的 Query 与 Redis 中缓存的 Query 向量相似度 &gt; 0.95 时才直接返回。且在前端 UI 上，缓存返回的答案会打上&quot;闪电&quot;图标标识为快速回复，引导用户如果不满意点击&quot;重新生成&quot;强制走 LLM。</li>
+</ul>
+</li>
+<li><em>问：流式输出中断怎么处理？</em><ul>
+<li>答：在 FastAPI 端捕获 <code>asyncio.CancelledError</code>，如果是客户端主动断开，我们会立刻停止对 OpenAI API 的流式读取，释放连接资源，防止协程泄漏。</li>
+</ul>
+</li>
+</ul>
+
+
+<hr>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">项目 3：NL2SQL 数据分析 Agent</h3>
+
+<p>NL2SQL 是企业内部效率提升的金矿项目，极具含金量。</p>
+
+
+<h4>算法岗版本：准确率突围</h4>
+
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">markdown</span>
+                </div>
+                <pre><code class="language-markdown">## 自然语言问数 Agent (NL2SQL)
+2026.01 - 2026.04
+
+- **Pipeline 设计**：摒弃了简单的端到端生成，设计了&quot;意图识别 → schema 检索 → SQL 生成 → 语法校验（AST层） → 自我纠错（Self-Correction）&quot;的 5 步流程。在内部 200 条复杂业务问数测试集上，SQL 首次执行成功率达 87%。
+- **两阶段生成方案**：对比了直接生成 SQL 和两阶段生成（先让 LLM 生成逻辑查询计划，再翻译为特定方言的 SQL）。发现两阶段方案在处理含 3 张表以上的复杂 JOIN 场景时，逻辑清晰度大幅提升，正确率从 62% 提升到 81%。
+- **元数据 RAG 增强**：针对字段名歧义（如&quot;收入&quot;是指&quot;GMV&quot;还是&quot;净利润&quot;），搭建了企业级元数据知识库。将表结构、字段说明、业务口径定义及优秀的示例 SQL 向量化。通过 RAG 动态组装 few-shot 提示词，使字段匹配错误率骤降 40%。</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<h4>开发岗版本：安全与可视化</h4>
+
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">markdown</span>
+                </div>
+                <pre><code class="language-markdown">## 自然语言问数 Agent (NL2SQL)
+2026.01 - 2026.04
+
+- **系统架构**：基于 LangGraph + MySQL + Qdrant 搭建企业级 NL2SQL 系统。将整个问数流程服务化，提供标准的 REST API 供内部 BI 平台调用。
+- **SQL 安全沙箱防护**：为防止 LLM 生成破坏性指令或导致慢查询，在数据库前置了安全拦截中间件。强制解析 AST，只允许 SELECT 操作，禁止 DROP/DELETE/ALTER/UPDATE 等 DDL/DML。对所有合法查询强制追加 LIMIT 100 并在 DB 层面设置 5s 超时断开。
+- **前后端全栈联调**：使用 FastAPI 提供接口，前端使用 React + ECharts 实现数据流闭环。除了返回表格数据，Agent 还会根据数据特征自动判断图表类型（折线图、柱状图、饼图）并返回 ECharts 配置项代码，实现前端页面的动态可视化渲染。
+- **权限管控**：深度接入公司现有的 SSO (OAuth2) 认证和 RBAC 权限体系。在传递给 LLM 的表结构之前，先进行过滤，确保用户或不同部门只能查询自己有权限的表，实现数据物理隔离。</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">面试中如何快速&quot;切频道&quot;</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>面试是一场双人舞，优秀的候选人会根据面试官的反馈调整自己的舞步。同一轮面试中，面试官可能会从算法视角切到工程视角，你要学会无缝切换。</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">情景演练：开场的&quot;试探&quot;</h3>
+
+<p>面试官说：&quot;先简单介绍一下你的项目吧。&quot;</p>
+
+
+<p><strong>此时你不确定他是偏算法还是偏工程？</strong> 采用<strong>中性的架构+数据双开场</strong>策略，通过抛出&quot;诱饵&quot;看对方咬哪个钩。</p>
+
+
+<blockquote>
+<p>&quot;我负责的是一个智能客服 Agent 系统。每天处理 3000+ 用户咨询。核心是用 LangGraph 编排了 4 步工作流。在这个项目中，我主要解决了两个难题：一个是<strong>如何把多轮对话中检索的准确率提升到了 90% 以上</strong>；另一个是<strong>在高并发下如何保证系统的 P99 延迟控制在 2 秒以内</strong>。&quot;</p>
+</blockquote>
+
+
+<p>说完后停顿观察，或者直接问：&quot;您希望我先从业务策略优化的角度讲，还是从系统架构设计的角度展开？&quot;</p>
+
+
+<ul>
+<li>如果面试官说：&quot;讲讲准确率是怎么做到 90% 的。&quot; → <strong>果断切入算法频道</strong>，讲你的 3 阶段检索和对比实验。</li>
+<li>如果面试官说：&quot;讲讲你们 2 秒的延迟是怎么做的，瓶颈在哪？&quot; → <strong>果断切入工程频道</strong>，讲你的多级缓存、并发处理和流式输出。</li>
+</ul>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">同一个追问，两种截然不同的回答套路</h3>
+
+<p><strong>追问</strong>：&quot;你们的系统如果出错了怎么办？&quot;</p>
+
+
+<div class="table-wrapper"><table class="data-table"><thead><tr><th>分析维度</th><th>算法岗（偏策略）的回答模式</th><th>开发岗（偏工程）的回答模式</th></tr></thead><tbody><tr><td>核心思维</td><td>分析错误根因 (Root Cause) → 数据回流 → 策略迭代更新</td><td>故障隔离 (Isolation) → 链路降级 (Fallback) → 快速恢复系统</td></tr><tr><td>具体表述</td><td>&quot;错误主要集中在模糊意图场景。我写脚本提取了日志里的 200 条 bad case 进行人工标注，发现 60% 是因为大模型在意图分类阶段把闲聊当成了业务咨询。于是我优化了 System Prompt，加入了 Few-shot 样例，并且加了意图分类的前置独立节点，准确率回升了 15%。&quot;</td><td>&quot;我们在架构上设计了三级降级策略。第一级：如果 LLM API 超时（超过 5s），立刻中断并走本地 Redis 的兜底缓存；第二级：如果 RAG 检索服务挂了，让大模型基于自身知识做泛化回答并提示风险；第三级：全部失效时自动跳转人工客服。所有异常都会触发 Prometheus 告警并推送到飞书群，我们要求 5 分钟内响应。&quot;</td></tr><tr><td>考察的关键词</td><td>Bad Case 分析、数据飞轮、Prompt 优化、Few-shot</td><td>降级机制 (Graceful Degradation)、高可用 (HA)、SLA、监控告警</td></tr></tbody></table></div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">场景 3：为什么选这个技术？</h3>
+
+<p><strong>追问</strong>：&quot;为什么用 BGE-M3 作为 Embedding 模型而不用 OpenAI 的 API？&quot;</p>
+
+
+<p><strong>算法视角的回答（强调效果与评测）</strong>：</p>
+
+<blockquote>
+<p>&quot;我们在初期做了选型评估。参考了 MTEB 中文 benchmark，并在我们的业务数据集上跑了对比。发现 BGE-M3 在中文特定领域词汇上的召回率比 text-embedding-ada-002 高 3.5 个百分点。并且 BGE-M3 支持稠密检索、稀疏检索和多向量检索机制，为我们后续的策略升级留了空间。加上开源可本地部署，避免了敏感数据的外传风险。&quot;</p>
+</blockquote>
+
+
+<p><strong>工程视角的回答（强调性能与成本）</strong>：</p>
+
+<blockquote>
+<p>&quot;主要是出于延迟和成本的综合考量。我们的 SLA 要求 P99 延迟 &lt; 100ms。实测发现 OpenAI API 跨国网络延迟波动很大（经常在 50-300ms 之间跳动），而 BGE-M3 使用 ONNX Runtime 本地部署在 GPU 机器上，延迟稳定在 15-20ms 左右。另外，我们一天有几十万次的 Embedding 调用，如果用 OpenAI 每个月成本要几千块，而本地化部署后除了一台 T4 服务器的成本，边际调用成本几乎为零。&quot;</p>
+</blockquote>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">双轨投递的实操建议与避坑指南</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">黄金时间线排布</h3>
+
+<p>不要漫无目的地乱投，要有一套&quot;打怪升级&quot;的策略。</p>
+
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">code</span>
+                </div>
+                <pre><code class="language-plaintext">投递时间线：
+【第 1 周】&quot;练手期&quot;
+只投 3-5 家中小型公司的开发岗。开发岗反馈最快，门槛相对明确。目的是把几个高频问题（如&quot;架构怎么设计的&quot;、&quot;缓存怎么做的&quot;）练熟，消除紧张感。
+
+【第 2 周】&quot;调整与双开期&quot;
+投 3 家中小型算法岗 + 5 家中大型开发岗。
+根据第一周的录音复盘（强烈建议面试录音自己听），修复表述漏洞。如果发现自己讲算法策略非常吃力，讲架构头头是道，那就把重心彻底倒向开发岗。
+
+【第 3 周】&quot;决战期&quot;
+集中火力投递心仪的头部公司或高薪创业公司（看准 jd 描述选择投算法还是开发）。此时你已经身经百战，对各种连环追问已经免疫。
+
+【第 4 周】&quot;谈判期&quot;
+如果手头已经有了一个中厂的开发岗 Offer，用它做底气去面大厂的算法岗或开发岗，心态会极其放松，通常能发挥出 120% 的水平。</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">千万别犯的致命错误</h3>
+
+<div class="table-wrapper"><table class="data-table"><thead><tr><th>致命错误</th><th>为什么绝对不行</th><th>正确做法</th></tr></thead><tbody><tr><td><strong>同公司双投</strong></td><td>同一家公司用同一份简历同时投递算法和开发。HR 后台一览无余，显得你毫无职业规划，像是在&quot;广撒网碰运气&quot;。</td><td>一家公司只认准一个岗投。如果被刷了或者 HR 建议转岗，再换简历投另一个。</td></tr><tr><td><strong>频道错乱</strong></td><td>在算法岗面试里大谈 Docker 怎么部署、Kubernetes 怎么配置网络；或者在开发岗面试里花 20 分钟推导一个公式。</td><td>面试前看清日历邀请里的岗位名称。如果对方是 Infra 背景的面试官，收起你的论文；如果是 AI Lab 的人，收起你的 Nginx 配置。</td></tr><tr><td><strong>两套简历自相矛盾</strong></td><td>算法简历写&quot;独立负责策略&quot;，开发简历写&quot;独立负责底层架构&quot;。万一遇上交叉面的熟人，直接判定造假。</td><td>项目是同一个，你只是在不同简历里放大了你负责的<strong>不同侧面</strong>。可以说&quot;项目中我主导了策略优化（算法版）&quot;，&quot;项目中我主导了服务落地（开发版）&quot;。</td></tr><tr><td><strong>露怯发言</strong></td><td>&quot;其实我主要做的是工程，算法我不太懂只是调包&quot; 或者是 &quot;代码都是凑合写的，我其实更擅长想策略&quot;。</td><td>不要主动暴露短板。可以说：&quot;在保证系统高可用的同时，我也对核心检索策略进行了深度优化，我对这两个方向都有极高的热情和实践经验。&quot;</td></tr></tbody></table></div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">算法岗 vs 开发岗：到底差在哪（量化对照）</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>很多人嘴上说&quot;双轨&quot;，心里却分不清两个岗位<strong>真正考的是什么</strong>。下表把两条赛道的核心差异拉平对比，照着补短板。</p>
+
+
+<div class="table-wrapper"><table class="data-table"><thead><tr><th>对比维度</th><th>算法岗 (AI 算法/研究)</th><th>开发岗 (AI 应用/全栈)</th></tr></thead><tbody><tr><td>核心命题</td><td>&quot;<strong>为什么</strong>这样做效果更好&quot;</td><td>&quot;<strong>怎么</strong>让它稳定高效跑起来&quot;</td></tr><tr><td>高频考点</td><td>RAG 策略、评估指标、微调、Bad Case 分析</td><td>架构设计、高并发、缓存、降级、可观测</td></tr><tr><td>量化语言</td><td>Recall/MRR/NDCG/faithfulness</td><td>QPS/P99/可用性/Token 成本</td></tr><tr><td>手撕题倾向</td><td>评估脚本、检索融合、采样策略</td><td>并发工具调用、限流熔断、状态机</td></tr><tr><td>加分项</td><td>读过论文、做过对比实验、有数据飞轮</td><td>扛过线上事故、做过容量规划、懂成本</td></tr><tr><td>致命减分</td><td>&quot;调包侠&quot;、说不清为什么选这个方案</td><td>&quot;Demo 工程师&quot;、没上过真实生产</td></tr><tr><td>典型职级薪资带(1-3年)</td><td>25K~45K (算法稀缺溢价)</td><td>22K~40K (工程供给略多)</td></tr></tbody></table></div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<div class="callout callout-tip">
+            <div class="callout-icon">💡</div>
+            <div class="callout-body"><p>双轨不是两边都学一半，而是<strong>同一个项目准备两套叙事</strong>。技术深度靠主轨，辅轨只需能接住基础追问。</p>
+</div>
+        </div>
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">双轨自评：你该主攻哪条赛道</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>转岗/双轨最忌&quot;平均用力&quot;。下面这个脚本帮你用打分量化自己的赛道适配度，明确主轨与辅轨。</p>
+
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">python</span>
+                </div>
+                <pre><code class="language-python">&quot;&quot;&quot;
+dual_track_advisor.py —— 双轨主辅赛道自评
+按真实能力打分(0~5)，输出主轨建议与辅轨补强清单。
+&quot;&quot;&quot;
+from dataclasses import dataclass, field
+
+@dataclass
+class SkillProfile:
+    # 算法侧能力 (0~5)
+    paper_reading: int      # 论文阅读/前沿跟踪
+    eval_methodology: int   # 评估方法论(RAGAS/AB实验)
+    retrieval_tuning: int   # 检索策略调优
+    finetune: int           # 微调/数据构造
+    # 工程侧能力 (0~5)
+    system_design: int      # 系统架构设计
+    high_concurrency: int   # 高并发/性能优化
+    devops: int             # 部署/监控/CICD
+    incident: int           # 线上排障/容量规划
+
+def advise(p: SkillProfile) -&gt; dict:
+    algo = p.paper_reading + p.eval_methodology + p.retrieval_tuning + p.finetune
+    eng = p.system_design + p.high_concurrency + p.devops + p.incident
+    main = &quot;算法岗&quot; if algo &gt; eng else &quot;开发岗&quot;
+    gap = abs(algo - eng)
+    # 找出辅轨最弱的两项，作为重点补强
+    eng_items = {&quot;系统架构&quot;: p.system_design, &quot;高并发&quot;: p.high_concurrency,
+                 &quot;部署运维&quot;: p.devops, &quot;线上排障&quot;: p.incident}
+    algo_items = {&quot;论文跟踪&quot;: p.paper_reading, &quot;评估方法&quot;: p.eval_methodology,
+                  &quot;检索调优&quot;: p.retrieval_tuning, &quot;微调&quot;: p.finetune}
+    weak = sorted((eng_items if main == &quot;算法岗&quot; else algo_items).items(),
+                  key=lambda x: x[1])[:2]
+    return {
+        &quot;算法分&quot;: algo, &quot;工程分&quot;: eng, &quot;主轨建议&quot;: main,
+        &quot;差距&quot;: gap,
+        &quot;策略&quot;: &quot;差距大,主轨打深辅轨保底&quot; if gap &gt;= 5 else &quot;双轨均衡,均可冲击&quot;,
+        &quot;辅轨重点补强&quot;: [k for k, _ in weak],
+    }
+
+if __name__ == &quot;__main__&quot;:
+    me = SkillProfile(paper_reading=2, eval_methodology=3, retrieval_tuning=3,
+                      finetune=1, system_design=4, high_concurrency=4,
+                      devops=4, incident=3)
+    import json
+    print(json.dumps(advise(me), ensure_ascii=False, indent=2))
+    # 典型后端背景输出：主轨=开发岗，辅轨重点补&quot;论文跟踪/微调&quot;</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">面试现场：如何 30 秒锁定面试官的&quot;频道&quot;</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="mermaid-wrap"><pre class="mermaid">flowchart TD
+    Open[中性双开场&lt;br/&gt;抛架构+数据双诱饵] --&gt; Listen{面试官追问方向?}
+    Listen --&gt;|&quot;准确率怎么做到的&quot;| Algo[切算法频道]
+    Listen --&gt;|&quot;延迟/并发怎么扛的&quot;| Eng[切工程频道]
+    Listen --&gt;|&quot;先讲讲整体设计&quot;| Probe[反问:从策略还是架构展开?]
+
+    Probe --&gt; Listen
+    Algo --&gt; A1[3阶段检索+对比实验&lt;br/&gt;Bad Case驱动优化&lt;br/&gt;评估指标量化]
+    Eng --&gt; E1[多级缓存+流式输出&lt;br/&gt;降级熔断&lt;br/&gt;QPS/P99数据]
+
+    A1 --&gt; Watch{对方是否点头/追更深?}
+    E1 --&gt; Watch
+    Watch --&gt;|深挖本频道| Stay[继续加深, 这就是对的轨]
+    Watch --&gt;|转问另一面| Switch[平滑切轨&lt;br/&gt;用同一项目另一侧叙事]
+    style Stay fill:#dcfce7,stroke:#16a34a
+    style Switch fill:#dbeafe,stroke:#2563eb</pre></div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<div class="callout callout-warning">
+            <div class="callout-icon">⚠️</div>
+            <div class="callout-body"><p>切轨要&quot;平滑&quot;而非&quot;翻脸&quot;。从算法切到工程时说&quot;这套策略要稳定跑到生产，我在工程上做了三件事…&quot;，让面试官感觉你是<strong>一个完整的人</strong>，而不是背了两套话术。</p>
+</div>
+        </div>
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">真实案例：一个后端用双轨拿下算法岗 offer</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<blockquote>
+<p>背景：候选人 L，Java 后端 3 年，自学 Agent 4 个月。本想只投开发岗，听从双轨建议同时准备算法叙事。</p>
+</blockquote>
+
+
+<div class="table-wrapper"><table class="data-table"><thead><tr><th>阶段</th><th>事件</th><th>双轨策略发挥的作用</th></tr></thead><tbody><tr><td>投递</td><td>投了某中厂&quot;算法工程师(Agent方向)&quot;</td><td>JD 偏算法，L 切换为算法简历版本</td></tr><tr><td>一面</td><td>面试官追问&quot;检索召回率怎么提的&quot;</td><td>L 用准备好的算法叙事：BM25+向量+Rerank 三阶段，附 MRR 提升数据</td></tr><tr><td>二面</td><td>转问&quot;这套怎么扛 200 QPS&quot;</td><td>L 切工程频道：多级缓存+语义缓存命中率 25%，面试官惊喜</td></tr><tr><td>三面(总监)</td><td>&quot;你到底算法强还是工程强&quot;</td><td>L 答&quot;工程是我的根，算法是我的刃&quot;，主辅清晰不含糊</td></tr><tr><td>结果</td><td>拿到算法岗 offer，比纯开发岗高 8%</td><td>双能力让 L 在&quot;边界模糊&quot;的岗位上脱颖而出</td></tr></tbody></table></div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p><strong>复盘</strong>：L 的工程是主轨（讲得最深最稳），算法是辅轨（能接住追问且有数据支撑）。正是二面那段&quot;工程频道&quot;的从容，让总监认定他是&quot;既懂模型又能落地&quot;的稀缺复合型人才。</p>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">双轨策略的底层逻辑（心法）</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>很多人对&quot;双轨&quot;有误解，以为是要你成为百年难遇的&quot;全栈天才&quot;。</p>
+
+
+<p><strong>不，你不需要真的同时精通顶尖算法和极致的底层工程。</strong></p>
+
+
+<p>你只需要做到：</p>
+
+<ol>
+<li><strong>一个非常扎实的项目底座</strong>：这个项目必须有策略思考的痕迹（算法面所需），也有严谨的代码落地实现（工程面所需）。</li>
+<li><strong>两套流利的表述剧本</strong>：把同一件事情，从&quot;研究型问题&quot;和&quot;工程型问题&quot;两个视角讲透彻。</li>
+<li><strong>一个清晰的自我认知</strong>：心里很清楚自己到底更擅长哪一端。把擅长的那一端作为&quot;保底必杀技&quot;，把另一端作为&quot;惊艳加分项&quot;。</li>
+</ol>
+
+
+<blockquote>
+<p><strong>核心心法总结</strong>：投算法的时候，把项目包装成&quot;研究型落地&quot;（我有理论，且我能让理论跑起来）；投开发的时候，把项目包装成&quot;工程型架构&quot;（我能搭高并发系统，且我懂 LLM 的底层脾气）。</p>
+<p><strong>面试的本质不是展示你的全部，而是让面试官看到他极度渴望看到的那一面。</strong> 准备好你的两套面具，随时上场。</p>
+</blockquote>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">2025-2026 最新进展</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>双轨策略在 2026 年的岗位错配市场中价值进一步凸显。由于企业对 Agent 岗的定位普遍模糊（既想要懂模型评估/微调的算法人，又想要能扛高并发/工程化落地的开发人），同时具备两侧能力并能按岗位灵活切换叙事的候选人，命中率明显高于单一定位者。实践中的关键是&quot;一项目两版本&quot;——同一个 Agent 项目，面算法岗时强调评估指标、提示优化、模型选型；面开发岗时强调架构、并发、成本与可观测。</p>
+
+
+<p>需要清醒认识的是：双轨不等于两边都浅尝辄止。市场最终淘汰的是&quot;什么都会一点、什么都不深&quot;的人。</p>
+
+
+<div class="callout callout-tip">
+            <div class="callout-icon">💡</div>
+            <div class="callout-body"><p>双轨准备时设定一个&quot;主轨 + 辅轨&quot;：把 70% 精力投入你最擅长的方向做到面试官挑不出毛病，剩余 30% 保证辅轨能接住基础追问即可，避免平均用力导致两边都不过关。
+[!WARNING] 切忌在同一场面试中频繁切换人设。一旦面算法岗就坚定走算法叙事，中途暴露工程短板时硬拗算法反而失分。投递前就确定本场主打哪一轨。</p>
+</div>
+        </div>
+                </div>
+            </section>
+</section>
+
+        <section class="title-slide">
+            <h1 class="main-title" style="color: #2563eb">THANKS</h1>
+            <div class="main-subtitle">07 · 双轨策略：算法岗 x 开发岗一起面 · 完</div>
+        </section>
+    
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/highlight/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/zoom/zoom.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.1/mermaid.min.js"></script>
+    <script>
+        if (window.mermaid) {
+            mermaid.initialize({
+                startOnLoad: false,
+                theme: 'default',
+                themeVariables: {
+                    primaryColor: '#eff6ff',
+                    primaryTextColor: '#1e293b',
+                    primaryBorderColor: '#2563eb',
+                    lineColor: '#94a3b8',
+                    secondaryColor: '#f1f5f9',
+                    tertiaryColor: '#ffffff',
+                    fontFamily: 'Noto Sans SC, sans-serif'
+                }
+            });
+            // reveal 切片后再渲染当前可见的 mermaid，避免隐藏时尺寸为 0
+            const renderMermaid = () => { try { mermaid.run({ querySelector: '.present .mermaid:not([data-processed])' }); } catch(e){} };
+            window.addEventListener('load', () => { setTimeout(renderMermaid, 300); });
+        }
+    
+        Reveal.initialize({
+            hash: true, center: false, controls: true, progress: true,
+            transition: 'slide', backgroundTransition: 'fade', slideNumber: 'c/t',
+            width: 1280, height: 720, margin: 0.08,
+            plugins: [ RevealHighlight, RevealZoom ]
+        });
+        Reveal.on('slidechanged', () => { try { mermaid.run({ querySelector: '.present .mermaid:not([data-processed])' }); } catch(e){} });
+    </script>
+
+<!-- 水印 -->
+<div id="_wm" style="pointer-events:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99999;overflow:hidden;opacity:0.06;">
+<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+<defs><pattern id="wmp" x="0" y="0" width="240" height="160" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
+<text x="10" y="80" font-size="16" fill="#333" font-family="sans-serif">算法研习手记</text>
+</pattern></defs>
+<rect width="100%" height="100%" fill="url(#wmp)"/>
+</svg></div>
+</body>
+</html>

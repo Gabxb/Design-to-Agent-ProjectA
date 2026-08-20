@@ -1,0 +1,22 @@
+"""Chapter 06 teaching example: 变量、函数和数据结构."""
+from __future__ import annotations
+
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
+class LearningTask:
+    title: str
+    priority: int
+
+
+def validate_task(title: str, priority: int) -> LearningTask:
+    if not title.strip():
+        raise ValueError("title must not be empty")
+    if priority not in {1, 2, 3}:
+        raise ValueError("priority must be 1, 2, or 3")
+    return LearningTask(title=title.strip(), priority=priority)
+
+
+if __name__ == "__main__":
+    print(validate_task("变量、函数和数据结构", 1))

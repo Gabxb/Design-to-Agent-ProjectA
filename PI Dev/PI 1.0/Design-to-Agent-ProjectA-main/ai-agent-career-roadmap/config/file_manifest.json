@@ -1,0 +1,227 @@
+{
+  "file_count": 15,
+  "total_size": 5423,
+  "plans": {
+    "plan-a-foundation": {
+      "status": "not_created",
+      "description": "稳健基础版"
+    },
+    "plan-b-job-ready": {
+      "status": "not_created",
+      "description": "求职冲刺版"
+    },
+    "plan-c-designer-ai": {
+      "status": "not_created",
+      "description": "设计师优势版"
+    }
+  },
+  "weeks": {
+    "week-01": {
+      "status": "partial",
+      "days": 1,
+      "description": "基础编程"
+    },
+    "week-02": {
+      "status": "not_created",
+      "description": "Python 进阶"
+    },
+    "week-03": {
+      "status": "not_created",
+      "description": "FastAPI 基础"
+    },
+    "week-04": {
+      "status": "not_created",
+      "description": "数据库与 API"
+    },
+    "week-05": {
+      "status": "not_created",
+      "description": "LLM 应用"
+    },
+    "week-06": {
+      "status": "not_created",
+      "description": "Prompt 工程"
+    },
+    "week-07": {
+      "status": "not_created",
+      "description": "Tool Calling"
+    },
+    "week-08": {
+      "status": "not_created",
+      "description": "LLM 应用开发"
+    },
+    "week-09": {
+      "status": "not_created",
+      "description": "RAG 基础"
+    },
+    "week-10": {
+      "status": "not_created",
+      "description": "向量数据库"
+    },
+    "week-11": {
+      "status": "not_created",
+      "description": "RAG 实践"
+    },
+    "week-12": {
+      "status": "not_created",
+      "description": "RAG 知识库"
+    },
+    "week-13": {
+      "status": "not_created",
+      "description": "Agent 基础"
+    },
+    "week-14": {
+      "status": "not_created",
+      "description": "工作流"
+    },
+    "week-15": {
+      "status": "not_created",
+      "description": "ReAct 与 Tool Use"
+    },
+    "week-16": {
+      "status": "not_created",
+      "description": "Agent 工作流"
+    },
+    "week-17": {
+      "status": "not_created",
+      "description": "生产化"
+    },
+    "week-18": {
+      "status": "not_created",
+      "description": "测试与评测"
+    },
+    "week-19": {
+      "status": "not_created",
+      "description": "安全与部署"
+    },
+    "week-20": {
+      "status": "not_created",
+      "description": "生产化"
+    },
+    "week-21": {
+      "status": "not_created",
+      "description": "求职冲刺"
+    },
+    "week-22": {
+      "status": "not_created",
+      "description": "作品集优化"
+    },
+    "week-23": {
+      "status": "not_created",
+      "description": "面试准备"
+    },
+    "week-24": {
+      "status": "not_created",
+      "description": "求职冲刺"
+    }
+  },
+  "projects": {
+    "project-01-tool-calling": {
+      "status": "not_created",
+      "description": "设计需求分析助手"
+    },
+    "project-02-rag-knowledge-base": {
+      "status": "not_created",
+      "description": "设计规范知识库 Agent"
+    },
+    "project-03-agent-workflow": {
+      "status": "not_created",
+      "description": "智能设计评审 Agent"
+    },
+    "project-04-capstone": {
+      "status": "not_created",
+      "description": "设计服务平台 Agent"
+    }
+  },
+  "knowledge": {
+    "python": {
+      "status": "partial",
+      "files": 2
+    },
+    "fastapi": {
+      "status": "not_created",
+      "files": 0
+    },
+    "database": {
+      "status": "not_created",
+      "files": 0
+    },
+    "git": {
+      "status": "not_created",
+      "files": 0
+    },
+    "docker": {
+      "status": "not_created",
+      "files": 0
+    },
+    "llm": {
+      "status": "not_created",
+      "files": 0
+    },
+    "rag": {
+      "status": "not_created",
+      "files": 0
+    },
+    "agent": {
+      "status": "not_created",
+      "files": 0
+    },
+    "langgraph": {
+      "status": "not_created",
+      "files": 0
+    },
+    "mcp": {
+      "status": "not_created",
+      "files": 0
+    },
+    "evaluation": {
+      "status": "not_created",
+      "files": 0
+    },
+    "security": {
+      "status": "not_created",
+      "files": 0
+    },
+    "deployment": {
+      "status": "not_created",
+      "files": 0
+    }
+  },
+  "templates": {
+    "status": "partial",
+    "files": 2
+  },
+  "config": {
+    "learner_profile.yaml": {
+      "status": "not_created",
+      "description": "学习者配置"
+    },
+    "current_plan.yaml": {
+      "status": "not_created",
+      "description": "当前方案配置"
+    },
+    "learning_settings.yaml": {
+      "status": "not_created",
+      "description": "学习设置"
+    },
+    "file_manifest.json": {
+      "status": "not_created",
+      "description": "文件索引"
+    }
+  },
+  "total_files": 15,
+  "total_size": 5423,
+  "generation_date": "2024-12-19",
+  "status": "partial",
+  "next_steps": [
+    "创建完整目录结构",
+    "生成所有方案文件夹",
+    "创建24周每周计划",
+    "生成每日任务文件",
+    "创建知识库文档",
+    "生成项目文件夹",
+    "创建所有模板",
+    "生成PDF文件",
+    "创建自动化脚本",
+    "更新文件清单"
+  ]
+}

@@ -1,0 +1,1 @@
+{"case_id":"smoke-001","input":{"query":"hello"},"expected":{"success":true},"tags":["smoke"]}

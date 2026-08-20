@@ -1,0 +1,8 @@
+fastapi>=0.115
+uvicorn[standard]>=0.30
+pydantic>=2.8
+pytest>=8.0
+httpx>=0.27
+PyYAML>=6.0
+Markdown>=3.6
+WeasyPrint>=61.0

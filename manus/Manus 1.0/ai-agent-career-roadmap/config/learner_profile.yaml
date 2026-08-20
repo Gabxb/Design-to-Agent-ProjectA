@@ -1,0 +1,12 @@
+learner:
+  current_role: designer
+  programming_foundation: some_code_experience
+  target_role: ai_agent_development_engineer
+  goal: participate_in_real_projects_and_interviews
+  learning_style: project_driven_engineering_first
+  preferred_language: zh-CN
+  code_language: English
+  default_environment:
+    - VS Code
+    - GitHub
+    - local_computer
