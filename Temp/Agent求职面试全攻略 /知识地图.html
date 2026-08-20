@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent 求职指南 · 课程主页</title>
+<style>
+  :root { --c: #a855f7; --c-soft: rgba(168,85,247,0.1); --c-line: rgba(168,85,247,0.22); }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+         background:#f7f8fb; color:#1f2937; line-height:1.6; }
+  /* 顶部课程横幅 */
+  .hero { background:linear-gradient(120deg, var(--c) 0%, rgba(168,85,247,0.78) 100%);
+          color:#fff; padding:56px 24px 64px; position:relative; overflow:hidden; }
+  .hero::after { content:""; position:absolute; right:-80px; top:-80px; width:320px; height:320px;
+          background:rgba(255,255,255,.12); border-radius:50%; }
+  .hero-inner { max-width:1080px; margin:0 auto; position:relative; z-index:1; }
+  .crumb { font-size:13px; opacity:.85; margin-bottom:18px; }
+  .crumb a { color:#fff; text-decoration:none; opacity:.9; }
+  .crumb a:hover { text-decoration:underline; }
+  .hero h1 { font-size:36px; font-weight:800; margin-bottom:10px; }
+  .hero .lead { font-size:17px; opacity:.92; max-width:680px; }
+  .hero-stats { display:flex; gap:28px; margin-top:26px; }
+  .stat b { font-size:26px; font-weight:800; display:block; }
+  .stat span { font-size:13px; opacity:.85; }
+  /* 课程列表 */
+  .wrap { max-width:1080px; margin:-32px auto 60px; padding:0 24px; position:relative; z-index:2; }
+  .section-title { font-size:20px; font-weight:700; margin:8px 0 20px; color:#111827;
+          display:flex; align-items:center; gap:10px; }
+  .section-title::before { content:""; width:5px; height:20px; background:var(--c); border-radius:3px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:20px; }
+  .course-card { display:flex; flex-direction:column; background:#fff; border-radius:16px;
+          border:1px solid #eceef2; padding:22px 22px 18px; text-decoration:none; color:inherit;
+          box-shadow:0 1px 3px rgba(16,24,40,.04); transition:transform .18s, box-shadow .18s, border-color .18s; }
+  .course-card:hover { transform:translateY(-5px); box-shadow:0 16px 36px rgba(16,24,40,.12); border-color:var(--c-line); }
+  .card-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+  .lesson-no { font-size:12px; font-weight:700; color:var(--c); background:var(--c-soft);
+          padding:4px 12px; border-radius:20px; letter-spacing:.5px; }
+  .play-icon { width:30px; height:30px; border-radius:50%; background:var(--c-soft); color:var(--c);
+          display:flex; align-items:center; justify-content:center; font-size:11px; transition:.18s; }
+  .course-card:hover .play-icon { background:var(--c); color:#fff; }
+  .lesson-title { font-size:18px; font-weight:700; color:#111827; margin-bottom:8px; line-height:1.4; }
+  .lesson-desc { font-size:13.5px; color:#6b7280; margin-bottom:14px; }
+  .lesson-points { list-style:none; margin-bottom:16px; flex:1; }
+  .lesson-points li { font-size:13px; color:#4b5563; padding:4px 0 4px 18px; position:relative; }
+  .lesson-points li::before { content:""; position:absolute; left:2px; top:11px; width:6px; height:6px;
+          background:var(--c); border-radius:50%; opacity:.6; }
+  .card-foot { margin-top:auto; padding-top:8px; border-top:1px dashed #eef0f4; }
+  .start-btn { font-size:13.5px; font-weight:700; color:var(--c); }
+  .start-btn::after { content:" →"; transition:.18s; }
+  .course-card:hover .start-btn::after { content:"  →"; }
+  .footer { text-align:center; color:#9ca3af; font-size:12px; padding:24px; }
+  @media(max-width:600px){ .hero h1{font-size:27px} .hero-stats{gap:18px} }
+</style>
+</head>
+<body>
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="crumb"><a href="../开始学习.html">全部课程</a> &nbsp;/&nbsp; Agent 求职指南</div>
+      <h1>Agent 求职指南</h1>
+      <div class="lead">简历 / 面试 / 双轨 / 谈薪</div>
+      <div class="hero-stats">
+        <div class="stat"><b>10</b><span>章节课时</span></div>
+        <div class="stat"><b>系统化</b><span>由浅入深</span></div>
+        <div class="stat"><b>可实战</b><span>含代码案例</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="section-title">课程目录</div>
+    <div class="grid">
+
+      <a class="course-card" href="01-%E6%B1%82%E8%81%8C%E5%85%A8%E6%99%AF.html">
+        <div class="card-top">
+          <span class="lesson-no">第 01 讲</span>
+          <span class="play-icon">▶</span>
+        </div>
+        <h3 class="lesson-title">求职全景</h3>
+        <p class="lesson-desc">2026 春招 AI 岗位数同比激增（脉脉报告）</p>
+        <ul class="lesson-points"><li>AI Agent 岗到底值不值得冲？</li><li>算法岗 vs 开发岗</li><li>不同公司的面试偏好</li><li>JD 常见要求拆解</li><li>薪资拆解</li></ul>
+        <div class="card-foot"><span class="start-btn">开始学习</span></div>
+      </a>
+
+      <a class="course-card" href="02-%E9%A1%B9%E7%9B%AE%E6%89%93%E9%80%A0%EF%BC%9A%E5%81%9A%E5%87%BA%E8%83%BD%E5%86%99%E8%BF%9B%E7%AE%80%E5%8E%86%E7%9A%84Agent%E9%A1%B9%E7%9B%AE.html">
+        <div class="card-top">
+          <span class="lesson-no">第 02 讲</span>
+          <span class="play-icon">▶</span>
+        </div>
+        <h3 class="lesson-title">项目打造：做出能写进简历的 Agent 项目</h3>
+        <p class="lesson-desc">简历筛选与面试开场首先围绕项目展开</p>
+        <ul class="lesson-points"><li>&quot;做出什么 &gt; 学过什么&quot;</li><li>步打造法</li><li>智能客服 Agent 系统</li><li>个选题的完整代码骨架</li><li>如何做差异化</li></ul>
+        <div class="card-foot"><span class="start-btn">开始学习</span></div>
+      </a>
+
+      <a class="course-card" href="03-%E7%AE%80%E5%8E%86%E5%86%99%E4%BD%9C%EF%BC%9AAgent%E9%A1%B9%E7%9B%AE%E7%9A%843D%E8%A1%A8%E8%BE%BE%E6%B3%95.html">
+        <div class="card-top">
+          <span class="lesson-no">第 03 讲</span>
+          <span class="play-icon">▶</span>
+        </div>
+        <h3 class="lesson-title">简历写作：Agent 项目的 3D 表达法</h3>
+        <p class="lesson-desc">架构/业务/结果三维度立体呈现项目贡献</p>
+        <ul class="lesson-points"><li>什么是 3D 表达法？</li><li>同一项目，两种写法</li><li>智能客服 Agent 系统</li><li>智能客服 Agent 系统</li><li>常见简历错误</li></ul>
+        <div class="card-foot"><span class="start-btn">开始学习</span></div>
+      </a>
+
+      <a class="course-card" href="04-%E7%90%86%E8%AE%BA%E9%9D%A2%E8%AF%95%EF%BC%9ALLM-Agent-RAG%E5%9F%BA%E7%A1%8040%E9%A2%98.html">
+        <div class="card-top">
+          <span class="lesson-no">第 04 讲</span>
+          <span class="play-icon">▶</span>
+        </div>
+        <h3 class="lesson-title">理论面试：LLM/Agent/RAG 基础 40 题</h3>
+        <p class="lesson-desc">覆盖 LLM/Agent/RAG/生态四大板块高频考点</p>
+        <ul class="lesson-points"><li>LLM 基础</li><li>Agent 核心</li><li>RAG 专项</li><li>模型与生态</li><li>进阶题</li></ul>
+        <div class="card-foot"><span class="start-btn">开始学习</span></div>
+      </a>
+
+      <a class="course-card" href="05-%E5%B7%A5%E7%A8%8B%E9%9D%A2%E8%AF%95%EF%BC%9A%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E6%9E%B6%E6%9E%8425%E9%A2%98.html">
+        <div class="card-top">
+          <span class="lesson-no">第 05 讲</span>
+          <span class="play-icon">▶</span>
+        </div>
+        <h3 class="lesson-title">工程面试：系统设计与架构 25 题</h3>
+        <p class="lesson-desc">系统设计 10 + 框架工具 8 + 性能优化 7</p>
+        <ul class="lesson-points"><li>系统设计</li><li>框架与工具</li><li>性能优化</li><li>系统设计精讲</li><li>面试官追问清单</li></ul>
+        <div class="card-foot"><span class="start-btn">开始学习</span></div>
+      </a>
+
+      <a class="course-card" href="06-%E4%BB%A3%E7%A0%81%E9%9D%A2%E8%AF%95%EF%BC%9A%E6%89%8B%E5%86%99Agent%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%8115%E9%A2%98.html">
+        <div class="card-top">
+          <span class="lesson-no">第 06 讲</span>
+          <span class="play-icon">▶</span>
+        </div>
+        <h3 class="lesson-title">代码面试：手写 Agent 核心代码 15 题</h3>
+        <p class="lesson-desc">Agent 基础 5 + RAG 代码 4 + 工程实践 6</p>
+        <ul class="lesson-points"><li>Agent 基础</li><li>RAG 代码</li><li>工程实践</li><li>面试深度剖析与高阶案例</li></ul>
+        <div class="card-foot"><span class="start-btn">开始学习</span></div>
+      </a>
+
+      <a class="course-card" href="07-%E5%8F%8C%E8%BD%A8%E7%AD%96%E7%95%A5%EF%BC%9A%E7%AE%97%E6%B3%95%E5%B2%97x%E5%BC%80%E5%8F%91%E5%B2%97%E4%B8%80%E8%B5%B7%E9%9D%A2.html">
+        <div class="card-top">
+          <span class="lesson-no">第 07 讲</span>
+          <span class="play-icon">▶</span>
+        </div>
+        <h3 class="lesson-title">双轨策略：算法岗 x 开发岗一起面</h3>
+        <p class="lesson-desc">算法岗 + 开发岗双线并行，命中率翻倍</p>
+        <ul class="lesson-points"><li>为什么推荐双轨？</li><li>同一项目的两侧重</li><li>简历准备两份</li><li>项目实战案例深度剖析：双版本表述</li><li>企业文档智能问答系统</li></ul>
+        <div class="card-foot"><span class="start-btn">开始学习</span></div>
+      </a>
+
+      <a class="course-card" href="08-%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E6%A1%88%E4%BE%8B.html">
+        <div class="card-top">
+          <span class="lesson-no">第 08 讲</span>
+          <span class="play-icon">▶</span>
+        </div>
+        <h3 class="lesson-title">大厂面经案例</h3>
+        <p class="lesson-desc">不同公司考察深度与侧重差异明显</p>
+        <ul class="lesson-points"><li>五大公司考察维度横向对比</li><li>系统设计题答题框架</li><li>面试前 48 小时 Checklist</li></ul>
+        <div class="card-foot"><span class="start-btn">开始学习</span></div>
+      </a>
+
+      <a class="course-card" href="09-%E8%BD%AC%E5%B2%97%E6%94%BB%E7%95%A5.html">
+        <div class="card-top">
+          <span class="lesson-no">第 09 讲</span>
+          <span class="play-icon">▶</span>
+        </div>
+        <h3 class="lesson-title">转岗攻略</h3>
+        <p class="lesson-desc">无需深度学习数学/训练底层，工程能力即入场券</p>
+        <ul class="lesson-points"><li>各背景转岗优势与能力迁盘分析</li><li>路线图拆解：后端转 Agent</li><li>路线图拆解：前端转 Agent</li><li>能力迁移矩阵：你的旧技能值多少钱</li><li>三类背景的技能差距雷达</li></ul>
+        <div class="card-foot"><span class="start-btn">开始学习</span></div>
+      </a>
+
+      <a class="course-card" href="10-%E8%B0%88%E8%96%AA%E7%AD%96%E7%95%A5.html">
+        <div class="card-top">
+          <span class="lesson-no">第 10 讲</span>
+          <span class="play-icon">▶</span>
+        </div>
+        <h3 class="lesson-title">谈薪策略</h3>
+        <p class="lesson-desc">掌握信息差与博弈技巧可多谈出的溢价幅度</p>
+        <ul class="lesson-points"><li>彻底拆解薪资构成</li><li>高能谈判场景实景推演</li><li>创业公司&quot;期权大坑&quot;防雷指南</li><li>Offer 横向决策：别只看总包数字</li><li>谈判全流程决策图</li></ul>
+        <div class="card-foot"><span class="start-btn">开始学习</span></div>
+      </a>
+    </div>
+  </div>
+  <div class="footer">课程主页 · 点击任意课时进入幻灯片学习</div>
+
+<!-- 水印 -->
+<div id="_wm" style="pointer-events:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99999;overflow:hidden;opacity:0.06;">
+<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+<defs><pattern id="wmp" x="0" y="0" width="240" height="160" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
+<text x="10" y="80" font-size="16" fill="#333" font-family="sans-serif">算法研习手记</text>
+</pattern></defs>
+<rect width="100%" height="100%" fill="url(#wmp)"/>
+</svg></div>
+</body>
+</html>

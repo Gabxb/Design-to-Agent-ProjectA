@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>09 · 转岗攻略</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/theme/white.min.css" id="theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #1e293b;
+            --accent-color: #2563eb;
+            --accent-2: #7c3aed;
+            --accent-3: #059669;
+            --border-color: #e2e8f0;
+            --card-bg: rgba(241, 245, 249, 0.7);
+        }
+        body { background: radial-gradient(circle at 30% 20%, #ffffff 0%, #f8fafc 60%, #f1f5f9 100%); }
+        .reveal { font-family: 'Noto Sans SC', sans-serif; color: var(--text-color); }
+
+        /* Typography */
+        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+            font-family: 'Noto Sans SC', sans-serif;
+            text-transform: none; letter-spacing: normal; word-break: break-word;
+        }
+        .reveal h1.main-title { font-weight: 900; color: #0f172a; font-size: 2.8em; text-shadow: 0 4px 24px rgba(37,99,235,0.18); margin-bottom: 0.3em; }
+        .reveal .main-subtitle { font-weight: 300; color: #64748b; font-size: 1.1em; line-height: 1.6; max-width: 800px; margin: 0 auto; }
+
+        .reveal h2.section-h2 {
+            color: transparent; background: linear-gradient(90deg, var(--accent-color), var(--accent-2));
+            -webkit-background-clip: text; background-clip: text;
+            font-weight: 800; font-size: 2.2em; border-bottom: 2px solid var(--border-color); padding-bottom: 0.3em; display: inline-block;
+        }
+        .reveal h3.section-h3 { color: #0f172a; font-weight: 700; font-size: 1.5em; text-align: left; border-left: 4px solid var(--accent-color); padding-left: 0.6em; margin-bottom: 1em; }
+
+        .reveal p, .reveal li { font-size: 0.95em; line-height: 1.7; text-align: left; margin-bottom: 0.8em; word-break: break-word; }
+        .reveal strong { color: #1d4ed8; font-weight: 700; }
+        .reveal em { color: #475569; }
+
+        /* Layouts */
+        .title-slide { height: 100%; display: flex !important; flex-direction: column; justify-content: center; align-items: center; }
+        .content-slide { height: 100%; display: flex !important; flex-direction: column; justify-content: center; align-items: flex-start; padding: 2% 5% !important; }
+        .slide-content-wrapper { width: 100%; max-height: 86vh; overflow-y: auto; padding-right: 15px; }
+        .content-slide.present .slide-content-wrapper > * { animation: fadeUp 0.5s ease both; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(14px);} to { opacity: 1; transform: none;} }
+
+        /* Scrollbar */
+        .slide-content-wrapper::-webkit-scrollbar { width: 6px; }
+        .slide-content-wrapper::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+
+        /* Badges & Hints */
+        .label-badge, .chapter-badge {
+            background: rgba(37,99,235,0.08); border: 1px solid rgba(37,99,235,0.25); color: var(--accent-color);
+            padding: 6px 16px; border-radius: 20px; font-size: 0.6em; font-weight: 700; margin-bottom: 2em; letter-spacing: 2px;
+        }
+        .scroll-hint { margin-top: 4em; font-size: 0.6em; color: #94a3b8; opacity: 0.9; }
+
+        /* Blockquotes */
+        .reveal blockquote {
+            width: 100%; text-align: left; margin: 1em 0; padding: 1em 1.5em;
+            background: var(--card-bg); border-left: 4px solid var(--accent-color);
+            border-radius: 0 8px 8px 0; font-style: normal; font-size: 0.9em; box-shadow: none;
+        }
+
+        /* Inline Code */
+        .reveal code { font-family: 'Fira Code', monospace; background: #f1f5f9; color: #db2777; padding: 0.1em 0.3em; border-radius: 4px; font-size: 0.85em; }
+
+        /* Mac Window Code Blocks */
+        .mac-window {
+            background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;
+            margin: 1em 0; width: 100%; box-shadow: 0 8px 24px rgba(15,23,42,0.10); overflow: hidden; text-align: left;
+        }
+        .mac-header { background: #eef2f7; padding: 8px 12px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid #e2e8f0; }
+        .mac-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+        .mac-lang { margin-left: auto; color: #94a3b8; font-size: 0.6em; font-family: 'Fira Code', monospace; text-transform: uppercase; }
+        .reveal pre { margin: 0; width: 100%; box-shadow: none; display: block; }
+        .reveal pre code {
+            padding: 1.2em; font-size: 0.75em; line-height: 1.5; font-family: 'Fira Code', monospace;
+            background: transparent; color: inherit; max-height: 55vh; overflow-y: auto; white-space: pre-wrap; word-break: break-all;
+        }
+
+        /* Tables + Bars */
+        .table-wrapper { width: 100%; overflow-x: auto; margin: 1em 0; }
+        .reveal table.data-table { width: 100%; margin: 0; font-size: 0.8em; border-collapse: collapse; }
+        .reveal table.data-table th { background: rgba(37,99,235,0.08); color: #1e293b; font-weight: 700; padding: 10px 14px; border-bottom: 2px solid var(--accent-color); text-align: left; }
+        .reveal table.data-table td { padding: 9px 14px; border-bottom: 1px solid var(--border-color); vertical-align: middle; }
+        .reveal table.data-table tr:nth-child(even) { background: rgba(15,23,42,0.02); }
+        .reveal table.data-table tr:hover { background: rgba(37,99,235,0.06); }
+        .bar-cell { min-width: 160px; }
+        .bar-val { font-weight: 600; color: #1d4ed8; margin-bottom: 4px; }
+        .bar-track { height: 7px; background: rgba(15,23,42,0.08); border-radius: 4px; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent-color), var(--accent-2)); box-shadow: 0 0 6px rgba(37,99,235,0.35); }
+
+        /* KPI Cards */
+        .kpi-grid { display: flex; flex-wrap: wrap; gap: 16px; width: 100%; margin: 0.8em 0; }
+        .kpi-card {
+            flex: 1 1 160px; min-width: 150px; padding: 18px 20px; border-radius: 14px;
+            background: linear-gradient(145deg, rgba(37,99,235,0.07), rgba(124,58,237,0.05));
+            border: 1px solid rgba(37,99,235,0.18); box-shadow: 0 8px 24px rgba(15,23,42,0.08);
+        }
+        .kpi-value { font-size: 2.1em; font-weight: 900; line-height: 1; color: #0f172a; background: linear-gradient(90deg,#2563eb,#7c3aed); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .kpi-unit { font-size: 0.45em; font-weight: 700; margin-left: 4px; -webkit-text-fill-color: #64748b; }
+        .kpi-label { margin-top: 8px; font-size: 0.8em; font-weight: 700; color: #1e293b; }
+        .kpi-desc { margin-top: 4px; font-size: 0.7em; color: #64748b; line-height: 1.4; }
+
+        /* Callouts */
+        .callout { display: flex; gap: 14px; width: 100%; margin: 1em 0; padding: 14px 18px; border-radius: 12px; text-align: left; background: var(--card-bg); border: 1px solid var(--border-color); }
+        .callout-icon { font-size: 1.4em; line-height: 1.4; }
+        .callout-body { flex: 1; font-size: 0.85em; }
+        .callout-body :first-child { margin-top: 0; } .callout-body :last-child { margin-bottom: 0; }
+        .callout-tip { border-left: 4px solid #34d399; background: rgba(52,211,153,0.08); }
+        .callout-note { border-left: 4px solid #38bdf8; background: rgba(56,189,248,0.08); }
+        .callout-info { border-left: 4px solid #38bdf8; background: rgba(56,189,248,0.08); }
+        .callout-warning { border-left: 4px solid #fbbf24; background: rgba(251,191,36,0.08); }
+        .callout-danger { border-left: 4px solid #f87171; background: rgba(248,113,113,0.08); }
+        .callout-success { border-left: 4px solid #34d399; background: rgba(52,211,153,0.08); }
+
+        /* Mermaid */
+        .mermaid-wrap { width: 100%; display: flex; justify-content: center; margin: 0.5em 0; }
+        .reveal .mermaid { background: transparent; font-size: 0.9em; max-height: 70vh; }
+        .reveal .mermaid svg { max-width: 100%; height: auto; }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            
+        <section class="title-slide">
+            <div class="label-badge">求职与面试 · 章节 09</div>
+            <h1 class="main-title">09 · 转岗攻略</h1>
+            
+            <div class="scroll-hint">
+                <p>按 <strong>Space</strong> 键查看全景鸟瞰视图</p>
+                <p>按 <strong>↓</strong> 或 <strong>→</strong> 键开始阅读</p>
+            </div>
+        </section>
+    <section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">前端/后端/产品 → AI Agent 工程师</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>AI Agent 岗是目前转行门槛最低的 AI 方向——它完美避开了传统 AI 岗位的死穴：你不需要懂深度学习底层数学公式，不需要会 Pytorch 模型训练微调，甚至不需要懂 CUDA 算力优化。你只需要具备<strong>扎实的工程代码能力 + 对 Agent 协同机制的深刻理解</strong>。</p>
+
+
+<p>这就意味着，所有拥有 3-5 年以上传统软件工程经验的开发者，都手握着转型的入场券。</p>
+
+
+<div class="kpi-grid"><div class="kpi-card">
+                <div class="kpi-value">最低<span class="kpi-unit">AI 方向</span></div>
+                <div class="kpi-label">转岗门槛</div>
+                <div class="kpi-desc">无需深度学习数学/训练底层，工程能力即入场券</div>
+            </div><div class="kpi-card">
+                <div class="kpi-value">3-5<span class="kpi-unit">年</span></div>
+                <div class="kpi-label">[!KPI] 入场经验</div>
+                <div class="kpi-desc">有传统软件工程经验即具备转型基础</div>
+            </div><div class="kpi-card">
+                <div class="kpi-value">8<span class="kpi-unit">周</span></div>
+                <div class="kpi-label">[!KPI] 后端速成</div>
+                <div class="kpi-desc">后端转 Agent 的硬核速成路线图周期</div>
+            </div><div class="kpi-card">
+                <div class="kpi-value">10<span class="kpi-unit">周</span></div>
+                <div class="kpi-label">[!KPI] 前端突围</div>
+                <div class="kpi-desc">前端转全栈 Agent 的进阶路线图周期</div>
+            </div></div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">各背景转岗优势与能力迁盘分析</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">📍 后端转 Agent（最丝滑的转型路径）</h3>
+
+<p><strong>你的核心优势（护城河）</strong>：</p>
+
+<ul>
+<li><strong>基建底子厚</strong>：高并发 API 设计、复杂的数据库表结构、系统架构、缓存与消息队列等经验，可以直接无缝平移。</li>
+<li><strong>架构思维契合</strong>：Agent 本质上就是一个&quot;带了大脑的复杂后端工作流&quot;。LangGraph 等主流框架的底层逻辑，和你熟悉的微服务编排、状态机流转高度一致。</li>
+</ul>
+
+
+<p><strong>你需要重点恶补的</strong>：</p>
+
+<ul>
+<li><strong>&quot;非确定性&quot;系统的思维转变</strong>：传统后端是&quot;如果 A 则必然 B&quot;，但 LLM 是个概率机器，同样输入可能产生不同输出。你需要学习 Prompt 工程来努力收敛这种不确定性。</li>
+<li><strong>RAG 检索策略与向量知识</strong>：不熟悉向量空间距离计算、多路召回策略，没用过 FAISS / Milvus / Qdrant。</li>
+<li><strong>评测闭环（Evaluation）</strong>：习惯了写单元测试测代码逻辑，但不熟悉怎么测 LLM 输出的&quot;质量好坏&quot;（需要学习 RAGAS 等自动化评估体系）。</li>
+</ul>
+
+
+<p><strong>极速推荐路线</strong>：</p>
+
+<ol>
+<li><strong>破冰（1 周）</strong>：学习 LangChain/LangGraph 的核心思想（重点理解 Graph 状态流转）。</li>
+<li><strong>实战打底（2 周）</strong>：用 FastAPI 搭建一个包含多路检索和混合排序的 RAG 问答 API 项目。</li>
+<li><strong>针对性刷题（1 周）</strong>：系统学习大模型评估指标（MRR, NDCG 等）。</li>
+<li><strong>简历重塑</strong>：突出**&quot;传统高并发系统架构演进为 AI Agent 架构&quot;**的能力平移。</li>
+</ol>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">📍 前端转 Agent（最具差异化竞争力的路径）</h3>
+
+<p>很多前端觉得做 AI 是后端的天下，大错特错！在 Agent 时代，<strong>交互体验的复杂度呈指数级上升</strong>。纯后端工程师往往做不出让用户惊艳的 Agent 产品。</p>
+
+
+<p><strong>你的核心优势（护城河）</strong>：</p>
+
+<ul>
+<li><strong>极致的 UI/UX 思维</strong>：你能敏锐察觉如何通过交互掩盖大模型的延迟（Loading 动画、流式打字效果）。</li>
+<li><strong>用户体感前置</strong>：在多模态 Agent（语音、图像）和 Copilot（侧边栏助手）产品中，前端本身就是核心业务层。</li>
+</ul>
+
+
+<p><strong>你需要重点恶补的</strong>：</p>
+
+<ul>
+<li><strong>Python 后端基建</strong>：必须补齐 Python 基础，学用 FastAPI 写接口，了解基础数据库操作。</li>
+<li><strong>Agent 引擎流转机制</strong>：深入理解 ReAct 循环、工具调用（Tool Calling）的生命周期。</li>
+<li><strong>系统全栈设计</strong>：补齐系统架构层面的宏观视角。</li>
+</ul>
+
+
+<p><strong>极速推荐路线</strong>：</p>
+
+<ol>
+<li><strong>跨界语言（1 周）</strong>：极速掌握 Python + FastAPI（带着你 JS 中 async/await 的经验，这非常快）。</li>
+<li><strong>概念对齐（1 周）</strong>：学习大模型 API 调用原理，手撸精简版 ReAct 循环。</li>
+<li><strong>打穿全栈（3 周，核心战役）</strong>：开发一个<strong>前后端完整的 Agent 独立产品</strong>。前端用 React/Vue 实现极致的流式对话和组件渲染，后端用 Python 处理核心逻辑。</li>
+<li><strong>简历重塑</strong>：死磕**&quot;全栈独立交付交互级 Agent 应用&quot;**这一差异化卖点。</li>
+</ol>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">📍 产品转 Agent PM / 技术 PM（最吃业务洞察的路径）</h3>
+
+<p><strong>你的核心优势（护城河）</strong>：</p>
+
+<ul>
+<li><strong>降维打击的业务理解</strong>：你比任何工程师都清楚&quot;这个牛逼的技术到底能给公司省多少钱 / 赚多少钱&quot;。</li>
+<li><strong>用户痛点拆解</strong>：能将模糊的业务需求，拆解为 Agent 可以执行的具体功能节点（SOP 化）。</li>
+</ul>
+
+
+<p><strong>你需要重点恶补的</strong>：</p>
+
+<ul>
+<li><strong>祛魅&quot;魔法&quot;</strong>：必须清楚大模型现在的<strong>能力边界</strong>。知道什么需求大模型轻松搞定，什么需求大模型一定会死循环。</li>
+<li><strong>掌握基础技术黑话</strong>：听得懂 Token, Embedding, RAG, 幻觉, 召回率，否则无法跟开发对齐需求。</li>
+</ul>
+
+
+<p><strong>极速推荐路线</strong>：</p>
+
+<ol>
+<li><strong>底层逻辑（1 周）</strong>：快速阅读行业科普文档，理解 Agent 的四大组件（规划、记忆、工具、执行）。</li>
+<li><strong>零代码实操（3 天）</strong>：用 Coze 或 Dify（无需写代码的搭积木平台）搭建 3 个不同场景的 Agent。深度体验它们是怎么工作的。</li>
+<li><strong>架构拆解（2 周）</strong>：深度分析市面上 5 个成熟 Agent 产品的交互设计和底层可能的 SOP 流转逻辑。</li>
+<li><strong>简历重塑</strong>：主打**&quot;深谙 AI 边界的业务级 Agent 落地操盘手&quot;**。</li>
+</ol>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">路线图拆解：后端转 Agent（8 周硬核速成）</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>这是一套经过多次验证的 8 周从 0 到面霸的魔鬼训练表。</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">阶段一：打破认知（第 1 周，理解 LLM 到底是什么）</h3>
+<ul>
+<li><strong>核心目标</strong>：从&quot;机械地调外部 API&quot;转变为&quot;理解模型为什么这样回复&quot;。</li>
+<li><strong>实操动作</strong>：<ul>
+<li>注册并跑通 OpenAI SDK（国内可用 DeepSeek V4 的 API 替代，便宜且好用）。</li>
+<li>写代码测试 Token 限制、调整 Temperature 看输出差异，理解 System Prompt 的统摄作用。</li>
+<li>阅读关于 Transformer 原理的高质量科普（理解什么是注意力机制，知道 LLM 是如何玩&quot;接龙游戏&quot;的）。</li>
+</ul>
+</li>
+<li><strong>验收标准</strong>：你能向一个外行清晰解释&quot;幻觉是怎么产生的&quot;。</li>
+</ul>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">阶段二：Agent 剥壳（第 2 周，手撕核心机制）</h3>
+<ul>
+<li><strong>核心目标</strong>：绝不依赖 LangChain 等黑盒框架，徒手实现 Agent 的大脑循环。</li>
+<li><strong>实操动作</strong>：<ul>
+<li>用纯 Python 手写一个最简版本的 <strong>ReAct (Reasoning and Acting)</strong> 循环。</li>
+<li>深度跑通一次完整的 <strong>Tool Calling (工具调用)</strong> 流程：从定义 JSON schema，到接收 LLM 返回的执行指令，到本地执行函数，最后把结果塞回给 LLM。</li>
+</ul>
+</li>
+<li><strong>验收标准</strong>：你能闭着眼睛在白板上画出 Agent 从接收问题到调用工具再到最终回答的时序图。</li>
+</ul>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">阶段三：RAG 深水区战役（第 3-4 周，打造能写进简历的核心项目）</h3>
+<ul>
+<li><strong>核心目标</strong>：徒手搓一个具有较高复杂度的文档问答系统。</li>
+<li><strong>实操动作</strong>：<ul>
+<li>实现从文档加载 (Loader) → 文本切分 (Chunking) → 向量化 (Embedding) → 存入向量库的完整索引流。</li>
+<li>核心挑战：对比不同切分策略（按固定长度 vs 按语义段落）在相同测试集上的效果差异。</li>
+<li>引入高阶玩法：在单路向量召回的基础上，加入 BM25 稀疏检索，并叠加 Reranker（重排序模型）做最后打分。</li>
+</ul>
+</li>
+<li><strong>验收标准</strong>：API 能够稳定、准确地基于一份 100 页的 PDF 文档回答极其刁钻的细节问题。</li>
+</ul>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">阶段四：老本行大显神威（第 5-6 周，工程化加持）</h3>
+<ul>
+<li><strong>核心目标</strong>：让你的实验室 Demo 变成一个具备企业级水准的正式系统。</li>
+<li><strong>实操动作</strong>：<ul>
+<li>运用你的后端经验，为系统加上 Docker Compose 容器化部署编排。</li>
+<li>搭建 Prometheus 监控面板，追踪每次请求的耗时和 Token 消耗量。</li>
+<li>实现核心链路的异常捕获与降级处理（当大模型 API 超时时该怎么兜底）。</li>
+<li>将普通的接口升级为支持 Server-Sent Events (SSE) 的流式输出接口。</li>
+</ul>
+</li>
+<li><strong>验收标准</strong>：任何人只需执行 <code>docker-compose up</code> 就能拉起你的整套全链路服务。</li>
+</ul>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">阶段五：简历包装与面经突击（第 7-8 周）</h3>
+<ul>
+<li><strong>实操动作</strong>：<ul>
+<li>彻底推翻旧简历，用 <strong>STAR 法则结合 3D 表达法</strong> 重新包装刚才的 RAG 项目（强调对比实验数据和高可用设计）。</li>
+<li>背诵并理解高频算法面试题（如 NDCG 指标计算、常见检索痛点解决方案）。</li>
+<li>开启海投模式：<strong>先投 5 家非目标公司（绝对不想去的公司）作为垫脚石进行实战演练</strong>，录音复盘后，再精准狙击目标头部企业。</li>
+</ul>
+</li>
+</ul>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">路线图拆解：前端转 Agent（10 周全栈突围）</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>前端由于需要补齐后端生态语言，周期稍长，但一旦突破，杀伤力极大。</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">阶段一：Python 与后端基建极速补课（第 1-2 周）</h3>
+<ul>
+<li>把你写 Express/Koa 的经验映射过来，极速学习 Python 语法和 <strong>FastAPI</strong> 框架。</li>
+<li>重点掌握 Pydantic 的数据校验模型，并熟悉 SQLAlchemy 或简单 PostgreSQL 的增删改查。</li>
+<li><strong>验收标准</strong>：能独立且不看文档写出一个带 Token 鉴权、包含基础路由的完整 CRUD 后端服务。</li>
+</ul>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">阶段二：LLM 原理降维打击（第 3-4 周）</h3>
+<ul>
+<li>用刚学的 Python 跑通 OpenAI SDK。</li>
+<li>不用深究太底层的论文，但要精读 ReAct 的思想，手写一个能维持上下文记忆的简单聊天循环。</li>
+<li><strong>验收标准</strong>：在控制台中，能和一个具备&quot;记忆&quot;能力的 AI 助理流畅对答。</li>
+</ul>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">阶段三：打造全栈交互神作（第 5-7 周，你的超级杀手锏）</h3>
+<ul>
+<li>这是你与其他纯后端候选人拉开断层差距的阶段。</li>
+<li><strong>后端</strong>：用 LangChain/LlamaIndex 搭建一个标准的 RAG 问答服务。</li>
+<li><strong>前端极致打磨</strong>：<ul>
+<li>用 React/Vue 配合 Tailwind 写一个极具质感、类似 ChatGPT 的对话界面。</li>
+<li>攻克 <strong>SSE 流式渲染</strong>难点，实现文字逐个蹦出的丝滑体验。</li>
+<li>实现 Markdown 实时渲染和代码块高亮，甚至能在 Agent 返回数据表时，直接在聊天框里渲染出一个可交互的 ECharts 图表（所谓 Generative UI）。</li>
+</ul>
+</li>
+<li><strong>验收标准</strong>：做出一个让外行看了都觉得&quot;这产品肯定很贵&quot;的完整 Web 应用。</li>
+</ul>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">阶段四：工程封层与收割（第 8-10 周）</h3>
+<ul>
+<li>学习 Docker 把前后端打在一个包里发布上线。</li>
+<li>完善 Readme 中的动图展示。</li>
+<li><strong>面试一击必杀话术</strong>：&quot;我不需要任何前端配合，我一个人就能把一个复杂的 Agent 产品从底层逻辑流转一直做到极致的前端像素级呈现，并直接推上生产线。&quot;</li>
+</ul>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">能力迁移矩阵：你的旧技能值多少钱</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>转岗不是清零重来，而是<strong>技能资产的重新定价</strong>。下表量化了三种背景的技能可迁移度，帮你识别&quot;哪些能直接卖钱、哪些必须补&quot;。</p>
+
+
+<div class="table-wrapper"><table class="data-table"><thead><tr><th>原有技能</th><th>后端背景</th><th>前端背景</th><th>产品背景</th><th>在 Agent 岗的价值</th></tr></thead><tbody><tr><td>高并发/分布式架构</td><td>⭐⭐⭐⭐⭐ 直接平移</td><td>⭐ 需补</td><td>⭐ 概念了解即可</td><td>Agent 服务化、高可用编排的硬底子</td></tr><tr><td>API/服务治理</td><td>⭐⭐⭐⭐⭐</td><td>⭐⭐</td><td>—</td><td>工具调用、外部服务集成</td></tr><tr><td>UI/UX 交互设计</td><td>⭐</td><td>⭐⭐⭐⭐⭐ 直接平移</td><td>⭐⭐⭐</td><td>流式对话、Generative UI、降低延迟感</td></tr><tr><td>状态管理 (Redux/状态机)</td><td>⭐⭐⭐</td><td>⭐⭐⭐⭐</td><td>—</td><td>LangGraph 状态流转理解极快</td></tr><tr><td>业务需求拆解</td><td>⭐⭐</td><td>⭐⭐</td><td>⭐⭐⭐⭐⭐ 直接平移</td><td>SOP 化、Agent 任务编排设计</td></tr><tr><td>数据库/SQL</td><td>⭐⭐⭐⭐</td><td>⭐⭐</td><td>⭐</td><td>向量库、元数据过滤、记忆持久化</td></tr><tr><td>Python</td><td>⭐⭐⭐ (Java转需补)</td><td>⭐⭐ (JS转需补)</td><td>⭐⭐</td><td>Agent 生态第一语言，必备</td></tr><tr><td>Prompt/LLM 调优</td><td>❌ 需从零学</td><td>❌ 需从零学</td><td>⭐⭐ (会用过工具)</td><td>核心新技能，三类背景都要补</td></tr></tbody></table></div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<div class="callout callout-tip">
+            <div class="callout-icon">💡</div>
+            <div class="callout-body"><p>转岗简历的黄金句式：<strong>&quot;将 [原领域优势] 平移到 Agent 工程化的 [对应环节]&quot;</strong>。例如后端写&quot;将千万级订单系统的高并发治理经验，平移到 Agent 工具调用的限流熔断设计&quot;。</p>
+</div>
+        </div>
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">三类背景的技能差距雷达</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="mermaid-wrap"><pre class="mermaid">graph TD
+    subgraph 后端转 Agent
+        B1[✅ 系统架构] --- B2[✅ 高并发] --- B3[⚠️ Prompt工程] --- B4[⚠️ 向量检索] --- B5[❌ 评测闭环]
+    end
+    subgraph 前端转 Agent
+        F1[✅ 交互体验] --- F2[⚠️ Python后端] --- F3[⚠️ Agent引擎] --- F4[❌ 系统架构] --- F5[❌ 向量检索]
+    end
+    subgraph 产品转 Agent
+        P1[✅ 业务洞察] --- P2[✅ 需求拆解] --- P3[⚠️ 技术黑话] --- P4[❌ 能力边界判断] --- P5[❌ 编码实现]
+    end
+    style B5 fill:#fee2e2
+    style F4 fill:#fee2e2
+    style F5 fill:#fee2e2
+    style P4 fill:#fee2e2
+    style P5 fill:#fee2e2</pre></div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">简历核武器：一个可写进简历的转岗项目骨架</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>转岗者最缺的不是知识，而是<strong>一个能在面试白板上画清楚、每行代码都讲得通的项目</strong>。下面是一个最小可运行的 RAG Agent 骨架，足以支撑一次完整的项目深挖。</p>
+
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">python</span>
+                </div>
+                <pre><code class="language-python">&quot;&quot;&quot;
+career_switch_rag_agent.py
+一个&quot;麻雀虽小五脏俱全&quot;的转岗简历项目骨架：
+多路召回 + Rerank + 工具调用 + 流式输出。
+面试时能把每个模块的 trade-off 讲透,就足够拿 offer。
+&quot;&quot;&quot;
+import asyncio
+from dataclasses import dataclass
+
+@dataclass
+class Doc:
+    content: str
+    score: float = 0.0
+
+class HybridRetriever:
+    &quot;&quot;&quot;多路召回：向量 + 关键词，体现你懂检索而非只会调包。&quot;&quot;&quot;
+    def __init__(self, docs: list[str]):
+        self.docs = docs
+
+    def dense_search(self, query: str, k: int = 5) -&gt; list[Doc]:
+        # 真实场景接 FAISS/Milvus，这里用长度相似模拟
+        return [Doc(d, score=1.0 / (1 + abs(len(d) - len(query))))
+                for d in self.docs][:k]
+
+    def sparse_search(self, query: str, k: int = 5) -&gt; list[Doc]:
+        # 真实场景接 BM25/ES，这里用词重叠模拟
+        qset = set(query)
+        scored = [Doc(d, score=len(qset &amp; set(d)) / (len(qset) + 1))
+                  for d in self.docs]
+        return sorted(scored, key=lambda x: x.score, reverse=True)[:k]
+
+    def rrf_fuse(self, *result_lists, k: int = 60) -&gt; list[Doc]:
+        &quot;&quot;&quot;倒数秩融合：面试高频考点，能讲清楚就是加分项。&quot;&quot;&quot;
+        scores: dict[str, float] = {}
+        for results in result_lists:
+            for rank, doc in enumerate(results):
+                scores[doc.content] = scores.get(doc.content, 0) + 1.0 / (k + rank)
+        fused = [Doc(c, score=s) for c, s in scores.items()]
+        return sorted(fused, key=lambda x: x.score, reverse=True)
+
+class SimpleAgent:
+    def __init__(self, retriever: HybridRetriever):
+        self.retriever = retriever
+
+    async def run(self, query: str):
+        dense = self.retriever.dense_search(query)
+        sparse = self.retriever.sparse_search(query)
+        fused = self.retriever.rrf_fuse(dense, sparse)[:3]
+        context = &quot;\n&quot;.join(d.content for d in fused)
+        # 流式输出：前端转岗者重点展示这一段的体验设计
+        async for chunk in self._stream_answer(query, context):
+            print(chunk, end=&quot;&quot;, flush=True)
+
+    async def _stream_answer(self, query, context):
+        answer = f&quot;基于检索到的上下文回答「{query}」：{context[:50]}...&quot;
+        for ch in answer:
+            await asyncio.sleep(0.01)
+            yield ch
+
+if __name__ == &quot;__main__&quot;:
+    kb = [&quot;Kubernetes 是容器编排系统&quot;, &quot;Docker 用于容器化打包&quot;,
+          &quot;向量数据库存储 Embedding&quot;, &quot;RAG 结合检索与生成&quot;]
+    agent = SimpleAgent(HybridRetriever(kb))
+    asyncio.run(agent.run(&quot;什么是容器编排&quot;))</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p><strong>面试讲法</strong>：后端候选人重点讲 <code>rrf_fuse</code> 和可扩展性；前端候选人重点讲 <code>_stream_answer</code> 的流式体验；产品候选人重点讲&quot;为什么要多路召回&quot;的业务价值。同一个项目，不同背景讲出不同的护城河。</p>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">8 周 / 10 周路线图：可勾选的周计划表</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>把抽象的&quot;加油学&quot;拆成可量化、可验收的周任务。</p>
+
+
+<div class="table-wrapper"><table class="data-table"><thead><tr><th>周次</th><th>后端路线核心交付物</th><th>前端路线核心交付物</th><th>验收标准</th></tr></thead><tbody><tr><td>W1</td><td>跑通 LLM SDK + 理解 Token/Temperature</td><td>Python+FastAPI CRUD 服务</td><td>能解释&quot;幻觉如何产生&quot;</td></tr><tr><td>W2</td><td>手写 ReAct + Tool Calling 循环</td><td>跑通 LLM SDK + 带记忆的对话</td><td>能在白板画时序图</td></tr><tr><td>W3-4</td><td>RAG 系统(切分+向量+Reranker)</td><td>—</td><td>能基于100页PDF精准问答</td></tr><tr><td>W5-6</td><td>Docker+监控+SSE 工程化</td><td>全栈交互神作(SSE+GenUI)</td><td><code>docker-compose up</code> 一键启动</td></tr><tr><td>W7-8</td><td>STAR 简历重塑 + 模拟面试</td><td>工程封层 + 上线 + Readme 动图</td><td>完成 5 家垫脚石面试</td></tr><tr><td>W9-10</td><td>—</td><td>面试一击必杀话术打磨</td><td>拿到目标公司 offer</td></tr></tbody></table></div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">转岗决策树：先确认你该不该转</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="mermaid-wrap"><pre class="mermaid">flowchart TD
+    Start[考虑转 Agent 岗] --&gt; Exp{工程经验是否 ≥3年?}
+    Exp --&gt;|是| Bg{你的背景?}
+    Exp --&gt;|否, 应届/跨行| Junior[从初级切入&lt;br/&gt;接受平薪起步&lt;br/&gt;赌赛道天花板]
+
+    Bg --&gt;|后端| Back[最丝滑路径&lt;br/&gt;8周速成&lt;br/&gt;主打跑稳跑省]
+    Bg --&gt;|前端| Front[差异化路径&lt;br/&gt;10周全栈&lt;br/&gt;主打交互体验]
+    Bg --&gt;|产品| PM[业务洞察路径&lt;br/&gt;主打懂边界会落地]
+
+    Back --&gt; Proj[完成1个可深挖项目]
+    Front --&gt; Proj
+    PM --&gt; Proj
+    Junior --&gt; Proj
+    Proj --&gt; Apply[70分即海投&lt;br/&gt;用面试反推学习]
+    style Apply fill:#dcfce7,stroke:#16a34a</pre></div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">高频转岗灵魂拷问 FAQ</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p><strong>🔥 Q1: 我目前做着毫无相关的传统增删改查（CRUD）业务，我的旧简历在 HR 看来是不是一文不值？</strong></p>
+
+
+<p><strong>绝对不是。</strong> 把你的旧经验当做&quot;隐形插件&quot;插入到简历中。比如你做过电商订单系统，你可以在简历总结中写：&quot;具备处理千万级日订单流水的高并发系统设计经验，<strong>极度擅长梳理复杂业务工作流（这正是 Agent 编排的核心基础）</strong>，目前正将深厚的架构经验平移至高并发 Agent 系统的落地中。&quot; 将劣势转化为系统稳定性的保障。</p>
+
+
+<p><strong>🔥 Q2: 我只跟着教程跑通了一个项目，真的能投简历吗？会不会被面试官问穿？</strong></p>
+
+
+<p>做了一个能完整从头跑通、你清楚知道每一行代码在干嘛的项目，<strong>不仅能投，而且必须立刻去投</strong>。
+标准在于：你能不能在白板上把这个项目的架构图一笔一划画出来，并在面试官问出&quot;如果这一步失败了怎么办&quot;时，能给出至少两个备选方案（哪怕是错的）。面试官想要的是你的<strong>技术推演能力</strong>，而不是要求你打造过完美的印钞机。</p>
+
+
+<p><strong>🔥 Q3: 转型期间我应该裸辞在家闭关苦学吗？</strong></p>
+
+
+<p><strong>坚决反对裸辞。</strong> 
+Agent 技术目前处于极速震荡期，每天都有新框架和新论文蹦出来。裸辞会让你陷入巨大的焦虑，导致你什么都想学，最后什么都没干成。
+正确做法是：利用晚上和周末的碎片时间。把学习目标极其功利地收窄为&quot;做完那一个核心的简历项目&quot;。项目能跑通，就立刻开始海投试水。用面试的鞭打来反向驱动学习。</p>
+
+
+<p><strong>🔥 Q4: 我已经 35 岁了，做传统后端 10 年，转型 Agent 会有人要吗？</strong></p>
+
+
+<p>Agent 赛道目前是全行业<strong>对年龄包容度最高的 AI 方向</strong>，没有之一。
+为什么？因为早期的 AI 实验室需要年轻的天才算力极客，但现在的 Agent 行业已经进入了**&quot;大规模工程落地期&quot;**。把 Agent 塞进复杂的企业微信、对接老旧的内部 ERP、处理恐怖的并发风暴——这些全是需要靠岁月沉淀下来的架构经验来填的坑。你的 10 年工程经验，在很多被 Agent 不稳定性折磨得焦头烂额的团队眼里，就是救命稻草。</p>
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p><strong>🔥 Q5: 转型跳槽，大概率会被大刀阔斧地压薪资吗？</strong></p>
+
+
+<p>如果是 3 年以上经验的后端转 Agent 开发，基本<strong>不会被压价</strong>，通常能拿到持平或 +10%~+20% 的涨幅。因为你带来的底层工程思维补足了团队短板。
+如果是纯小白或跨行（如非开发转开发），不可避免地需要从初级甚至平薪开始。但这就像买股票，你买的是 Agent 赛道在未来 3-5 年恐怖的天花板，牺牲短期换取长期暴击。</p>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">终极心态建设：打破&quot;准备完美再上场&quot;的幻觉</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>很多转岗者死在了&quot;我要把 LangChain 所有 API 都背熟&quot;、&quot;我要把注意力机制公式推导 10 遍&quot;的准备焦虑中。</p>
+
+
+<p>请记住转岗的核心心法：<strong>做到 70 分，就立刻把自己扔到战场上。</strong></p>
+
+
+<ul>
+<li>面试官问到了你没学过的 RAG 策略？太棒了，这恰好说明那是目前企业的刚需，回家立马花两小时吃透它，把它加进你的项目中。</li>
+<li>把前 3 家面试彻底当成<strong>免费且高端的技术一对一咨询</strong>。面试官刁难你的每一个问题，就是你项目简历下一版迭代的指导大纲。</li>
+</ul>
+
+
+<p>Agent 时代不属于那些准备最完美的做题家，而属于那些用旧武器武装了新大脑，敢于冲上第一线肉搏的人。</p>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">2025-2026 最新进展</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>AI Agent 岗在 2026 年仍是传统开发者转型门槛最低的 AI 方向——它不强依赖深度学习数学与模型训练，而是高度依赖工程能力与对 Agent 协同机制的理解，这让 3-5 年经验的后端、前端乃至产品都握有入场券。后端开发者凭借高并发、服务治理经验可在 8 周内速成；前端开发者则可借助全栈路线在 10 周内打通从交互到编排的闭环。</p>
+
+
+<p>转型成功的共性在于&quot;用熟悉的工程能力做杠杆&quot;：把原有领域的优势（如后端的系统设计、前端的产品体感）嫁接到 Agent 工程化上，而非从零和应届生拼理论。</p>
+
+
+<div class="callout callout-tip">
+            <div class="callout-icon">💡</div>
+            <div class="callout-body"><p>转岗时不要丢掉原有优势去硬卷算法。后端就主打&quot;能把 Agent 跑稳跑省&quot;，前端就主打&quot;能把 Agent 体验做好&quot;，差异化叙事远比补短板更高效。
+[!WARNING] 转岗速成路线图是&quot;最短可行路径&quot;而非&quot;躺赢捷径&quot;。不动手做出一个完整可演示的项目，仅看完教程就投递，会在第一轮项目深挖中原形毕露。</p>
+</div>
+        </div>
+                </div>
+            </section>
+</section>
+
+        <section class="title-slide">
+            <h1 class="main-title" style="color: #2563eb">THANKS</h1>
+            <div class="main-subtitle">09 · 转岗攻略 · 完</div>
+        </section>
+    
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/highlight/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/zoom/zoom.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.1/mermaid.min.js"></script>
+    <script>
+        if (window.mermaid) {
+            mermaid.initialize({
+                startOnLoad: false,
+                theme: 'default',
+                themeVariables: {
+                    primaryColor: '#eff6ff',
+                    primaryTextColor: '#1e293b',
+                    primaryBorderColor: '#2563eb',
+                    lineColor: '#94a3b8',
+                    secondaryColor: '#f1f5f9',
+                    tertiaryColor: '#ffffff',
+                    fontFamily: 'Noto Sans SC, sans-serif'
+                }
+            });
+            // reveal 切片后再渲染当前可见的 mermaid，避免隐藏时尺寸为 0
+            const renderMermaid = () => { try { mermaid.run({ querySelector: '.present .mermaid:not([data-processed])' }); } catch(e){} };
+            window.addEventListener('load', () => { setTimeout(renderMermaid, 300); });
+        }
+    
+        Reveal.initialize({
+            hash: true, center: false, controls: true, progress: true,
+            transition: 'slide', backgroundTransition: 'fade', slideNumber: 'c/t',
+            width: 1280, height: 720, margin: 0.08,
+            plugins: [ RevealHighlight, RevealZoom ]
+        });
+        Reveal.on('slidechanged', () => { try { mermaid.run({ querySelector: '.present .mermaid:not([data-processed])' }); } catch(e){} });
+    </script>
+
+<!-- 水印 -->
+<div id="_wm" style="pointer-events:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99999;overflow:hidden;opacity:0.06;">
+<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+<defs><pattern id="wmp" x="0" y="0" width="240" height="160" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
+<text x="10" y="80" font-size="16" fill="#333" font-family="sans-serif">算法研习手记</text>
+</pattern></defs>
+<rect width="100%" height="100%" fill="url(#wmp)"/>
+</svg></div>
+</body>
+</html>

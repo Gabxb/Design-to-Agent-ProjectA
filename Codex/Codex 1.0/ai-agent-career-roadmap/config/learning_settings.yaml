@@ -1,0 +1,10 @@
+daily_days: 7
+weekly_hours: 15
+review_day: 7
+preserve_user_content: true
+backup_before_update: true
+generate_pdf: true
+pdf_language: zh-CN
+code_language: en
+text_encoding: UTF-8
+date_format: YYYY-MM-DD

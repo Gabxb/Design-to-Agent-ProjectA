@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>06 · 代码面试：手写 Agent 核心代码 15 题</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/theme/white.min.css" id="theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #1e293b;
+            --accent-color: #2563eb;
+            --accent-2: #7c3aed;
+            --accent-3: #059669;
+            --border-color: #e2e8f0;
+            --card-bg: rgba(241, 245, 249, 0.7);
+        }
+        body { background: radial-gradient(circle at 30% 20%, #ffffff 0%, #f8fafc 60%, #f1f5f9 100%); }
+        .reveal { font-family: 'Noto Sans SC', sans-serif; color: var(--text-color); }
+
+        /* Typography */
+        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+            font-family: 'Noto Sans SC', sans-serif;
+            text-transform: none; letter-spacing: normal; word-break: break-word;
+        }
+        .reveal h1.main-title { font-weight: 900; color: #0f172a; font-size: 2.8em; text-shadow: 0 4px 24px rgba(37,99,235,0.18); margin-bottom: 0.3em; }
+        .reveal .main-subtitle { font-weight: 300; color: #64748b; font-size: 1.1em; line-height: 1.6; max-width: 800px; margin: 0 auto; }
+
+        .reveal h2.section-h2 {
+            color: transparent; background: linear-gradient(90deg, var(--accent-color), var(--accent-2));
+            -webkit-background-clip: text; background-clip: text;
+            font-weight: 800; font-size: 2.2em; border-bottom: 2px solid var(--border-color); padding-bottom: 0.3em; display: inline-block;
+        }
+        .reveal h3.section-h3 { color: #0f172a; font-weight: 700; font-size: 1.5em; text-align: left; border-left: 4px solid var(--accent-color); padding-left: 0.6em; margin-bottom: 1em; }
+
+        .reveal p, .reveal li { font-size: 0.95em; line-height: 1.7; text-align: left; margin-bottom: 0.8em; word-break: break-word; }
+        .reveal strong { color: #1d4ed8; font-weight: 700; }
+        .reveal em { color: #475569; }
+
+        /* Layouts */
+        .title-slide { height: 100%; display: flex !important; flex-direction: column; justify-content: center; align-items: center; }
+        .content-slide { height: 100%; display: flex !important; flex-direction: column; justify-content: center; align-items: flex-start; padding: 2% 5% !important; }
+        .slide-content-wrapper { width: 100%; max-height: 86vh; overflow-y: auto; padding-right: 15px; }
+        .content-slide.present .slide-content-wrapper > * { animation: fadeUp 0.5s ease both; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(14px);} to { opacity: 1; transform: none;} }
+
+        /* Scrollbar */
+        .slide-content-wrapper::-webkit-scrollbar { width: 6px; }
+        .slide-content-wrapper::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+
+        /* Badges & Hints */
+        .label-badge, .chapter-badge {
+            background: rgba(37,99,235,0.08); border: 1px solid rgba(37,99,235,0.25); color: var(--accent-color);
+            padding: 6px 16px; border-radius: 20px; font-size: 0.6em; font-weight: 700; margin-bottom: 2em; letter-spacing: 2px;
+        }
+        .scroll-hint { margin-top: 4em; font-size: 0.6em; color: #94a3b8; opacity: 0.9; }
+
+        /* Blockquotes */
+        .reveal blockquote {
+            width: 100%; text-align: left; margin: 1em 0; padding: 1em 1.5em;
+            background: var(--card-bg); border-left: 4px solid var(--accent-color);
+            border-radius: 0 8px 8px 0; font-style: normal; font-size: 0.9em; box-shadow: none;
+        }
+
+        /* Inline Code */
+        .reveal code { font-family: 'Fira Code', monospace; background: #f1f5f9; color: #db2777; padding: 0.1em 0.3em; border-radius: 4px; font-size: 0.85em; }
+
+        /* Mac Window Code Blocks */
+        .mac-window {
+            background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;
+            margin: 1em 0; width: 100%; box-shadow: 0 8px 24px rgba(15,23,42,0.10); overflow: hidden; text-align: left;
+        }
+        .mac-header { background: #eef2f7; padding: 8px 12px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid #e2e8f0; }
+        .mac-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+        .mac-lang { margin-left: auto; color: #94a3b8; font-size: 0.6em; font-family: 'Fira Code', monospace; text-transform: uppercase; }
+        .reveal pre { margin: 0; width: 100%; box-shadow: none; display: block; }
+        .reveal pre code {
+            padding: 1.2em; font-size: 0.75em; line-height: 1.5; font-family: 'Fira Code', monospace;
+            background: transparent; color: inherit; max-height: 55vh; overflow-y: auto; white-space: pre-wrap; word-break: break-all;
+        }
+
+        /* Tables + Bars */
+        .table-wrapper { width: 100%; overflow-x: auto; margin: 1em 0; }
+        .reveal table.data-table { width: 100%; margin: 0; font-size: 0.8em; border-collapse: collapse; }
+        .reveal table.data-table th { background: rgba(37,99,235,0.08); color: #1e293b; font-weight: 700; padding: 10px 14px; border-bottom: 2px solid var(--accent-color); text-align: left; }
+        .reveal table.data-table td { padding: 9px 14px; border-bottom: 1px solid var(--border-color); vertical-align: middle; }
+        .reveal table.data-table tr:nth-child(even) { background: rgba(15,23,42,0.02); }
+        .reveal table.data-table tr:hover { background: rgba(37,99,235,0.06); }
+        .bar-cell { min-width: 160px; }
+        .bar-val { font-weight: 600; color: #1d4ed8; margin-bottom: 4px; }
+        .bar-track { height: 7px; background: rgba(15,23,42,0.08); border-radius: 4px; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent-color), var(--accent-2)); box-shadow: 0 0 6px rgba(37,99,235,0.35); }
+
+        /* KPI Cards */
+        .kpi-grid { display: flex; flex-wrap: wrap; gap: 16px; width: 100%; margin: 0.8em 0; }
+        .kpi-card {
+            flex: 1 1 160px; min-width: 150px; padding: 18px 20px; border-radius: 14px;
+            background: linear-gradient(145deg, rgba(37,99,235,0.07), rgba(124,58,237,0.05));
+            border: 1px solid rgba(37,99,235,0.18); box-shadow: 0 8px 24px rgba(15,23,42,0.08);
+        }
+        .kpi-value { font-size: 2.1em; font-weight: 900; line-height: 1; color: #0f172a; background: linear-gradient(90deg,#2563eb,#7c3aed); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .kpi-unit { font-size: 0.45em; font-weight: 700; margin-left: 4px; -webkit-text-fill-color: #64748b; }
+        .kpi-label { margin-top: 8px; font-size: 0.8em; font-weight: 700; color: #1e293b; }
+        .kpi-desc { margin-top: 4px; font-size: 0.7em; color: #64748b; line-height: 1.4; }
+
+        /* Callouts */
+        .callout { display: flex; gap: 14px; width: 100%; margin: 1em 0; padding: 14px 18px; border-radius: 12px; text-align: left; background: var(--card-bg); border: 1px solid var(--border-color); }
+        .callout-icon { font-size: 1.4em; line-height: 1.4; }
+        .callout-body { flex: 1; font-size: 0.85em; }
+        .callout-body :first-child { margin-top: 0; } .callout-body :last-child { margin-bottom: 0; }
+        .callout-tip { border-left: 4px solid #34d399; background: rgba(52,211,153,0.08); }
+        .callout-note { border-left: 4px solid #38bdf8; background: rgba(56,189,248,0.08); }
+        .callout-info { border-left: 4px solid #38bdf8; background: rgba(56,189,248,0.08); }
+        .callout-warning { border-left: 4px solid #fbbf24; background: rgba(251,191,36,0.08); }
+        .callout-danger { border-left: 4px solid #f87171; background: rgba(248,113,113,0.08); }
+        .callout-success { border-left: 4px solid #34d399; background: rgba(52,211,153,0.08); }
+
+        /* Mermaid */
+        .mermaid-wrap { width: 100%; display: flex; justify-content: center; margin: 0.5em 0; }
+        .reveal .mermaid { background: transparent; font-size: 0.9em; max-height: 70vh; }
+        .reveal .mermaid svg { max-width: 100%; height: auto; }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            
+        <section class="title-slide">
+            <div class="label-badge">求职与面试 · 章节 06</div>
+            <h1 class="main-title">06 · 代码面试：手写 Agent 核心代码 15 题</h1>
+            <div class="main-subtitle">算法岗侧重思路讲解，开发岗要求现场写代码。以下 15 题覆盖 Agent 开发的核心代码模式。</div>
+            <div class="scroll-hint">
+                <p>按 <strong>Space</strong> 键查看全景鸟瞰视图</p>
+                <p>按 <strong>↓</strong> 或 <strong>→</strong> 键开始阅读</p>
+            </div>
+        </section>
+    <section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+
+<div class="kpi-grid"><div class="kpi-card">
+                <div class="kpi-value">15<span class="kpi-unit">题</span></div>
+                <div class="kpi-label">题目总量</div>
+                <div class="kpi-desc">Agent 基础 5 + RAG 代码 4 + 工程实践 6</div>
+            </div><div class="kpi-card">
+                <div class="kpi-value">Agent 循环<span class="kpi-unit">必考</span></div>
+                <div class="kpi-label">[!KPI] 核心模式</div>
+                <div class="kpi-desc">LLM+工具调用的基本循环是手写题第一关</div>
+            </div><div class="kpi-card">
+                <div class="kpi-value">可运行<span class="kpi-unit">代码</span></div>
+                <div class="kpi-label">[!KPI] 现场要求</div>
+                <div class="kpi-desc">开发岗要求现场写出能跑的代码而非伪代码</div>
+            </div><div class="kpi-card">
+                <div class="kpi-value">27<span class="kpi-unit">%</span></div>
+                <div class="kpi-label">[!KPI] RAG 占比</div>
+                <div class="kpi-desc">检索增强相关代码是高频考察方向</div>
+            </div></div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">一、Agent 基础（5 题）</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">1. 手写一个最简单的 Agent 循环 ⭐</h3>
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">python</span>
+                </div>
+                <pre><code class="language-python"># 要求：实现 LLM + 工具调用的基本循环
+from openai import OpenAI
+
+client = OpenAI(
+    api_key=&quot;sk-xxx&quot;,
+    base_url=&quot;https://api.deepseek.com/v1&quot;
+)
+
+def calculator(expression):
+    &quot;&quot;&quot;评估数学表达式&quot;&quot;&quot;
+    try:
+        return str(eval(expression))
+    except:
+        return &quot;Error&quot;
+
+TOOLS = [{
+    &quot;type&quot;: &quot;function&quot;,
+    &quot;function&quot;: {
+        &quot;name&quot;: &quot;calculator&quot;,
+        &quot;description&quot;: &quot;计算数学表达式&quot;,
+        &quot;parameters&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+                &quot;expression&quot;: {&quot;type&quot;: &quot;string&quot;}
+            },
+            &quot;required&quot;: [&quot;expression&quot;]
+        }
+    }
+}]
+
+def simple_agent(user_message, max_steps=5):
+    messages = [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_message}]
+
+    for _ in range(max_steps):
+        response = client.chat.completions.create(
+            model=&quot;deepseek-v4&quot;,
+            messages=messages,
+            tools=TOOLS
+        )
+        msg = response.choices[0].message
+        messages.append(msg)
+
+        if not msg.tool_calls:
+            return msg.content  # 最终回答
+
+        # 执行工具调用
+        for tc in msg.tool_calls:
+            if tc.function.name == &quot;calculator&quot;:
+                import json
+                args = json.loads(tc.function.arguments)
+                result = calculator(args[&quot;expression&quot;])
+                messages.append({
+                    &quot;role&quot;: &quot;tool&quot;,
+                    &quot;tool_call_id&quot;: tc.id,
+                    &quot;content&quot;: result
+                })
+    return &quot;Max steps reached&quot;</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">2. 实现带记忆的多轮对话 ⭐</h3>
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">python</span>
+                </div>
+                <pre><code class="language-python"># 要求：Agent 能记住之前对话的内容
+class MemoryAgent:
+    def __init__(self):
+        self.history = []  # 完整对话历史
+
+    def chat(self, user_input):
+        self.history.append({&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_input})
+
+        response = client.chat.completions.create(
+            model=&quot;deepseek-v4&quot;,
+            messages=self.history
+        )
+
+        reply = response.choices[0].message.content
+        self.history.append({&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: reply})
+        return reply
+
+    def summarize_history(self):
+        &quot;&quot;&quot;压缩历史，保留关键信息&quot;&quot;&quot;
+        summary_prompt = (
+            &quot;请总结以下对话的关键信息：\n&quot;
+            + &quot;\n&quot;.join([f&quot;{m[&#039;role&#039;]}: {m[&#039;content&#039;]}&quot;
+                         for m in self.history[-10:]])
+        )
+        return client.chat.completions.create(
+            model=&quot;deepseek-v4&quot;,
+            messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: summary_prompt}]
+        ).choices[0].message.content</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">3. 实现工具注册系统 ⭐⭐</h3>
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">python</span>
+                </div>
+                <pre><code class="language-python"># 要求：可动态注册/注销工具，支持参数校验
+import inspect
+from typing import Callable, get_type_hints
+
+class ToolRegistry:
+    def __init__(self):
+        self._tools = {}
+
+    def register(self, func: Callable):
+        &quot;&quot;&quot;注册一个函数为工具&quot;&quot;&quot;
+        hints = get_type_hints(func)
+        schema = {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {},
+            &quot;required&quot;: []
+        }
+        for name, typ in hints.items():
+            if name == &quot;return&quot;:
+                continue
+            schema[&quot;properties&quot;][name] = {
+                &quot;type&quot;: &quot;string&quot; if typ == str else &quot;number&quot;
+            }
+            schema[&quot;required&quot;].append(name)
+
+        self._tools[func.__name__] = {
+            &quot;function&quot;: func,
+            &quot;schema&quot;: {
+                &quot;name&quot;: func.__name__,
+                &quot;description&quot;: func.__doc__ or &quot;&quot;,
+                &quot;parameters&quot;: schema
+            }
+        }
+
+    def get_tool_definitions(self):
+        &quot;&quot;&quot;返回 OpenAI 格式的工具定义&quot;&quot;&quot;
+        return [{&quot;type&quot;: &quot;function&quot;, &quot;function&quot;: t[&quot;schema&quot;]}
+                for t in self._tools.values()]
+
+    def execute(self, name, args):
+        &quot;&quot;&quot;执行指定工具&quot;&quot;&quot;
+        if name not in self._tools:
+            raise ValueError(f&quot;Tool {name} not found&quot;)
+        return self._tools[name][&quot;function&quot;](**args)
+
+# 使用示例
+registry = ToolRegistry()
+
+@registry.register
+def get_weather(city: str) -&gt; str:
+    &quot;&quot;&quot;查询指定城市的天气&quot;&quot;&quot;
+    return f&quot;{city}: Sunny, 25°C&quot;
+
+@registry.register
+def calculate(expression: str) -&gt; str:
+    &quot;&quot;&quot;计算数学表达式&quot;&quot;&quot;
+    return str(eval(expression))</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">4. 实现 ReAct 循环 ⭐⭐</h3>
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">python</span>
+                </div>
+                <pre><code class="language-python"># 要求：手动实现 Thought → Action → Observation 循环
+def react_agent(question, tools, max_steps=5):
+    messages = [
+        {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;&quot;&quot;你是一个 ReAct Agent。
+对每个问题，按以下格式回复：
+
+Thought: 你的推理过程
+Action: 工具名
+Action Input: 工具参数（JSON 格式）
+
+当你准备好最终回答时，用：
+Thought: 我已经有足够信息
+Final Answer: 你的最终回答&quot;&quot;&quot;},
+        {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: question}
+    ]
+
+    for _ in range(max_steps):
+        response = client.chat.completions.create(
+            model=&quot;deepseek-v4&quot;,
+            messages=messages
+        )
+        content = response.choices[0].message.content
+        messages.append({&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: content})
+
+        if &quot;Final Answer:&quot; in content:
+            return content.split(&quot;Final Answer:&quot;)[1].strip()
+
+        # 解析 Action
+        if &quot;Action:&quot; not in content:
+            continue
+
+        action_line = [l for l in content.split(&#039;\n&#039;)
+                       if l.startswith(&quot;Action:&quot;)][0]
+        action_name = action_line.replace(&quot;Action:&quot;, &quot;&quot;).strip()
+
+        args_line = [l for l in content.split(&#039;\n&#039;)
+                     if l.startswith(&quot;Action Input:&quot;)][0]
+        import json
+        action_args = json.loads(
+            args_line.replace(&quot;Action Input:&quot;, &quot;&quot;).strip()
+        )
+
+        # 执行工具
+        if action_name == &quot;calculator&quot;:
+            result = str(eval(action_args[&quot;expression&quot;]))
+        else:
+            result = &quot;Unknown tool&quot;
+
+        messages.append({
+            &quot;role&quot;: &quot;user&quot;,
+            &quot;content&quot;: f&quot;Observation: {result}&quot;
+        })
+
+    return &quot;Max steps reached&quot;</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">5. 实现带超时和重试的工具调用 ⭐⭐</h3>
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">python</span>
+                </div>
+                <pre><code class="language-python">import asyncio
+import functools
+
+def with_retry(max_retries=2, timeout=10):
+    &quot;&quot;&quot;工具调用装饰器：超时重试&quot;&quot;&quot;
+    def decorator(func):
+        @functools.wraps(func)
+        async def wrapper(*args, **kwargs):
+            for attempt in range(max_retries + 1):
+                try:
+                    return await asyncio.wait_for(
+                        func(*args, **kwargs),
+                        timeout=timeout
+                    )
+                except asyncio.TimeoutError:
+                    if attempt &lt; max_retries:
+                        print(f&quot;Retry {attempt + 1}/{max_retries}&quot;)
+                    else:
+                        raise
+            return None
+        return wrapper
+    return decorator
+
+@with_retry(max_retries=2, timeout=5)
+async def search_knowledge_base(query: str):
+    &quot;&quot;&quot;模拟知识库搜索&quot;&quot;&quot;
+    await asyncio.sleep(3)  # 模拟网络延迟
+    return [f&quot;Result for: {query}&quot;]</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">二、RAG 代码（4 题）</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">6. 实现 Embedding + FAISS 检索 ⭐</h3>
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">python</span>
+                </div>
+                <pre><code class="language-python">from openai import OpenAI
+import faiss
+import numpy as np
+
+client = OpenAI(
+    api_key=&quot;sk-xxx&quot;,
+    base_url=&quot;https://api.deepseek.com/v1&quot;
+)
+
+class SimpleRAG:
+    def __init__(self):
+        self.documents = []
+        self.index = None
+
+    def get_embedding(self, text):
+        response = client.embeddings.create(
+            model=&quot;text-embedding-3-small&quot;,
+            input=text
+        )
+        return np.array(response.data[0].embedding)
+
+    def add_documents(self, docs):
+        self.documents = docs
+        embeddings = [self.get_embedding(d) for d in docs]
+
+        dim = len(embeddings[0])
+        self.index = faiss.IndexFlatL2(dim)
+        self.index.add(np.array(embeddings))
+
+    def search(self, query, k=3):
+        query_vec = self.get_embedding(query).reshape(1, -1)
+        distances, indices = self.index.search(query_vec, k)
+        return [self.documents[i] for i in indices[0]]</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">7. 实现带重排序的检索 ⭐⭐</h3>
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">python</span>
+                </div>
+                <pre><code class="language-python">def search_with_rerank(query, retriever, reranker, k=20, top_n=3):
+    # 1. 粗排：向量检索 Top-K
+    candidates = retriever.get_relevant_documents(query, k=k)
+
+    # 2. 精排：用 Reranker 打分
+    scores = []
+    for doc in candidates:
+        score = reranker.compute_score(query, doc.page_content)
+        scores.append((score, doc))
+
+    # 3. 返回 Top-N
+    scores.sort(key=lambda x: x[0], reverse=True)
+    return [doc for _, doc in scores[:top_n]]</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">8. 实现文档 Chunk 分割 ⭐</h3>
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">python</span>
+                </div>
+                <pre><code class="language-python">def chunk_document(text, chunk_size=512, overlap=50):
+    &quot;&quot;&quot;固定长度切分，带重叠&quot;&quot;&quot;
+    chunks = []
+    start = 0
+
+    while start &lt; len(text):
+        end = start + chunk_size
+        chunk = text[start:end]
+
+        # 尽量在句子边界断开
+        if end &lt; len(text):
+            last_period = chunk.rfind(&#039;。&#039;)
+            if last_period &gt; chunk_size * 0.5:
+                end = start + last_period + 1
+
+        chunks.append(text[start:end])
+        start = end - overlap
+
+    return chunks</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">9. 实现 Hybrid Search（向量 + BM25） ⭐⭐</h3>
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">python</span>
+                </div>
+                <pre><code class="language-python">from rank_bm25 import BM25Okapi
+
+def hybrid_search(query, vector_store, documents, k=5, alpha=0.6):
+    # 向量检索
+    vec_results = vector_store.similarity_search_with_score(query, k=k)
+
+    # BM25 检索
+    tokenized_docs = [doc.split() for doc in documents]
+    bm25 = BM25Okapi(tokenized_docs)
+    bm25_scores = bm25.get_scores(query.split())
+    bm25_results = sorted(
+        enumerate(bm25_scores),
+        key=lambda x: x[1],
+        reverse=True
+    )[:k]
+
+    # 融合（加权）
+    fused = {}
+    for doc, score in vec_results:
+        fused[doc.page_content] = alpha * (1 - score)
+
+    for idx, score in bm25_results:
+        doc = documents[idx]
+        if doc in fused:
+            fused[doc] += (1 - alpha) * score
+        else:
+            fused[doc] = (1 - alpha) * score
+
+    return sorted(fused.items(), key=lambda x: x[1], reverse=True)[:k]</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">三、工程实践（6 题）</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">10. 实现 FastAPI Agent 服务 ⭐</h3>
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">python</span>
+                </div>
+                <pre><code class="language-python">from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class ChatRequest(BaseModel):
+    message: str
+    session_id: str = None
+
+@app.post(&quot;/chat&quot;)
+def chat(req: ChatRequest):
+    result = agent.run(req.message)
+    return {&quot;reply&quot;: result}</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">11. 实现 SSE 流式推送 ⭐⭐</h3>
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">python</span>
+                </div>
+                <pre><code class="language-python">from fastapi.responses import StreamingResponse
+import json, asyncio
+
+@app.post(&quot;/chat/stream&quot;)
+async def chat_stream(req: ChatRequest):
+    async def event_generator():
+        for event in graph.stream({&quot;messages&quot;: [req.message]}):
+            data = json.dumps(event, ensure_ascii=False)
+            yield f&quot;data: {data}\n\n&quot;
+            await asyncio.sleep(0)
+        yield &quot;data: [DONE]\n\n&quot;
+
+    return StreamingResponse(
+        event_generator(),
+        media_type=&quot;text/event-stream&quot;
+    )</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">12. 实现 Token 计数器 ⭐</h3>
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">python</span>
+                </div>
+                <pre><code class="language-python">import tiktoken
+
+def count_tokens(text, model=&quot;gpt-4&quot;):
+    encoding = tiktoken.encoding_for_model(model)
+    return len(encoding.encode(text))
+
+def count_messages_tokens(messages):
+    return sum(count_tokens(m[&quot;content&quot;]) for m in messages)</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">13. 实现限流器 ⭐⭐</h3>
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">python</span>
+                </div>
+                <pre><code class="language-python">import time
+from collections import defaultdict
+
+class RateLimiter:
+    def __init__(self, max_requests=60, window=60):
+        self.max = max_requests
+        self.window = window
+        self.requests = defaultdict(list)
+
+    def allow(self, user_id):
+        now = time.time()
+        self.requests[user_id] = [
+            t for t in self.requests[user_id]
+            if now - t &lt; self.window
+        ]
+        if len(self.requests[user_id]) &gt;= self.max:
+            return False
+        self.requests[user_id].append(now)
+        return True</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">14. 实现 Agent 单元测试 ⭐</h3>
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">python</span>
+                </div>
+                <pre><code class="language-python">def test_agent_with_mock_llm():
+    &quot;&quot;&quot;用 Mock LLM 做单元测试&quot;&quot;&quot;
+    from unittest.mock import MagicMock
+
+    mock_llm = MagicMock()
+    mock_llm.invoke.return_value = &quot;Mocked response&quot;
+
+    agent = MyAgent(llm=mock_llm)
+    result = agent.run(&quot;test input&quot;)
+
+    assert result == &quot;Mocked response&quot;
+    assert mock_llm.invoke.called
+
+def test_tool_call_parsing():
+    &quot;&quot;&quot;测试工具调用解析&quot;&quot;&quot;
+    registry = ToolRegistry()
+    registry.register(calculator)
+
+    result = registry.execute(&quot;calculator&quot;, {&quot;expression&quot;: &quot;1+1&quot;})
+    assert result == &quot;2&quot;
+
+    tools_def = registry.get_tool_definitions()
+    assert len(tools_def) == 1</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">15. 实现成本追踪 ⭐</h3>
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">python</span>
+                </div>
+                <pre><code class="language-python">class CostTracker:
+    PRICES = {
+        &quot;deepseek-v4&quot;: {&quot;input&quot;: 0.00028, &quot;output&quot;: 0.0011},
+        &quot;deepseek-v4-pro&quot;: {&quot;input&quot;: 0.0014, &quot;output&quot;: 0.0056},
+        &quot;qwen-3.5&quot;: {&quot;input&quot;: 0.0, &quot;output&quot;: 0.0},
+    }
+
+    def __init__(self, budget=0.5):
+        self.budget = budget
+        self.spent = 0
+
+    def record(self, model, tokens_in, tokens_out):
+        price = self.PRICES[model]
+        cost = (tokens_in * price[&quot;input&quot;] +
+                tokens_out * price[&quot;output&quot;]) / 1000
+        self.spent += cost
+        return cost
+
+    @property
+    def remaining(self):
+        return self.budget - self.spent</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<hr>
+
+
+<blockquote>
+<p><strong>刷题建议</strong>：1-5 题是所有 Agent 岗必问的，必须能手写。6-9 题 RAG 相关也是高频。10-15 工程题看岗位侧重。</p>
+</blockquote>
+
+
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">面试深度剖析与高阶案例（代码实力加分项）</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<blockquote>
+<p>简单的 API 调用和玩具级别的 Agent 已经无法打动大厂的面试官。能够手写具备容错、状态管理和架构解耦的工业级代码，才是拉开差距的关键。</p>
+</blockquote>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">16. 手写：基于 LangGraph 的多 Agent 协作系统（工业级）⭐⭐⭐</h3>
+
+<blockquote>
+<p><strong>要求</strong>：实现一个包含“研究员（Researcher）”和“写作者（Writer）”的流水线。要求用到状态机（State），并且能够演示如何在图节点之间传递信息。</p>
+</blockquote>
+
+
+<p><strong>核心考点</strong>：状态图（StateGraph）定义、节点路由逻辑、多实体状态流转。</p>
+
+
+<p><strong>可运行的完整解决方案与逐行讲解</strong>：</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">python</span>
+                </div>
+                <pre><code class="language-python">from typing import TypedDict, Annotated, List
+from langgraph.graph import StateGraph, END
+from openai import OpenAI
+import operator
+
+# 初始化客户端
+client = OpenAI(api_key=&quot;sk-xxx&quot;, base_url=&quot;https://api.deepseek.com/v1&quot;)
+
+# 1. 定义全局状态字典（这是多Agent沟通的&quot;黑板&quot;）
+# TypedDict 约束结构，Annotated 和 operator.add 解决列表追加而不是覆盖的问题
+class AgentState(TypedDict):
+    topic: str               # 用户指定的研究主题
+    research_data: List[str] # 研究员收集的资料
+    draft: str               # 写作者生成的初稿
+    revision_count: int      # 审稿被打回的次数
+
+# 2. 定义节点逻辑（每个节点就是一个函数，输入是State，输出也是State片段）
+def researcher_node(state: AgentState):
+    topic = state[&quot;topic&quot;]
+    print(f&quot;🕵️  研究员正在搜索关于 [{topic}] 的资料...&quot;)
+    # 模拟外部API调用或LLM推理
+    prompt = f&quot;请提供关于 {topic} 的3条核心事实，每条简短即可。&quot;
+    res = client.chat.completions.create(
+        model=&quot;deepseek-v4&quot;,
+        messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: prompt}]
+    )
+    # 返回的内容会自动合并或覆盖到全局 state 中
+    return {&quot;research_data&quot;: [res.choices[0].message.content]}
+
+def writer_node(state: AgentState):
+    data = &quot;\n&quot;.join(state[&quot;research_data&quot;])
+    print(&quot;✍️  写作者正在基于资料撰写草稿...&quot;)
+    prompt = f&quot;根据以下资料写一段100字左右的摘要：\n{data}&quot;
+    res = client.chat.completions.create(
+        model=&quot;deepseek-v4&quot;,
+        messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: prompt}]
+    )
+    return {
+        &quot;draft&quot;: res.choices[0].message.content,
+        # 记录写作次数
+        &quot;revision_count&quot;: state.get(&quot;revision_count&quot;, 0) + 1 
+    }
+
+def reviewer_node(state: AgentState):
+    draft = state[&quot;draft&quot;]
+    print(&quot;🧐 审核员正在检查文章质量...&quot;)
+    # 工业级系统中这里会让LLM进行判分，这里为了演示简化为字数判断
+    if len(draft) &lt; 50:
+        print(&quot;❌ 审核不通过，打回重写。&quot;)
+        return {&quot;status&quot;: &quot;rejected&quot;}
+    print(&quot;✅ 审核通过。&quot;)
+    return {&quot;status&quot;: &quot;approved&quot;}
+
+# 3. 定义条件路由函数（决定下一步去哪里）
+def review_router(state: AgentState) -&gt; str:
+    # 防止死循环的硬性保护机制
+    if state.get(&quot;revision_count&quot;, 0) &gt;= 3:
+        return &quot;end&quot;
+    
+    # 根据审核员的隐式判断结果进行路由
+    if len(state.get(&quot;draft&quot;, &quot;&quot;)) &lt; 50:
+        return &quot;rewrite&quot;
+    return &quot;end&quot;
+
+# 4. 组装工作流图
+workflow = StateGraph(AgentState)
+
+# 添加节点
+workflow.add_node(&quot;researcher&quot;, researcher_node)
+workflow.add_node(&quot;writer&quot;, writer_node)
+# 这里省略 reviewer_node 的直接调用，将逻辑融合到 router 中以简化图结构
+
+# 定义边（控制流）
+workflow.set_entry_point(&quot;researcher&quot;)
+workflow.add_edge(&quot;researcher&quot;, &quot;writer&quot;)
+
+# 添加条件边（根据路由函数的结果决定下一步分支）
+workflow.add_conditional_edges(
+    &quot;writer&quot;,
+    review_router,
+    {
+        &quot;rewrite&quot;: &quot;writer&quot;, # 打回重写，回到 writer 节点
+        &quot;end&quot;: END           # 结束工作流
+    }
+)
+
+# 5. 编译成可运行的应用
+app = workflow.compile()
+
+# 6. 执行示例
+if __name__ == &quot;__main__&quot;:
+    initial_state = {
+        &quot;topic&quot;: &quot;Agent技术的发展趋势&quot;,
+        &quot;research_data&quot;: [],
+        &quot;revision_count&quot;: 0
+    }
+    # stream 方法支持流式输出节点状态
+    for s in app.stream(initial_state):
+        print(s)
+        print(&quot;---&quot;)</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p><strong>代码亮点总结</strong>：</p>
+
+<ul>
+<li>使用了 <code>TypedDict</code> 进行状态强类型校验，这是高标准工程的体现。</li>
+<li>包含了防死循环的兜底逻辑（<code>revision_count &gt;= 3</code>），展示了安全编程意识。</li>
+<li>完整展示了 LangGraph 的三要素：State（状态）、Nodes（节点计算）、Edges（边与路由流转）。</li>
+</ul>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">17. 手写：实现一个兼容 MCP 协议的微型服务端 ⭐⭐⭐</h3>
+
+<blockquote>
+<p><strong>要求</strong>：不要用庞大的 SDK，用最基础的 FastAPI / Python，徒手写一个能暴露本地文件读取工具给 Agent 的微型接口，解释 MCP 的核心运作方式。</p>
+</blockquote>
+
+
+<p><strong>核心考点</strong>：理解 Agent 工具调用的解耦、跨进程 RPC 协议。</p>
+
+
+<p><strong>可运行的完整解决方案与逐行讲解</strong>：</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">python</span>
+                </div>
+                <pre><code class="language-python">from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+import os
+
+app = FastAPI(title=&quot;Mini MCP Server&quot;)
+
+# 1. 协议定义：MCP要求服务端必须返回支持的工具 Schema 列表
+class ToolSchema(BaseModel):
+    name: str
+    description: str
+    parameters: dict
+
+class ToolListResponse(BaseModel):
+    tools: list[ToolSchema]
+
+# 2. 协议定义：执行工具的请求和响应结构
+class ExecuteRequest(BaseModel):
+    tool_name: str
+    arguments: dict
+
+class ExecuteResponse(BaseModel):
+    result: str
+    is_error: bool = False
+
+# 3. 暴露工具发现接口 (Discovery)
+@app.get(&quot;/tools&quot;, response_model=ToolListResponse)
+def list_tools():
+    &quot;&quot;&quot;Agent 会首先调用这个接口，知道你有啥本事&quot;&quot;&quot;
+    return ToolListResponse(tools=[
+        ToolSchema(
+            name=&quot;read_local_file&quot;,
+            description=&quot;读取服务器上的文本文件内容&quot;,
+            parameters={
+                &quot;type&quot;: &quot;object&quot;,
+                &quot;properties&quot;: {
+                    &quot;file_path&quot;: {
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;description&quot;: &quot;文件的绝对路径&quot;
+                    }
+                },
+                &quot;required&quot;: [&quot;file_path&quot;]
+            }
+        )
+    ])
+
+# 4. 暴露工具执行接口 (Execution)
+@app.post(&quot;/execute&quot;, response_model=ExecuteResponse)
+def execute_tool(req: ExecuteRequest):
+    &quot;&quot;&quot;Agent 推理出需要调用的工具后，向这里发送指令&quot;&quot;&quot;
+    if req.tool_name == &quot;read_local_file&quot;:
+        file_path = req.arguments.get(&quot;file_path&quot;)
+        
+        # 安全防御：防目录穿越攻击 (Directory Traversal)
+        if &quot;..&quot; in file_path or not file_path.startswith(&quot;/tmp/safe_zone/&quot;):
+            return ExecuteResponse(
+                result=&quot;Access Denied: 只能读取 /tmp/safe_zone/ 目录&quot;,
+                is_error=True
+            )
+            
+        try:
+            with open(file_path, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+                content = f.read()
+            return ExecuteResponse(result=content[:2000]) # 截断防止Token溢出
+        except Exception as e:
+            return ExecuteResponse(result=str(e), is_error=True)
+            
+    raise HTTPException(status_code=404, detail=&quot;Tool not found&quot;)
+
+# 面试官提问时的核心解释：
+# “MCP 的本质就是将原来的 function_calling 变成了远程过程调用。
+# 客户端 Agent 启动时，发 GET /tools 同步能力；需要时，发 POST /execute 执行动作。
+# 这段代码还展示了工业级的两个安全要求：1. 路径越权检查；2. 返回文本长度截断防内存/Token溢出。”</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">18. 心智模型：工业级 Agent 的代码结构规范</h3>
+
+<p>在面试中，如果要求你白板设计项目结构，千万不要把所有东西塞进一个 <code>main.py</code>。优秀的 Agent 代码架构应该像微服务一样分层：</p>
+
+
+<div class="mac-window">
+                <div class="mac-header">
+                    <span class="mac-dot" style="background:#ff5f56"></span>
+                    <span class="mac-dot" style="background:#ffbd2e"></span>
+                    <span class="mac-dot" style="background:#27c93f"></span>
+                    <span class="mac-lang">text</span>
+                </div>
+                <pre><code class="language-text">├── agents/                 # Agent 核心定义层
+│   ├── prompts/            # 模板文件单独管理 (jinja2/yaml)
+│   ├── chains/             # LLM 调用链逻辑
+│   └── graphs/             # LangGraph 状态机拓扑定义
+├── tools/                  # 工具层
+│   ├── web_search.py       # 外部 API 交互
+│   └── database.py         # DB 交互 (读写分离，带权限控制)
+├── memory/                 # 记忆与存储层
+│   ├── checkpointers/      # 状态快照持久化 (SQLite/Postgres)
+│   └── vector_store/       # 向量检索封装 (FAISS/Milvus)
+├── core/                   # 核心基建
+│   ├── config.py           # 环境变量与 LLM 密钥管理
+│   ├── logger.py           # 结构化日志追踪
+│   └── telemetry.py        # LangSmith / 耗时/ Token 监控
+└── app.py                  # API 路由与 FastAPI 入口</code></pre>
+            </div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p><strong>关键点</strong>：把 <code>prompts</code> 当作配置文件而不是代码字符串对待。分离业务逻辑（graph）与底层能力（tools），这是架构师的基本功。</p>
+
+
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <h3 class="section-h3">19. 高阶综合：Agent 代码常见 Bug 与填坑指南（Summary Table）</h3>
+
+<div class="table-wrapper"><table class="data-table"><thead><tr><th>典型代码 Bug (Anti-Pattern)</th><th>现象</th><th>底层原因分析</th><th>标准解决方案 (Code Fix)</th></tr></thead><tbody><tr><td><strong>幻觉参数强解析报错</strong></td><td><code>json.loads(tc.function.arguments)</code> 报 JSONDecodeError</td><td>LLM 有时会输出带有 Markdown 标记（```json）或者单引号、换行符的不规范字符串。</td><td>不要裸调 JSON 解析。使用 <code>ast.literal_eval</code> 或正则表达式清洗，最好使用 <code>Pydantic</code> 或第三方库 <code>json_repair</code> 进行容错解析。</td></tr><tr><td><strong>上下文隐性爆炸</strong></td><td>跑了几轮对话后，报错 <code>ContextWindowExceededError</code></td><td>在记录 <code>messages</code> 历史时，直接把工具返回的 10 万字网页源码或者长报错堆栈无脑 <code>append</code> 进了历史列表。</td><td>拦截器模式：在把工具结果存入历史前，强制截断 <code>content[:2000]</code>，或调用一个独立模型对超长结果做一次 summarization 再入栈。</td></tr><tr><td><strong>异步竞态与并发堵塞</strong></td><td>多个请求进来，整个 FastAPI 夯死，只能一个个串行处理</td><td>Agent 代码中混用了同步的 LLM 客户端（如 <code>client.chat.completions.create</code>）在 <code>async def</code> 的路由里。</td><td>彻底拥抱异步：使用 <code>AsyncOpenAI</code> 客户端，并用 <code>await client.chat.completions.create</code>；或者把同步调用放进 <code>run_in_executor</code> 线程池里。</td></tr><tr><td><strong>历史状态被意外污染</strong></td><td>在 LangGraph 循环中，上一轮计算的中间变量干扰了下一轮推理</td><td><code>AgentState</code> 使用字典，并在处理节点直接进行了浅拷贝或指针引用修改（In-place mutation）。</td><td>确保状态不可变思想：节点返回的是状态的“更新增量（Delta）”，利用 <code>Annotated[list, operator.add]</code> 让框架引擎负责安全合并。</td></tr></tbody></table></div>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<hr>
+
+
+                </div>
+            </section>
+</section>
+<section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    <div class="chapter-badge">Chapter</div>
+<h2 class="section-h2">2025-2026 最新进展</h2>
+                </div>
+            </section>
+  <section class="content-slide">
+                <div class="slide-content-wrapper">
+                    
+<p>代码面试在 2026 年依然是开发岗的硬门槛，且&quot;现场能跑&quot;的要求愈发严格。高频手写题集中在三类：Agent 基础循环（LLM + 工具调用的 ReAct 实现）、RAG 链路（切分、嵌入、检索、重排）、以及工程实践（重试装饰器、并发调用、流式输出、token 计数与截断）。随着 Function Calling/Tool Use 成为标配，能否优雅地实现工具注册、参数校验与结果回填，成为区分水平的关键。</p>
+
+
+<p>部分公司开始引入&quot;补全真实开源框架代码片段&quot;或&quot;修复一段有 bug 的 Agent 代码&quot;的新题型，比纯白板手写更贴近实战。</p>
+
+
+<div class="callout callout-tip">
+            <div class="callout-icon">💡</div>
+            <div class="callout-body"><p>手写 Agent 循环时，主动处理好&quot;工具调用失败&quot;&quot;LLM 返回非法 JSON&quot;&quot;最大轮次限制&quot;这三个边界情况。这些细节最能体现你的工程成熟度。
+[!WARNING] 不要只背模板。面试官常在你写完后追加约束（如&quot;加上并发&quot;&quot;支持流式&quot;&quot;换成异步&quot;），死记硬背的代码一旦需要现场改造就会暴露真实水平。</p>
+</div>
+        </div>
+                </div>
+            </section>
+</section>
+
+        <section class="title-slide">
+            <h1 class="main-title" style="color: #2563eb">THANKS</h1>
+            <div class="main-subtitle">06 · 代码面试：手写 Agent 核心代码 15 题 · 完</div>
+        </section>
+    
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/highlight/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/zoom/zoom.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true, center: false, controls: true, progress: true,
+            transition: 'slide', backgroundTransition: 'fade', slideNumber: 'c/t',
+            width: 1280, height: 720, margin: 0.08,
+            plugins: [ RevealHighlight, RevealZoom ]
+        });
+        
+    </script>
+
+<!-- 水印 -->
+<div id="_wm" style="pointer-events:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99999;overflow:hidden;opacity:0.06;">
+<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+<defs><pattern id="wmp" x="0" y="0" width="240" height="160" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
+<text x="10" y="80" font-size="16" fill="#333" font-family="sans-serif">算法研习手记</text>
+</pattern></defs>
+<rect width="100%" height="100%" fill="url(#wmp)"/>
+</svg></div>
+</body>
+</html>
